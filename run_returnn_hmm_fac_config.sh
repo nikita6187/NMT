@@ -1,11 +1,11 @@
 #!/bin/bash
 
-export PATH=~/cuda-9.0/bin:$PATH
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/cuda-9.0/extras/CUPTI/lib64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/cuda-9.0/lib64
+export PATH=/u/makarov/cuda-9.0/bin:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/u/makarov/cuda-9.0/extras/CUPTI/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/u/makarov/cuda-9.0/lib64
 
-source ../rimes-testing/ENV/bin/activate
+source /u/makarov/rimes-testing/ENV/bin/activate
 
-python3 ../returnn-hmm-fac/rnn.py $1
+python3 /u/makarov/returnn-hmm-fac/rnn.py $1
 
 
