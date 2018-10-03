@@ -205,7 +205,7 @@ class TransformerNetwork:
 		
 		    "encoder_int": {"class": "linear", "activation": None, "with_bias": False, "from": ["base:encoder"], "n_out": intermediary_size},
 		    "decoder_int": {"class": "linear", "activation": None, "with_bias": False, "from": ["decoder"], "n_out": intermediary_size},
-    		    "prev_outputs_int": {"class": "linear", "activation": None, "with_bias": False, "from": ["prev:target_embed_raw"], "n_out": intermediary_size},
+		    "prev_outputs_int": {"class": "linear", "activation": None, "with_bias": False, "from": ["prev:target_embed_raw"], "n_out": intermediary_size},
 		
 
                 "output_prob" : {"class": "hmm_factorization", "from": "dec_%02d_att_weights" % (self.decN),
@@ -250,7 +250,7 @@ debug_add_check_numerics_on_output = True
 tf_log_memory_usage = True
 log_batch_size = True
 batching = 'random'
-batch_size = 400
+batch_size = 200
 max_seqs = 50
 max_seq_length = 60  # 75
 
