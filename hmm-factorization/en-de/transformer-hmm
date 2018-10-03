@@ -201,12 +201,17 @@ class TransformerNetwork:
 
                 # decoder stack is added by separate function
                 "decoder": {"class": "layer_norm", "from": ["dec_%02d" % self.decN]},
+		
+		    "encoder_int": {"class": "linear", "activation": None, "with_bias": False, "from": ["base:encoder"], "n_out": intermediary_size},
+		    "decoder_int": {"class": "linear", "activation": None, "with_bias": False, "from": ["decoder"], "n_out": intermediary_size},
+    		    "prev_outputs_int": {"class": "linear", "activation": None, "with_bias": False, "from": ["prev:target_embed_raw"], "n_out": intermediary_size},
+		
 
                 "output_prob" : {"class": "hmm_factorization", "from": "dec_%02d_att_weights" % (self.decN),
                      "attention_weights": "dec_%02d_att_weights" % (self.decN),
-                     "base_encoder_transformed": "base:encoder",
-                     "prev_state": "decoder",
-                     "prev_outputs": "prev:target_embed_raw",
+                     "base_encoder_transformed": "encoder_int",
+                     "prev_state": "decoder_int",
+                     "prev_outputs": "prev_outputs_int",
                      "threshold" : None,  # TODO: Find correct value here
                      "debug": False,
                      "transpose_and_average_att_weights": True,
