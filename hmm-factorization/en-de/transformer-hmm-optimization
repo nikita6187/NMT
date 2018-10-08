@@ -254,8 +254,8 @@ batch_size = 200
 max_seqs = 50
 max_seq_length = 60  # 75
 
-num_epochs = 16
-model = '"net-model/network/en-de/transformer-hmm"'
+num_epochs = 17
+model = "net-model/network/en-de/transformer-hmm-opt"
 cleanup_old_models = True
 
 
@@ -274,5 +274,5 @@ newbob_multi_update_interval = 1
 newbob_learning_rate_decay = 0.9
 
 # log
-log = "hmm-factorization/logs/en-de/transformer-hmm-opt/r1"
+log = "hmm-factorization/logs/en-de/transformer-hmm-opt/r2"
 log_verbosity = 5
