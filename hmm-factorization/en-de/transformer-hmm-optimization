@@ -214,7 +214,7 @@ class TransformerNetwork:
                      "prev_state": "decoder_int",
                      "prev_outputs": "prev_outputs_int",
                      "threshold" : 0.1,  # TODO: Find correct value here
-                     "debug": False,
+                     "debug": True,
                      "transpose_and_average_att_weights": True,
                      "target": "classes", "loss": "ce"},
 
