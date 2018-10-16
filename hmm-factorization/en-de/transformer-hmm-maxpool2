@@ -253,7 +253,7 @@ debug_add_check_numerics_on_output = True
 tf_log_memory_usage = True
 log_batch_size = True
 batching = 'random'
-batch_size = 300
+batch_size = 400
 max_seqs = 50
 max_seq_length = 60  # 75
 
