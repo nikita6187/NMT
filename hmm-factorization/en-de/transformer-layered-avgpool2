@@ -186,7 +186,7 @@ class TransformerNetwork:
             "source_embed": {"class": "dropout", "from": ["source_embed_with_pos"], "dropout": self.embed_dropout},
 
             # encoder stack is added by separate function
-            "encode": {"class": "layer_norm", "from": ["enc_%02d" % self.encN]},
+            "encoder": {"class": "layer_norm", "from": ["enc_%02d" % self.encN]},
 		#"encoder": {"class": "pool", "mode": "avg", "padding": "same", "pool_size": (2,), "from": ["encode_pre"], "trainable": False},	
            
  	"output": {"class": "rec", "from": [], "unit": {
