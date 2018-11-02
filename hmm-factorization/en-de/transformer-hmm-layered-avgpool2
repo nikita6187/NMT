@@ -171,9 +171,8 @@ class TransformerNetwork:
                                    "from": [output + '_ff_conv1'], "dropout": self.act_dropout,
                                    "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init}
         d[output + '_ff_drop'] = {"class": "dropout", "from": [output + '_ff_conv2'], "dropout": self.postprocess_dropout}
-        d[output + '_ff_out_pre'] = {"class": "combine", "kind": "add", "from": [output + '_att_out', output + '_ff_drop'],
-                                 "n_out": self.EncValueTotalDim}
-        d[output + '_ff_out'] = {"class": "pool", "mode": "avg", "padding": "same", "pool_size": (2,), "from": [output + '_ff_out_pre'], "trainable": False},	
+        d[output + '_ff_out_pre'] = {"class": "combine", "kind": "add", "from": [output + '_att_out', output + '_ff_drop'], "n_out": self.EncValueTotalDim}
+        d[output + '_ff_out'] = {"class": "pool", "mode": "avg", "padding": "same", "pool_size": (2,), "from": [output + '_ff_out_pre'], "trainable": False}	
         d[output] = {"class": "copy", "from": [output + '_ff_out']}
 
     def build(self):
