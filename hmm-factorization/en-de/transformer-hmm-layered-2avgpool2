@@ -235,7 +235,7 @@ class TransformerNetwork:
 
         }
 
-        self.add_trafo_enc_layer(network, "source_embed", "enc_01")
+        self.add_trafo_enc_layer(network, "source_embed", "enc_01", 0)
         for n in range(1, self.encN):
             self.add_trafo_enc_layer(network, "enc_%02d" % n, "enc_%02d" % (n+1), n)
 
