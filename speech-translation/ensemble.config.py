@@ -136,7 +136,7 @@ network = {
      "ens_output_prob": {"class": "eval", "from": ["output_prob", "model1_output_prob" ],
                         "eval": "source(0)*0.5  + 0.5 * source(1) "},
     "end": {"class": "compare", "from": ["output"], "value": 0},
-#model 0
+    #model 0
     'target_embed': {'class': 'linear', 'activation': None, "with_bias": False, 'from': ['output'], "n_out": 621, "initial_output": 0},  # feedback_input
     "weight_feedback": {"class": "linear", "activation": None, "with_bias": False, "from": ["prev:accum_att_weights"], "n_out": 1000},
     "prev_s_state": {"class": "get_last_hidden_state", "from": ["prev:s"], "n_out": 2000},
@@ -155,7 +155,7 @@ network = {
         "class": "softmax", "from": ["readout"], "dropout": 0.3,
         "target": "classes", "loss": "ce", "loss_opts": {"label_smoothing": 0.1}
         },
-#model 1
+    #model 1
     'model1_target_embed': {'class': 'linear', 'activation': None, "with_bias": False, 'from': ['output'], "n_out": 621, "initial_output": 0},  # feedback_input
     "model1_weight_feedback": {"class": "linear", "activation": None, "with_bias": False, "from": ["prev:model1_accum_att_weights"], "n_out": 1000},
     "model1_prev_s_state": {"class": "get_last_hidden_state", "from": ["prev:model1_s"], "n_out": 2000},
