@@ -31,7 +31,7 @@ update_on_device = True
 
 # data
 num_inputs = 46300
-num_outputs = {'classes': [34908, 1], 'data': [num_inputs, 1]}
+num_outputs = {'classes': [34909, 1], 'data': [num_inputs, 1]}
 num_seqs = {'train': 32799253}
 EpochSplit = 100
 SeqOrderTrainBins = num_seqs["train"] // 1000
