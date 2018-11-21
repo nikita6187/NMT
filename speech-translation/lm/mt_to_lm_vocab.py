@@ -18,7 +18,6 @@ def convert_vocab_lm_to_mt(source_file, target_file):
     for line in vocab_lines:
         d = line.decode('UTF-8').split()
         vocab[str(d[0])] = int(d[1])
-    # TODO: Fix <UNK> vocab error
     pickle.dump(vocab, open(target_file, "wb"))
 
 
