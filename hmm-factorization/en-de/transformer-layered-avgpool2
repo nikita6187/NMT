@@ -107,7 +107,10 @@ class TransformerNetwork:
         d[output + '_ff_out_pre'] = {"class": "combine", "kind": "add",
                                  "from": [output + '_self_att_out', output + '_ff_drop'],
                                  "n_out": self.EncValueTotalDim}
-        d[output + '_ff_out'] = {"class": "pool", "mode": "avg", "padding": "same", "pool_size": (2,), "from": [output + '_ff_out_pre'], "trainable": False}	
+        if n <= 2:
+                d[output + '_ff_out'] = {"class": "pool", "mode": "avg", "padding": "same", "pool_size": (2,), "from": [output + '_ff_out_pre'], "trainable": False}
+        else:
+                d[output + '_ff_out'] = d[output + '_ff_out_pre']
         d[output] = {"class": "copy", "from": [output + '_ff_out']}
 
     def add_trafo_dec_layer(self, db, d, inp, output, reuse_att=None):
