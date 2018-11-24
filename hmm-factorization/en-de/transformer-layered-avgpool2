@@ -84,7 +84,7 @@ class TransformerNetwork:
 
         self.ff_init = "variance_scaling_initializer(mode='fan_in', distribution='uniform', scale=0.78)"
 
-    def add_trafo_enc_layer(self, d, inp, output):
+    def add_trafo_enc_layer(self, d, inp, output, n):
         d[output + '_self_att_laynorm'] = {"class": "layer_norm", "from": [inp]}
         d[output + '_self_att_att'] = {"class": "self_attention", "num_heads": self.AttNumHeads,
                                     "total_key_dim": self.EncKeyTotalDim,
@@ -233,9 +233,9 @@ class TransformerNetwork:
 
         }
 
-        self.add_trafo_enc_layer(network, "source_embed", "enc_01")
+        self.add_trafo_enc_layer(network, "source_embed", "enc_01", 0)
         for n in range(1, self.encN):
-            self.add_trafo_enc_layer(network, "enc_%02d" % n, "enc_%02d" % (n+1))
+            self.add_trafo_enc_layer(network, "enc_%02d" % n, "enc_%02d" % (n+1), n)
 
         self.add_trafo_dec_layer(network, network["output"]["unit"], "target_embed", "dec_01")
         for n in range(1, self.decN):
@@ -254,7 +254,7 @@ debug_add_check_numerics_on_output = True
 tf_log_memory_usage = True
 log_batch_size = True
 batching = 'random'
-batch_size = 550
+batch_size = 2000
 max_seqs = 100
 max_seq_length = 60  # 75
 
