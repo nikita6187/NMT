@@ -225,7 +225,8 @@ class TransformerNetwork:
 
                 "lm_output": {"class": "softmax", "dropout": 0.2,
                            "forward_weights_init": "random_normal_initializer(mean=0.0, stddev=0.1)",
-                           "bias_init": "random_normal_initializer(mean=0.0, stddev=0.1)", "trainable": False
+                           "bias_init": "random_normal_initializer(mean=0.0, stddev=0.1)", "trainable": False,
+                           "n_out": num_outputs['classes'][0],
                            },
 
                 # Combine via Simple Fusion PreNorm
