@@ -8,4 +8,4 @@ source /u/makarov/rimes-testing/ENV/bin/activate
 
 # Usage: sh run_returnn_hmm_fac_search <Config> <Epoch Nr> <Output> <Log> <"dev"/"eval"/"test">
 
-python3 /u/makarov/returnn-hmm-fac/rnn.py $1 ++load_epoch $2 ++device 'gpu' --task 'search' ++search_data 'config:$5' ++beam_size '12' ++need_data 'False' ++max_seq_length '0' ++search_output_file $3$5 &> $4$5
+python3 /u/makarov/returnn-hmm-fac/rnn.py $1 ++load_epoch $2 ++device 'gpu' --task 'search' ++search_data "config:${5}" ++beam_size '12' ++need_data 'False' ++max_seq_length '0' ++search_output_file $3$5 &> $4$5
