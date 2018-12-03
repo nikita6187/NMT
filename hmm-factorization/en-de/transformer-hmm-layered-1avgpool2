@@ -222,7 +222,8 @@ class TransformerNetwork:
                      "threshold" : None,  # TODO: Find correct value here
                      "debug": False,
                      "transpose_and_average_att_weights": True,
-                     "target": "classes", "loss": "ce"},
+                     "target": "classes", "loss": "ce",
+                     "n_out": num_outputs['classes'][0]},
 
             }, "target": "classes", "max_seq_len": "max_len_from('base:encoder') * 3"},
 
