@@ -207,15 +207,15 @@ class TransformerNetwork:
                 "decoder": {"class": "layer_norm", "from": ["dec_%02d" % self.decN]},
 
                 "lm_output": { "class": "subnetwork", "from": ["prev:output"], "load_on_init": lm_model_filename,
-                                "n_out": num_outputs['classes'][0],
+                                "n_out": num_outputs['classes'][0], "trainable": False,
                     "subnetwork": {
-                      "input": {"class": "linear", "n_out": 512, "activation": "identity", "trainable": False},
+                      "input": {"class": "linear", "n_out": 512, "activation": "identity"},
                       "lstm0": {"class": "rnn_cell", "unit": "LSTMBlock", "n_out": 2048, "dropout": 0.2,
-                                "unit_opts": {"forget_bias": 0.0}, "from": ["input"], "trainable": False},
+                                "unit_opts": {"forget_bias": 0.0}, "from": ["input"]},
                       "lstm1": {"class": "rnn_cell", "unit": "LSTMBlock", "n_out": 2048, "dropout": 0.2,
-                                "unit_opts": {"forget_bias": 0.0}, "from": ["lstm0"], "trainable": False},
+                                "unit_opts": {"forget_bias": 0.0}, "from": ["lstm0"]},
                       "output": {"class": "softmax", "dropout": 0.2, "from": ["lstm1"], "dropout": 0.2,
-                                "n_out": num_outputs['classes'][0], "trainable": False}
+                                "n_out": num_outputs['classes'][0]}
                       }},
 
                 # Combine via Simple Fusion PreNorm
