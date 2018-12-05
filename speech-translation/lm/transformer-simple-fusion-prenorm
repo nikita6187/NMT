@@ -221,7 +221,7 @@ class TransformerNetwork:
                 # Combine via Simple Fusion PreNorm
                 "decoder_out": {"class": "linear", "activation": None, "with_bias": False, "from": ["decoder"],
                                 "n_out": num_outputs['classes'][0]},
-                "log_lm_output": { "class": "eval", "from": ["lm_output"], "eval": "tf.math.log(source(0))" },
+                "log_lm_output": { "class": "eval", "from": ["lm_output"], "eval": "tf.log(source(0))" },
 
                 "output_prob" : { "class": "combine", "from": ["decoder_out", "log_lm_output"], "kind": "add",
                             "n_out": num_outputs['classes'][0], "activation": "softmax",
