@@ -221,7 +221,7 @@ class TransformerNetwork:
                 # Combine via Simple Fusion PreNorm
                 "decoder_out": {"class": "linear", "activation": None, "with_bias": False, "from": ["decoder"],
                                 "n_out": num_outputs['classes'][0]},
-                "log_lm_output": { "class": "eval", "from": ["lm_output"], "eval": "tf.log(source(0))" },
+                "log_lm_output": { "class": "eval", "from": ["lm_output"], "eval": "safe_log(source(0))" },
 
                 "output_prob" : { "class": "combine", "from": ["decoder_out", "log_lm_output"], "kind": "add",
                             "n_out": num_outputs['classes'][0], "activation": "softmax",
@@ -272,7 +272,7 @@ preload_from_files = {
 tf_log_memory_usage = True
 log_batch_size = True
 batching = 'random'
-batch_size = 500
+batch_size = 800
 max_seqs = 100
 max_seq_length = 100  # 75
 
