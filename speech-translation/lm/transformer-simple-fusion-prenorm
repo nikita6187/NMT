@@ -44,7 +44,7 @@ def get_dataset(data):
     epochSplit = {"train": EpochSplit}.get(data, 1)
     return {
         "class": "TranslationDataset",
-        "path": "/work/smt2/makarov/NMT/speech-translation/data/de-en/mt/",
+        "path": "/work/smt2/makarov/NMT/speech-translation/data/de-en/mt",
         "file_postfix": data,
         "source_postfix": " </S>",
         "target_postfix": " </S>",
