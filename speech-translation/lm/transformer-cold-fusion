@@ -217,15 +217,20 @@ class TransformerNetwork:
 				        "unit_opts": {"forget_bias": 0.0}, "from": ["lstm0"], "trainable": False},
 			      }},
 
-                # Combine via Deep Fusion
-                "lm_logits": {"class": "linear", "activation": None, "with_bias": False, "from": ["lm_output"],
-                                "n_out": num_outputs['classes'][0]},
-                # TODO: Fix the rest
-                "decoder_out": {"class": "linear", "activation": None, "with_bias": False, "from": ["decoder"],
-                                "n_out": num_outputs['classes'][0]},
-                "log_lm_output": { "class": "eval", "from": ["lm_output"], "eval": "safe_log(source(0))" },
+                # Combine via Cold Fusion (Note, not exact as in paper, logits not explicitly trained)
+                "lm_hidden": {"class": "linear", "activation": "relu", "with_bias": False, "from": ["lm_output"],
+                                "n_out": 2048},
 
-                "output_prob" : { "class": "combine", "from": ["decoder_out", "log_lm_output"], "kind": "add",
+                "g": {"class": "linear", "activation": "sigmoid", "with_bias": True, "from": ["lm_hidden", "decoder"],
+                                "n_out": 2048},
+
+                "lm_hidden_weighted" : {"class": "combine", "from": ["decoder_out", "log_lm_output"], "kind": "mul",
+                                        "from": ["lm_hidden", "g"], "n_out": 2048},
+
+                "final_state": {"class": "linear", "activation": "relu", "with_bias": False,
+                                "from": ["lm_hidden_weighted", "decoder"], "n_out": num_outputs['classes'][0]},
+
+                "output_prob" : { "class": "combine", "from": ["final_state"], "kind": "add",
                             "n_out": num_outputs['classes'][0], "activation": "softmax",
                             "target": "classes", "loss": "ce", "loss_opts":
                             {"label_smoothing": self.label_smoothing, "use_normalized_loss": self.normalized_loss} if self.normalized_loss # ToDo: remove if in later version
