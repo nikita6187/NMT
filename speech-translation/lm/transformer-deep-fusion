@@ -90,100 +90,100 @@ class TransformerNetwork:
         d[output + '_self_att_att'] = {"class": "self_attention", "num_heads": self.AttNumHeads,
                                     "total_key_dim": self.EncKeyTotalDim,
                                     "n_out": self.EncValueTotalDim, "from": [output + '_self_att_laynorm'],
-                                    "attention_left_only": False, "attention_dropout": self.attention_dropout, "forward_weights_init": self.ff_init}
+                                    "attention_left_only": False, "attention_dropout": self.attention_dropout, "forward_weights_init": self.ff_init, "trainable": False}
         d[output + '_self_att_lin'] = {"class": "linear", "activation": None, "with_bias": False,
-                                       "from": [output + '_self_att_att'], "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init}
-        d[output + '_self_att_drop'] = {"class": "dropout", "from": [output + '_self_att_lin'], "dropout": self.postprocess_dropout}
+                                       "from": [output + '_self_att_att'], "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init, "trainable": False}
+        d[output + '_self_att_drop'] = {"class": "dropout", "from": [output + '_self_att_lin'], "dropout": self.postprocess_dropout, "trainable": False}
         d[output + '_self_att_out'] = {"class": "combine", "kind": "add", "from": [inp, output + '_self_att_drop'],
-                                       "n_out": self.EncValueTotalDim}
+                                       "n_out": self.EncValueTotalDim, "trainable": False}
         #####
-        d[output + '_ff_laynorm'] = {"class": "layer_norm", "from": [output + '_self_att_out']}
+        d[output + '_ff_laynorm'] = {"class": "layer_norm", "from": [output + '_self_att_out'], "trainable": False}
         d[output + '_ff_conv1'] = {"class": "linear", "activation": "relu", "with_bias": True,
                                    "from": [output + '_ff_laynorm'],
-                                   "n_out": self.FFDim, "forward_weights_init": self.ff_init}
+                                   "n_out": self.FFDim, "forward_weights_init": self.ff_init, "trainable": False}
         d[output + '_ff_conv2'] = {"class": "linear", "activation": None, "with_bias": True,
                                    "from": [output + '_ff_conv1'], "dropout": self.act_dropout,
-                                   "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init}
-        d[output + '_ff_drop'] = {"class": "dropout", "from": [output + '_ff_conv2'], "dropout": self.postprocess_dropout}
+                                   "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init, "trainable": False}
+        d[output + '_ff_drop'] = {"class": "dropout", "from": [output + '_ff_conv2'], "dropout": self.postprocess_dropout, "trainable": False}
         d[output + '_ff_out'] = {"class": "combine", "kind": "add",
                                  "from": [output + '_self_att_out', output + '_ff_drop'],
-                                 "n_out": self.EncValueTotalDim}
-        d[output] = {"class": "copy", "from": [output + '_ff_out']}
+                                 "n_out": self.EncValueTotalDim, "trainable": False}
+        d[output] = {"class": "copy", "from": [output + '_ff_out'], "trainable": False}
 
     def add_trafo_dec_layer(self, db, d, inp, output, reuse_att=None):
         pre_inp = [inp, 'prev:' + output + '_att_drop'] if self.rnn_dec else [inp]
-        d[output + '_self_att_laynorm'] = {"class": "layer_norm", "from": pre_inp}
+        d[output + '_self_att_laynorm'] = {"class": "layer_norm", "from": pre_inp, "trainable": False}
         d[output + '_self_att_att'] = {"class": "rnn_cell", "unit": "LSTMBlock",
-                "from": [output + '_self_att_laynorm'], "n_out": self.EncValueTotalDim} if self.rnn_dec else {"class": "self_attention", "num_heads": self.AttNumHeads,
+                "from": [output + '_self_att_laynorm'], "n_out": self.EncValueTotalDim, "trainable": False} if self.rnn_dec else {"class": "self_attention", "num_heads": self.AttNumHeads,
                                     "total_key_dim": self.EncKeyTotalDim,
                                     "n_out": self.EncValueTotalDim, "from": [output + '_self_att_laynorm'],
-                                    "attention_left_only": True, "attention_dropout": self.attention_dropout, "forward_weights_init": self.ff_init}
+                                    "attention_left_only": True, "attention_dropout": self.attention_dropout, "forward_weights_init": self.ff_init, "trainable": False}
         d[output + '_self_att_lin'] = {"class": "linear", "activation": None, "with_bias": False,
-                                       "from": [output + '_self_att_att'], "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init}
-        d[output + '_self_att_drop'] = {"class": "dropout", "from": [output + '_self_att_lin'], "dropout": self.postprocess_dropout}
+                                       "from": [output + '_self_att_att'], "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init, "trainable": False}
+        d[output + '_self_att_drop'] = {"class": "dropout", "from": [output + '_self_att_lin'], "dropout": self.postprocess_dropout, "trainable": False}
         d[output + '_self_att_out'] = {"class": "combine", "kind": "add", "from": [inp, output + '_self_att_drop'],
-                                       "n_out": self.EncValueTotalDim}
+                                       "n_out": self.EncValueTotalDim, "trainable": False}
         #####
         if not reuse_att:
-            d[output + '_att_laynorm'] = {"class": "layer_norm", "from": [output + '_self_att_out']}
+            d[output + '_att_laynorm'] = {"class": "layer_norm", "from": [output + '_self_att_out'], "trainable": False}
             d[output + '_att_query0'] = {"class": "linear", "activation": None, "with_bias": False,
                                          "from": [output + '_att_laynorm'],
-                                         "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init}
+                                         "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init, "trainable": False}
             d[output + '_att_query'] = {"class": "split_dims", "axis": "F", "dims": (self.AttNumHeads, self.EncKeyPerHeadDim),
-                                        "from": [output + '_att_query0']}  # (B, H, D/H)
+                                        "from": [output + '_att_query0'], "trainable": False}  # (B, H, D/H)
             db[output + '_att_key0'] = {"class": "linear", "activation": None, "with_bias": False, "from": ["encoder"],
-                                        "n_out": self.EncKeyTotalDim, "forward_weights_init": self.ff_init}  # (B, enc-T, D)
+                                        "n_out": self.EncKeyTotalDim, "forward_weights_init": self.ff_init, "trainable": False}  # (B, enc-T, D)
             db[output + '_att_value0'] = {"class": "linear", "activation": None, "with_bias": False, "from": ["encoder"],
-                                          "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init}
+                                          "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init, "trainable": False}
             db[output + '_att_key'] = {"class": "split_dims", "axis": "F", "dims": (self.AttNumHeads, self.EncKeyPerHeadDim),
-                                       "from": [output + '_att_key0']}  # (B, enc-T, H, D/H)
+                                       "from": [output + '_att_key0'], "trainable": False}  # (B, enc-T, H, D/H)
             db[output + '_att_value'] = {"class": "split_dims", "axis": "F", "dims": (self.AttNumHeads, self.EncValuePerHeadDim),
-                                         "from": [output + '_att_value0']}  # (B, enc-T, H, D'/H)
+                                         "from": [output + '_att_value0'], "trainable": False}  # (B, enc-T, H, D'/H)
             d[output + '_att_energy'] = {"class": "dot", "red1": -1, "red2": -1, "var1": "T", "var2": "T?",
-                                         "from": ['base:' + output + '_att_key', output + '_att_query']}  # (B, H, enc-T, 1)
+                                         "from": ['base:' + output + '_att_key', output + '_att_query'], "trainable": False}  # (B, H, enc-T, 1)
             d[output + '_att_weights'] = {"class": "softmax_over_spatial", "from": [output + '_att_energy'],
-                                          "energy_factor": self.EncKeyPerHeadDim ** -0.5}  # (B, enc-T, H, 1)
+                                          "energy_factor": self.EncKeyPerHeadDim ** -0.5, "trainable": False}  # (B, enc-T, H, 1)
 
             d[output + '_att_weights_drop'] = {"class": "dropout", "dropout_noise_shape": {"*": None},
-                                               "from": [output + '_att_weights'], "dropout": self.attention_dropout}
+                                               "from": [output + '_att_weights'], "dropout": self.attention_dropout, "trainable": False}
 
             d[output + '_att0'] = {"class": "generic_attention", "weights": output + '_att_weights_drop',
-                                   "base": 'base:' + output + '_att_value'}  # (B, H, V)
+                                   "base": 'base:' + output + '_att_value', "trainable": False}  # (B, H, V)
             d[output + '_att_att'] = {"class": "merge_dims", "axes": "static",
                                    "from": [output + '_att0']}  # (B, H*V) except_batch
             d[output + '_att_lin'] = {"class": "linear", "activation": None, "with_bias": False, "from": [output + '_att_att'],
-                                      "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init}
-            d[output + '_att_drop'] = {"class": "dropout", "from": [output + '_att_lin'], "dropout": self.postprocess_dropout}
+                                      "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init, "trainable": False}
+            d[output + '_att_drop'] = {"class": "dropout", "from": [output + '_att_lin'], "dropout": self.postprocess_dropout, "trainable": False}
             d[output + '_att_out'] = {"class": "combine", "kind": "add",
                                       "from": [output + '_self_att_out', output + '_att_drop'],
-                                      "n_out": self.EncValueTotalDim}
+                                      "n_out": self.EncValueTotalDim, "trainable": False}
         elif self.only_one_enc_dec_att == 'add':
             d[output + '_att_out'] = {"class": "combine", "from": [output + '_self_att_out', reuse_att + '_att_drop'],
-                    "n_out": self.EncValueTotalDim, "kind": "add"}
+                    "n_out": self.EncValueTotalDim, "kind": "add", "trainable": False}
         elif self.only_one_enc_dec_att == 'concat':
             d[output + '_att_out'] = {"class": "linear", "from": [output + '_self_att_out', reuse_att + '_att_drop'],
-                    "n_out": self.EncValueTotalDim, "activation": None, "with_bias": False, "forward_weights_init": self.ff_init}
+                    "n_out": self.EncValueTotalDim, "activation": None, "with_bias": False, "forward_weights_init": self.ff_init, "trainable": False}
         #####
-        d[output + '_ff_laynorm'] = {"class": "layer_norm", "from": [output + '_att_out']}
+        d[output + '_ff_laynorm'] = {"class": "layer_norm", "from": [output + '_att_out'], "trainable": False}
         d[output + '_ff_conv1'] = {"class": "linear", "activation": "relu", "with_bias": True,
                                    "from": [output + '_ff_laynorm'],
-                                   "n_out": self.FFDim, "forward_weights_init": self.ff_init}
+                                   "n_out": self.FFDim, "forward_weights_init": self.ff_init, "trainable": False}
         d[output + '_ff_conv2'] = {"class": "linear", "activation": None, "with_bias": True,
                                    "from": [output + '_ff_conv1'], "dropout": self.act_dropout,
-                                   "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init}
-        d[output + '_ff_drop'] = {"class": "dropout", "from": [output + '_ff_conv2'], "dropout": self.postprocess_dropout}
+                                   "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init, "trainable": False}
+        d[output + '_ff_drop'] = {"class": "dropout", "from": [output + '_ff_conv2'], "dropout": self.postprocess_dropout, "trainable": False}
         d[output + '_ff_out'] = {"class": "combine", "kind": "add", "from": [output + '_att_out', output + '_ff_drop'],
-                                 "n_out": self.EncValueTotalDim}
+                                 "n_out": self.EncValueTotalDim, "trainable": False}
         d[output] = {"class": "copy", "from": [output + '_ff_out']}
 
     def build(self):
         network = {
             "source_embed_raw": {"class": "linear", "activation": None, "with_bias": False, "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init},
             "source_embed_weighted": {"class": "eval", "from": ["source_embed_raw"],
-                                      "eval": "source(0) * %f" % self.embed_weight },
+                                      "eval": "source(0) * %f" % self.embed_weight , "trainable": False},
             "source_embed_with_pos": {"class": "positional_encoding", "add_to_input": True,
-                                      "from": ["source_embed_weighted"]},
-            "source_embed": {"class": "dropout", "from": ["source_embed_with_pos"], "dropout": self.embed_dropout},
+                                      "from": ["source_embed_weighted"], "trainable": False},
+            "source_embed": {"class": "dropout", "from": ["source_embed_with_pos"], "dropout": self.embed_dropout, "trainable": False},
 
             # encoder stack is added by separate function
             "encoder": {"class": "layer_norm", "from": ["enc_%02d" % self.encN]},
@@ -194,13 +194,13 @@ class TransformerNetwork:
                 "end": {"class": "compare", "from": ["output"], "value": 0},
 
                 'target_embed_raw': {'class': 'linear', 'activation': None, "with_bias": False, 'from': ['prev:output'],
-                                     "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init},
+                                     "n_out": self.EncValueTotalDim, "forward_weights_init": self.ff_init, "trainable": False},
                 # there seems to be no <s> in t2t, they seem to use just the zero vector
                 "target_embed_weighted": {"class": "eval", "from": ["target_embed_raw"],
-                                          "eval": "source(0) * %f" % self.embed_weight },
+                                          "eval": "source(0) * %f" % self.embed_weight , "trainable": False},
                 "target_embed_with_pos": {"class": "positional_encoding", "add_to_input": True,
-                                          "from": ["target_embed_weighted"]},
-                "target_embed": {"class": "dropout", "from": ["target_embed_with_pos"], "dropout": self.embed_dropout},
+                                          "from": ["target_embed_weighted"], "trainable": False},
+                "target_embed": {"class": "dropout", "from": ["target_embed_with_pos"], "dropout": self.embed_dropout, "trainable": False},
 
 
                 # decoder stack is added by separate function
@@ -218,7 +218,7 @@ class TransformerNetwork:
 			      }},
 
                 # Combine via Deep Fusion
-                # TODO: Check whether "maxout" non linearity exists
+                # TODO: Check whether "maxout" non linearity exists, check if trainable works
                 "lm_hidden": {"class": "linear", "activation": "relu", "with_bias": False,
                                 "from": ["lm_output", "target_embed", "decoder"],
                                 "n_out": 512},
