@@ -223,10 +223,7 @@ class TransformerNetwork:
                                 "from": ["lm_output", "target_embed", "decoder"],
                                 "n_out": 512},
 
-                "final_state": {"class": "linear", "activation": None, "with_bias": true,
-                                "from": ["lm_hidden_weighted", "decoder"], "n_out": num_outputs['classes'][0]},
-
-                "output_prob" : { "class": "combine", "from": ["final_state"], "kind": "add",
+                "output_prob" : { "class": "combine", "from": ["lm_hidden"], "kind": "add",
                             "n_out": num_outputs['classes'][0], "activation": "softmax",
                             "target": "classes", "loss": "ce", "loss_opts":
                             {"label_smoothing": self.label_smoothing, "use_normalized_loss": self.normalized_loss} if self.normalized_loss # ToDo: remove if in later version

@@ -224,8 +224,7 @@ class TransformerNetwork:
                 "g": {"class": "linear", "activation": "sigmoid", "with_bias": True, "from": ["lm_hidden", "decoder"],
                                 "n_out": 2048},
 
-                "lm_hidden_weighted" : {"class": "combine", "from": ["decoder_out", "log_lm_output"], "kind": "mul",
-                                        "from": ["lm_hidden", "g"], "n_out": 2048},
+                "lm_hidden_weighted" : {"class": "combine", "kind": "mul", "from": ["lm_hidden", "g"], "n_out": 2048},
 
                 "final_state": {"class": "linear", "activation": "relu", "with_bias": False,
                                 "from": ["lm_hidden_weighted", "decoder"], "n_out": num_outputs['classes'][0]},
