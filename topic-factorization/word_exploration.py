@@ -121,13 +121,13 @@ def get_topics_lda(word_list):
         print(topic)
 
     import pyLDAvis.gensim
-    lda_display = pyLDAvis.gensim.prepare(ldamodel, corpus, dictionary, sort_topics=False)
+    lda_display = pyLDAvis.gensim.prepare(ldamodel, corpus, dictionary, sort_topics=False, sort=False)
     pyLDAvis.display(lda_display)
 
     return topics, ldamodel
 
 
-l = read_file('./trg.shuf', 100000)
+l = read_file('./trg.shuf', 10000)
 wl = process_bpe(line_list=l)
 print(get_word_count(word_list=wl))
 get_topics_lda(word_list=wl)
