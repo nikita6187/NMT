@@ -207,7 +207,7 @@ class TransformerNetwork:
                 "decoder": {"class": "layer_norm", "from": ["dec_%02d" % self.decN]},
 
                 "lm_output": { "class": "subnetwork", "from": ["prev:output"], "load_on_init": lm_model_filename,
-                                "n_out": num_outputs['classes'][0], "trainable": False, "concat_sources": True,
+                                "n_out": 2048, "trainable": False, "concat_sources": True,
                                 "load_ignore_missing": True,
 			    "subnetwork": {
 			      "input": {"class": "linear", "n_out": 512, "activation": "identity", "trainable": False},
