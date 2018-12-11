@@ -207,7 +207,7 @@ class TransformerNetwork:
                 "decoder": {"class": "layer_norm", "from": ["dec_%02d" % self.decN]},
 
                 "lm_output": { "class": "subnetwork", "from": ["prev:output"], "load_on_init": lm_model_filename,
-                                "n_out": num_outputs['classes'][0], "trainable": False, "concat_sources": True,
+                                "n_out": 2048, "trainable": False, "concat_sources": True,
                                 "load_ignore_missing": True,
 			    "subnetwork": {
 			      "input": {"class": "linear", "n_out": 512, "activation": "identity", "trainable": False},
@@ -215,11 +215,11 @@ class TransformerNetwork:
 				        "unit_opts": {"forget_bias": 0.0}, "from": ["input"], "trainable": False},
 			      "lstm1": {"class": "rnn_cell", "unit": "LSTMBlock", "n_out": 2048, "dropout": 0.2,
 				        "unit_opts": {"forget_bias": 0.0}, "from": ["lstm0"], "trainable": False},
+		              "output": {"class": "copy", "from": ["lstm1"], "n_out": 2048, "trainable": False},	
 			      }},
 
                 # Combine via Cold Fusion (Note, not exact as in paper, logits not explicitly trained)
-                "lm_hidden": {"class": "linear", "activation": "relu", "with_bias": False, "from": ["lm_output"],
-                                "n_out": 2048},
+                "lm_hidden": {"class": "linear", "activation": "relu", "with_bias": False, "from": ["lm_output"], "n_out": 2048},
 
                 "g": {"class": "linear", "activation": "sigmoid", "with_bias": True, "from": ["lm_hidden", "decoder"],
                                 "n_out": 2048},
