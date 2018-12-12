@@ -206,7 +206,7 @@ class TransformerNetwork:
                 # decoder stack is added by separate function
                 "decoder": {"class": "layer_norm", "from": ["dec_%02d" % self.decN]},
 
-                "lm_output": { "class": "subnetwork", "from": ["prev:output"], "load_on_init": lm_model_filename,
+                "lm_output": { "class": "subnetwork", "from": ["prev:output"], #"load_on_init": lm_model_filename,
                                 "n_out": num_outputs['classes'][0], "trainable": False, "concat_sources": True,
 			    "subnetwork": {
 			      "input": {"class": "linear", "n_out": 512, "activation": "identity", "trainable": False},
@@ -264,15 +264,13 @@ debug_add_check_numerics_on_output = True
 
 transformer_file = "/work/smt2/makarov/NMT/speech-translation/lm/logs/de-en/transformer.6l/net-model/network.179"  # TODO set this correct
 transformer_prefix = ""
-preload_from_files = {
-    "transformer" : {"filename": transformer_file, "prefix": transformer_prefix, "init_for_train": True, "ignore_missing": True},
-}
+# preload_from_files = {"transformer" : {"filename": transformer_file, "prefix": transformer_prefix, "init_for_train": True, "ignore_missing": True},}
 
 # trainer
 tf_log_memory_usage = True
 log_batch_size = True
 batching = 'random'
-batch_size = 500
+batch_size = 800
 max_seqs = 100
 max_seq_length = 100  # 75
 
