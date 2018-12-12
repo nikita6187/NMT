@@ -220,7 +220,7 @@ class TransformerNetwork:
 
                 # Combine via Deep Fusion
                 # TODO: Check whether "maxout" non linearity exists, check if trainable works
-                "lm_hidden": {"class": "linear", "activation": "relu", "with_bias": False,
+                "lm_hidden": {"class": "linear", "activation": "relu", "with_bias": True,
                                 "from": ["lm_output", "target_embed", "decoder"],
                                 "n_out": 512},
 
