@@ -257,7 +257,7 @@ preload_from_files = {
 tf_log_memory_usage = True
 log_batch_size = True
 batching = 'random'
-batch_size = 3000
+batch_size = 3300
 max_seqs = 100
 max_seq_length = 100  # 75
 
@@ -268,7 +268,7 @@ cleanup_old_models = True
 
 learning_rate = 0.0003  # Initial: 0.0003
 optimizer = {'beta1': 0.9, 'beta2': 0.999, 'class': 'Adam', 'epsilon': 1e-08}
-accum_grad_multiple_step = 4
+accum_grad_multiple_step = 1
 gradient_clip = 0
 gradient_noise = 0.0
 learning_rate_file = 'newbob.data'
