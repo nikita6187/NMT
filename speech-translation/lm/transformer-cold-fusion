@@ -267,18 +267,18 @@ debug_add_check_numerics_on_output = True
 
 # Load LM & transformer
 # LM has prefix here "lm_" and transformer doesn't have any prefix
-
+"""
 transformer_file = "/work/smt2/makarov/NMT/speech-translation/lm/logs/de-en/transformer.6l/net-model/network.179"  # TODO set this correct
 transformer_prefix = ""
 preload_from_files = {
     "transformer" : {"filename": transformer_file, "prefix": transformer_prefix, "init_for_train": True, "ignore_missing": True},
 }
-
+"""
 # trainer
 tf_log_memory_usage = True
 log_batch_size = True
 batching = 'random'
-batch_size = 800
+batch_size = 1300
 max_seqs = 100
 max_seq_length = 100  # 75
 
@@ -287,9 +287,9 @@ model = 'net-model/network'
 cleanup_old_models = True
 
 
-learning_rate = 0.0003
+learning_rate = 0.003
 optimizer = {'beta1': 0.9, 'beta2': 0.999, 'class': 'Adam', 'epsilon': 1e-08}
-accum_grad_multiple_step = 4
+accum_grad_multiple_step = 2
 gradient_clip = 0
 gradient_noise = 0.0
 learning_rate_file = 'newbob.data'
