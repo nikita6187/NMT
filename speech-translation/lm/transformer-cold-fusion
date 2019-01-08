@@ -267,13 +267,12 @@ debug_add_check_numerics_on_output = True
 
 # Load LM & transformer
 # LM has prefix here "lm_" and transformer doesn't have any prefix
-"""
 transformer_file = "/work/smt2/makarov/NMT/speech-translation/lm/logs/de-en/transformer.6l/net-model/network.179"  # TODO set this correct
 transformer_prefix = ""
 preload_from_files = {
     "transformer" : {"filename": transformer_file, "prefix": transformer_prefix, "init_for_train": True, "ignore_missing": True},
 }
-"""
+
 # trainer
 tf_log_memory_usage = True
 log_batch_size = True
