@@ -277,7 +277,7 @@ preload_from_files = {
 tf_log_memory_usage = True
 log_batch_size = True
 batching = 'random'
-batch_size = 900
+batch_size = 1300
 max_seqs = 100
 max_seq_length = 100  # 75
 
