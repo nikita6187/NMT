@@ -27,7 +27,7 @@ def main(args):
         os.mkdir(config_dir)
 
     if not os.path.isdir(config_log_dir):
-        print('Makign config log folder: ' + str(config_log_dir))
+        print('Making config log folder: ' + str(config_log_dir))
         os.mkdir(config_log_dir)
 
     # Launching of config
