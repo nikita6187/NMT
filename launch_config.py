@@ -37,7 +37,7 @@ def main(args):
     launch_command = launch_command.format(path_to_runner, args.p)
        
     launch_command = shlex.split(launch_command)
-    print('Running: ' + launch_command + ' from ' + config_dir)
+    print('Running: ' + str(launch_command) + ' from ' + config_dir)
 
     #subprocess.Popen(launch_command, cwd=config_dir)
     subprocess.run(launch_command, cwd=config_dir, shell=True)
