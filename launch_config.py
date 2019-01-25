@@ -36,7 +36,7 @@ def main(args):
     launch_command = "qsub -l gpu=1 -l h_rt=150:00:00 -l h_vmem=30G -l qname='*1080*|*TITAN*' -m abe -cwd {} {}"
     launch_command = launch_command.format(path_to_runner, args.p)
        
-    launch_command = shlex.split(launch_command)
+    #launch_command = shlex.split(launch_command)
     print('Running: ' + str(launch_command) + ' from ' + config_dir)
 
     #subprocess.Popen(launch_command, cwd=config_dir)
