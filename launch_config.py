@@ -40,7 +40,7 @@ def main(args):
     print('Running: ' + str(launch_command) + ' from ' + config_dir)
 
     #subprocess.Popen(launch_command, cwd=config_dir)
-    subprocess.run(launch_command, cwd=config_dir, shell=True)
+    subprocess.Popen(launch_command, cwd=config_dir, shell=True)
     print('Launched!')
 
 
