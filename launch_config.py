@@ -1,6 +1,7 @@
 import argparse
 import os
 import subprocess
+import shlex
 
 
 # Usage: python3 launch_config.py <path to config>
@@ -34,11 +35,12 @@ def main(args):
     path_to_runner = "/work/smt2/makarov/NMT/run_returnn_hmm_fac_config.sh"
     launch_command = "qsub -l gpu=1 -l h_rt=150:00:00 -l h_vmem=30G -l qname='*1080*|*TITAN*' -m abe -cwd {} {}"
     launch_command = launch_command.format(path_to_runner, args.p)
-
-    print('Running: ' + launch_command + ' from ' + config_dir)
+       
+    #launch_command = shlex.split(launch_command)
+    print('Running: ' + str(launch_command) + ' from ' + config_dir)
 
     #subprocess.Popen(launch_command, cwd=config_dir)
-    subprocess.check_call(launch_command.split(), cwd=config_dir)
+    subprocess.Popen(launch_command, cwd=config_dir, shell=True)
     print('Launched!')
 
 
