@@ -17,6 +17,8 @@ echo $TMPDIR
 
 cd $TMPDIR
 
+mkdir ./log/
+
 python3 /u/makarov/returnn-hmm-fac/rnn.py $1
 
 #python3 /u/bahar/src/python/returnn-nikita-20181204/returnn/rnn.py $1
