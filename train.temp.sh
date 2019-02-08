@@ -13,9 +13,9 @@ source /u/bahar/settings/python3-returnn-tf1.9/bin/activate
 
 TMPDIR=$(mktemp -d)
 
-echo TMPDIR
+echo $TMPDIR
 
-cd TMPDIR
+cd $TMPDIR
 
 python3 /u/makarov/returnn-hmm-fac/rnn.py $1
 
