@@ -14,4 +14,4 @@ source /u/bahar/settings/python3-returnn-tf1.9/bin/activate
 
 #python3 /u/makarov/returnn-hmm-fac/rnn.py $1
 
-/u/bahar/src/python/returnn-nikita-20181204/returnn/rnn.py $1
+python3 /u/bahar/src/python/returnn-nikita-20181204/returnn/rnn.py $1
