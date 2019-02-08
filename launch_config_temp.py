@@ -33,7 +33,7 @@ def main(args):
 
     # Launching of config
     #path_to_runner = "/work/smt2/makarov/NMT/run_returnn_hmm_fac_config.sh"
-    path_to_runner = "/work/smt2/makarov/NMT/train.test.sh"
+    path_to_runner = "/work/smt2/makarov/NMT/train.temp.sh"
     
     launch_command = "qsub -l gpu=1 -l h_rt=150:00:00 -l h_vmem=30G -l qname='*1080*|*TITAN*' -m abe -cwd {} {}"
     launch_command = launch_command.format(path_to_runner, args.p)
