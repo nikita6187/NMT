@@ -22,14 +22,20 @@ def main(args):
         raw_output = raw_output.split('\n')
         last_convergences = [o.split()[1] for o in raw_output]
 
+        print(str(last_convergences))
+
         # Get lr
         lr = subprocess.getoutput("grep learningRate" + dir + "newbob.data | tail -1")
         lr = lr.split('=')[1].split(',')[0]
+
+        print(lr)
 
         # Get last epoch time
         epoch_time = subprocess.getoutput("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1")
 
         epoch_time = epoch_time.split()[7]
+
+        print(epoch_time)
 
         # Get name
         name = os.path.basename(os.path.normpath(dir))
