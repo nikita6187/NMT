@@ -20,18 +20,18 @@ def main(args):
         print(dir)
 
         # First get newbob data
-        raw_output = subprocess.check_output("grep dev_score newbob.data | tail -3".split(), cwd=dir)
+        raw_output = subprocess.check_output("grep dev_score newbob.data | tail -3".split(), cwd=dir, shell=True)
         print(raw_output)
         raw_output = raw_output.split('\n')
         last_convergences = [o.split()[1] for o in raw_output]
 
         # Get lr
-        lr = subprocess.check_output("grep learningRate newbob.data | tail -1".split(), cwd=dir)
+        lr = subprocess.check_output("grep learningRate newbob.data | tail -1".split(), cwd=dir, shell=True)
         lr = lr.split('=')[1].split(',')[0]
 
         # Get last epoch time
         epoch_time = subprocess.check_output("grep train log/crnn.train.log |  grep finished | tail -1".split(),
-                                             cwd=dir)
+                                             cwd=dir, shell=True)
         epoch_time = epoch_time.split()[7]
 
         # Get name
