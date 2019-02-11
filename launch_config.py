@@ -32,8 +32,8 @@ def main(args):
         os.mkdir(config_log_dir)
 
     # Launching of config
-    path_to_runner = "/work/smt2/makarov/NMT/run_returnn_hmm_fac_config.sh"
-    launch_command = "qsub -l gpu=1 -l h_rt=150:00:00 -l h_vmem=30G -l qname='*1080*|*TITAN*' -m abe -cwd {} {}"
+    path_to_runner = "/work/smt2/makarov/NMT/train.sh"
+    launch_command = "qsub -l gpu=1 -l h_rt=150:00:00 -l num_proc=5 -l h_vmem=30G -l qname='*1080*|*TITAN*' -m abe -cwd {} {}"
     launch_command = launch_command.format(path_to_runner, args.p)
        
     #launch_command = shlex.split(launch_command)
