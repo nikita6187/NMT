@@ -26,6 +26,9 @@ def main(args):
 
         # Get lr
         lr = subprocess.getoutput("grep learningRate" + dir + "newbob.data | tail -1")
+
+        print(lr)
+
         lr = lr.split('=')[1].split(',')[0]
 
         print(lr)
