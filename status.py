@@ -17,21 +17,18 @@ def main(args):
         if os.path.isdir(dir + 'log') is False or os.path.exists(dir + 'newbob.data') is False:
             continue
 
-        print(dir)
-
         # First get newbob data
         raw_output = subprocess.getoutput("grep dev_score " + dir + "newbob.data | tail -3")
-        print(raw_output)
         raw_output = raw_output.split('\n')
         last_convergences = [o.split()[1] for o in raw_output]
 
         # Get lr
-        lr = subprocess.check_output("grep learningRate newbob.data | tail -1".split(), cwd=dir, shell=True)
+        lr = subprocess.getoutput("grep learningRate" + dir + "newbob.data | tail -1")
         lr = lr.split('=')[1].split(',')[0]
 
         # Get last epoch time
-        epoch_time = subprocess.check_output("grep train log/crnn.train.log |  grep finished | tail -1".split(),
-                                             cwd=dir, shell=True)
+        epoch_time = subprocess.getoutput("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1")
+
         epoch_time = epoch_time.split()[7]
 
         # Get name
