@@ -20,7 +20,7 @@ def main(args):
         print(dir)
 
         # First get newbob data
-        raw_output = subprocess.check_output("grep dev_score newbob.data | tail -3".split(), cwd=dir, shell=True)
+        raw_output = subprocess.getoutput("grep dev_score " + dir + "newbob.data | tail -3")
         print(raw_output)
         raw_output = raw_output.split('\n')
         last_convergences = [o.split()[1] for o in raw_output]
