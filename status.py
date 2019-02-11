@@ -12,12 +12,16 @@ def main(args):
 
     # Iterate through all folders and get data
     for dir in all_dirs:
+
         # First check if its got everything we need
         if os.path.isdir(dir + 'log') is False or os.path.exists(dir + 'newbob.data') is False:
             continue
 
+        print(dir)
+
         # First get newbob data
         raw_output = subprocess.check_output("grep dev_score newbob.data | tail -3".split())
+        print(raw_output)
         raw_output = raw_output.split('\n')
         last_convergences = [o.split()[1] for o in raw_output]
 
