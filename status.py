@@ -9,7 +9,8 @@ def main(args):
     # Get all folders:
     all_dirs = [args.p + '/' + x + '/' for x in os.listdir(args.p)]
 
-    full_out = "{0:<40} {1:<15} {2:<15} {3:<50} {4:<36}".format("Name", "Current Epoch", "Epoch Time", "Learning Rate",
+    full_out = "{0:<60} {1:<15} {2:<15} {3:<50} {4:<36}".format("Name           ",
+                                                                "Current Epoch", "Epoch Time", "Learning Rate",
                                                                 str("Last convergences"))
     print(full_out)
 
@@ -42,8 +43,6 @@ def main(args):
         epoch_time = str(epoch_time.communicate()[0])
         epoch_time = epoch_time.split()[7]
 
-        epoch_time = "0"
-
         # Get name
         name = os.path.basename(os.path.normpath(dir))
 
@@ -53,8 +52,6 @@ def main(args):
         full_out = "{0:<60} {1:<15} {2:<15} {3:<50} {4:<36}".format(name, curr_epoch, epoch_time, lr,
                                                                     str(last_convergences))
         print(full_out)
-        #print(name + " at epoch nr: " + curr_epoch + " taking: " + epoch_time + " lr: " + lr
-        #      + " convergence: " + str(last_convergences))
 
 
 if __name__ == '__main__':
