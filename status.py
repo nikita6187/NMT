@@ -11,6 +11,7 @@ def main(args):
 
     full_out = "{0:<40} {1:<15} {2:<15} {3:<50} {4:<36}".format("Name", "Current Epoch", "Epoch Time", "Learning Rate",
                                                                 str("Last convergences"))
+    print(full_out)
 
     # Iterate through all folders and get data
     for dir in all_dirs:
