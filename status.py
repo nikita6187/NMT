@@ -35,8 +35,6 @@ def main(args):
         epoch_time = str(epoch_time.communicate()[0])
         epoch_time = epoch_time.split()[7]
 
-        print(epoch_time)
-
         # Get name
         name = os.path.basename(os.path.normpath(dir))
 
