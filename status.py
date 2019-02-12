@@ -26,8 +26,11 @@ def main(args):
         # Get lr
         com = "grep learningRate " + dir + "newbob.data | tail -1"
         lr = subprocess.Popen(com, shell=True, stdout=subprocess.PIPE)
-        lr = str(lr.communicate()[0])
-        lr = lr.split('=')[1].split(',')[0]
+        lr_pre = str(lr.communicate()[0])
+        lr = lr_pre.split('=')[1].split(',')[0]
+
+        # Get current epoch
+        curr_epoch = lr_pre.split(":")[0]
 
         # Get last epoch time
         epoch_time = subprocess.Popen("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1",
@@ -35,11 +38,13 @@ def main(args):
         epoch_time = str(epoch_time.communicate()[0])
         epoch_time = epoch_time.split()[7]
 
+
         # Get name
         name = os.path.basename(os.path.normpath(dir))
 
         # print
-        print(name + " taking: " + epoch_time + " lr: " + lr + " convergence: " + str(last_convergences))
+        print(name + "at epoch nr: " + curr_epoch + " taking: " + epoch_time + " lr: " + lr
+              + " convergence: " + str(last_convergences))
 
 
 if __name__ == '__main__':
