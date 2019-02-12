@@ -23,17 +23,11 @@ def main(args):
         output = raw_output.split(",")
         last_convergences = [o.split()[1] for o in output[:-1] if "dev_score" in o]
 
-        print(str(last_convergences))
-
         # Get lr
-        lr = subprocess.Popen("grep learningRate" + dir + "newbob.data | tail -1", shell=True, stdout=subprocess.PIPE)
+        com = "grep learningRate " + dir + "newbob.data | tail -1"
+        lr = subprocess.Popen(com, shell=True, stdout=subprocess.PIPE)
         lr = str(lr.communicate()[0])
-
-        print(lr)
-
         lr = lr.split('=')[1].split(',')[0]
-
-        print(lr)
 
         # Get last epoch time
         epoch_time = subprocess.Popen("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1",
