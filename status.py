@@ -19,7 +19,7 @@ def main(args):
 
         # First get newbob data
         com = "grep dev_score " + dir + "newbob.data | tail -3"
-        raw_output = subprocess.Popen(com, shell=true)
+        raw_output = subprocess.Popen(com, shell=True)
         raw_output = raw_output.split('\n')
         last_convergences = [o.split()[1] for o in raw_output]
 
