@@ -21,10 +21,10 @@ def main(args):
         pipe = subprocess.Popen(com, shell=True)
         raw_output = str(pipe.communicate()[0])
         print(raw_output)
-        raw_output = raw_output.split(",")
-        print(raw_output)
-        print(len(raw_output))
-        last_convergences = [o.split()[1] for o in raw_output[:-1]]
+        output = raw_output.split(",")
+        print(output)
+        print(len(output))
+        last_convergences = [o.split()[1] for o in output[:-1]]
 
         print(str(last_convergences))
 
