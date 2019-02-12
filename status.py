@@ -49,7 +49,7 @@ def main(args):
         # print
         data = (name, curr_epoch, epoch_time, lr, str(last_convergences))
 
-        full_out = "{0:<40} {1:<15} {2:<15} {3:<50} {4:<36}".format(name, curr_epoch, epoch_time, lr,
+        full_out = "{0:<60} {1:<15} {2:<15} {3:<50} {4:<36}".format(name, curr_epoch, epoch_time, lr,
                                                                     str(last_convergences))
         print(full_out)
         #print(name + " at epoch nr: " + curr_epoch + " taking: " + epoch_time + " lr: " + lr
