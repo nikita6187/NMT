@@ -30,7 +30,7 @@ def main(args):
         lr = lr_pre.split('=')[1].split(',')[0]
 
         # Get current epoch
-        curr_epoch = lr_pre.split(":")[0]
+        curr_epoch = str(lr_pre.split(":")[0])
 
         # Get last epoch time
         epoch_time = subprocess.Popen("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1",
@@ -43,8 +43,12 @@ def main(args):
         name = os.path.basename(os.path.normpath(dir))
 
         # print
-        print(name + "at epoch nr: " + curr_epoch + " taking: " + epoch_time + " lr: " + lr
-              + " convergence: " + str(last_convergences))
+        data = (name, curr_epoch, epoch_time, lr, str(last_convergences))
+
+        full_out = '%-12s %-12s %-12s %-12s %-12s'.format(data)
+        print(full_out)
+        #print(name + " at epoch nr: " + curr_epoch + " taking: " + epoch_time + " lr: " + lr
+        #      + " convergence: " + str(last_convergences))
 
 
 if __name__ == '__main__':
