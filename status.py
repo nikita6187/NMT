@@ -23,7 +23,8 @@ def main(args):
         raw_output = str(pipe.communicate()[0])
         print(raw_output)
         raw_output = raw_output.split('\n')
-        last_convergences = [o.split()[1] for o in raw_output]
+        print(raw_output)
+        last_convergences = [o.split()[1] for o in raw_output[:-1]]
 
         print(str(last_convergences))
 
