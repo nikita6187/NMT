@@ -26,7 +26,8 @@ def main(args):
         print(str(last_convergences))
 
         # Get lr
-        lr = subprocess.getoutput("grep learningRate" + dir + "newbob.data | tail -1")
+        lr = subprocess.Popen("grep learningRate" + dir + "newbob.data | tail -1", shell=True, stdout=subprocess.PIPE)
+        lr = str(lr.communicate()[0])
 
         print(lr)
 
@@ -35,8 +36,9 @@ def main(args):
         print(lr)
 
         # Get last epoch time
-        epoch_time = subprocess.getoutput("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1")
-
+        epoch_time = subprocess.Popen("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1",
+                                      shell=True, stdout=subprocess.PIPE)
+        epoch_time = str(epoch_time.communicate()[0])
         epoch_time = epoch_time.split()[7]
 
         print(epoch_time)
