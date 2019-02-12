@@ -18,13 +18,10 @@ def main(args):
 
         # First get newbob data
         com = "grep dev_score " + dir + "newbob.data | tail -3"
-        pipe = subprocess.Popen(com, shell=True)
+        pipe = subprocess.Popen(com, shell=True, stdout=subprocess.PIPE)
         raw_output = str(pipe.communicate()[0])
-        print(raw_output)
-        output = raw_output.split(":")
-        print(output)
-        print(len(output))
-        last_convergences = [o.split()[1] for o in output[:-1]]
+        output = raw_output.split(",")
+        last_convergences = [o.split()[1] for o in output[:-1] if "dev_score" in o]
 
         print(str(last_convergences))
 
