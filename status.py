@@ -21,7 +21,7 @@ def main(args):
         pipe = subprocess.Popen(com, shell=True)
         raw_output = str(pipe.communicate()[0])
         print(raw_output)
-        output = raw_output.split(",")
+        output = raw_output.split(":")
         print(output)
         print(len(output))
         last_convergences = [o.split()[1] for o in output[:-1]]
