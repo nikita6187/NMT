@@ -1,7 +1,7 @@
 import argparse
 import os
 import subprocess
-
+from subprocess import PIPE
 
 
 def main(args):
@@ -19,7 +19,8 @@ def main(args):
 
         # First get newbob data
         com = "grep dev_score " + dir + "newbob.data | tail -3"
-        raw_output = subprocess.Popen(com, shell=True)
+        raw_output = subprocess.Popen(com, shell=True, stdout=PIPE)
+        raw_output = raw_output.communicate()[0]
         raw_output = raw_output.split('\n')
         last_convergences = [o.split()[1] for o in raw_output]
 
