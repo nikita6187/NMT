@@ -9,6 +9,9 @@ def main(args):
     # Get all folders:
     all_dirs = [args.p + '/' + x + '/' for x in os.listdir(args.p)]
 
+    full_out = "{0:<40} {1:<15} {2:<15} {3:<50} {4:<36}".format("Name", "Current Epoch", "Epoch Time", "Learning Rate",
+                                                                str("Last convergences"))
+
     # Iterate through all folders and get data
     for dir in all_dirs:
 
@@ -31,7 +34,7 @@ def main(args):
 
         # Get current epoch
         curr_epoch = str(lr_pre.split(":")[0]).split("'")[1]
-        
+
         # Get last epoch time
         epoch_time = subprocess.Popen("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1",
                                       shell=True, stdout=subprocess.PIPE)
