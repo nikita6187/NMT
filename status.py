@@ -26,7 +26,7 @@ def main(args):
         pipe = subprocess.Popen(com, shell=True, stdout=subprocess.PIPE)
         raw_output = str(pipe.communicate()[0])
         output = raw_output.split(",")
-        last_convergences = [o.split()[1] for o in output[:-1] if "dev_score" in o].reverse()
+        last_convergences = list(reversed([o.split()[1] for o in output[:-1] if "dev_score" in o]))
 
         # Get lr
         com = "grep learningRate " + dir + "newbob.data | tail -1"
