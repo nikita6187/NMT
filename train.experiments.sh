@@ -7,6 +7,6 @@ source /u/bahar/settings/python3-returnn-tf1.9/bin/activate
 
 
 
-python3 /work/smt2/makarov/returnn-hmm/rnn.py $1
+python3 /work/smt2/makarov/returnn-hmm-experiments/rnn.py $1
 
 
