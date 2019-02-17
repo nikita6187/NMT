@@ -50,7 +50,7 @@ def main(args):
         change_time = subprocess.Popen("ls -l " + dir + "log/crnn.train.log",
                                       shell=True, stdout=subprocess.PIPE)
         change_time = str(change_time.communicate()[0])
-        change_time = "/".join(change_time.split()
+        change_time = "/".join(change_time.split()[5:8])
 
         # print
         data = (name, curr_epoch, epoch_time, lr, str(last_convergences))
