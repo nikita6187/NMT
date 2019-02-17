@@ -9,9 +9,9 @@ def main(args):
     # Get all folders:
     all_dirs = [args.p + '/' + x + '/' for x in os.listdir(args.p)]
 
-    full_out = "{0:<60} {1:<15} {2:<15} {3:<50} {4:<36}".format("Name           ",
+    full_out = "{0:<60} {1:<15} {2:<15} {3:<50} {4:<36} {5:<12}".format("Name           ",
                                                                 "Current Epoch", "Epoch Time", "Learning Rate",
-                                                                str("Last convergences"))
+                                                                str("Last convergences"), "Last Time")
     print(full_out)
 
     # Iterate through all folders and get data
@@ -46,11 +46,17 @@ def main(args):
         # Get name
         name = os.path.basename(os.path.normpath(dir))
 
+        # Get last time something was changed
+        change_time = subprocess.Popen("ls -l " + dir + "log/crnn.train.log",
+                                      shell=True, stdout=subprocess.PIPE)
+        change_time = str(change_time.communicate()[0])
+        change_time = str(change_time.split()[5:7])
+
         # print
         data = (name, curr_epoch, epoch_time, lr, str(last_convergences))
 
-        full_out = "{0:<60} {1:<15} {2:<15} {3:<50} {4:<36}".format(name, curr_epoch, epoch_time, lr,
-                                                                    str(last_convergences))
+        full_out = "{0:<60} {1:<15} {2:<15} {3:<50} {4:<36} {5:<12}".format(name, curr_epoch, epoch_time, lr,
+                                                                    str(last_convergences), change_time)
         print(full_out)
 
 
