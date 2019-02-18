@@ -41,8 +41,10 @@ def main(args):
         epoch_time = subprocess.Popen("grep train " + dir + "log/crnn.train.log |  grep finished | tail -1",
                                       shell=True, stdout=subprocess.PIPE)
         epoch_time = str(epoch_time.communicate()[0])
-        epoch_time = epoch_time.split()[7]
-
+        if len(epoch_time.split()) >= 7:
+            epoch_time = epoch_time.split()[7]
+        else:
+            epoch_time = ""
         # Get name
         name = os.path.basename(os.path.normpath(dir))
 
