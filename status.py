@@ -9,9 +9,9 @@ def main(args):
     # Get all folders:
     all_dirs = [args.p + '/' + x + '/' for x in os.listdir(args.p)]
 
-    full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<12}".format("Name           ",
+    full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<12} {6:<5}".format("Name           ",
                                                                 "Current Epoch", "Epoch Time", "Learning Rate",
-                                                                str("Last convergences"), "Last Time")
+                                                                str("Last convergences"), "Last Time", "FER")
     print(full_out)
 
     # Iterate through all folders and get data
@@ -33,6 +33,12 @@ def main(args):
         lr = subprocess.Popen(com, shell=True, stdout=subprocess.PIPE)
         lr_pre = str(lr.communicate()[0])
         lr = lr_pre.split('=')[1].split(',')[0]
+
+        # Get fer
+        com = "grep output_prob " + dir + "newbob.data | tail -1"
+        fer = subprocess.Popen(com, shell=True, stdout=subprocess.PIPE)
+        fer_pre = str(fer.communicate()[0])
+        fer = fer_pre.split(':')[1].split(',')[0][0:4]
 
         # Get current epoch
         curr_epoch = str(lr_pre.split(":")[0]).split("'")[1]
@@ -57,8 +63,8 @@ def main(args):
         # print
         data = (name, curr_epoch, epoch_time, lr, str(last_convergences))
 
-        full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<12}".format(name, curr_epoch, epoch_time, lr,
-                                                                    str(last_convergences), change_time)
+        full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<12} {6:<5}".format(name, curr_epoch, epoch_time, lr,
+                                                                    str(last_convergences), change_time, fer)
         print(full_out)
 
 
