@@ -17,8 +17,9 @@ def main(args):
     list_2 = os.listdir(args.attention_2)
 
     # first filter out non ".npy" files
-    list_1 = [w for w in list_1 if w[-3:-1] == ".np"]
-    list_2 = [w for w in list_2 if w[-3:-1] == ".np"]
+    print(list_1[0][-3:-1])
+    list_1 = [w for w in list_1 if w[-3:-1] == "np"]
+    list_2 = [w for w in list_2 if w[-3:-1] == "np"]
 
     # find pairs
     full_list = []
@@ -29,34 +30,40 @@ def main(args):
                 continue
 
     for f1, f2 in full_list:
-        print('---- -----')
-        print(f1)
-        print(f2)
-
         difference[f1] = {}
 
-        d1 = np.load(f1).item()
+        d1 = np.load(args.attention_1 + f1).item()
         d1 = [v for (k, v) in d1.items()]
 
-        d2 = np.load(f2).item()
+        d2 = np.load(args.attention_2 + f2).item()
         d2 = [v for (k, v) in d2.items()]
 
         for idx in range(len(d1)):
             m1 = d1[idx]['rec_dec_06_att_weights']
             m2 = d2[idx]['rec_dec_06_att_weights']
-            s1 = np.sum(m1.tranpose()[-1])
+            s1 = np.sum(m1.transpose()[-1])
             s2 = np.sum(m2.transpose()[-1])
             diff = s1-s2
-            difference[f1][idx] = diff
+            avg_diff = float(diff)/float(m1.shape[1])
+            difference[f1][idx] = (diff, avg_diff)
 
     # Sort
     full_difference = []
     for f1, _ in full_list:
         for v, k in difference[f1].items():
-            full_difference.append((v, k))
+            full_difference.append((f1[-13:-1] + "-----" + str(v), k))
 
-    full_difference.sort(key=lambda x: x[1])
+    full_difference.sort(key=lambda x: x[1][1])
     print(full_difference)
+    print([w[0] for w in full_difference[-20:]])
+
+    print('Full len: ' + str(len(full_difference)))
+
+    # Get total average
+    total_sum = sum([v[1][1] for v in full_difference])
+    total_avg = total_sum / len(full_difference)
+
+    print("Total average: " + str(total_avg))
 
 
 if __name__ == '__main__':
