@@ -6,8 +6,8 @@ import json
 import pickle
 
 
-# target vocab: /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl
-# source vocab: /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.de.pkl
+# default target vocab: /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl
+# default source vocab: /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.de.pkl
 
 def main(args):
 
@@ -27,9 +27,10 @@ def main(args):
     target = [target_int_to_vocab[w] for w in d[args.t]['classes']]
     source = [source_int_to_vocab[w] for w in d[args.t]['data']]
 
+    np.set_printoptions(suppress=True)
 
     fig, ax = plt.subplots()
-    ax.matshow(att_weights)
+    ax.matshow(att_weights, cmap=plt.cm.Blues)
     ax.set_xticks(np.arange(len(source)))
     ax.set_yticks(np.arange(len(target)))
 
@@ -37,6 +38,12 @@ def main(args):
     ax.set_yticklabels(target)
 
     plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
+
+    if args.show_labels:
+        for i in range(len(target)):
+            for j in range(len(source)):
+                text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
+                               ha="center", va="center", color="black")
 
     plt.show()
 
@@ -55,6 +62,8 @@ if __name__ == '__main__':
                         help='Path to vocab pickle file of source',
                         default='/work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.de.pkl',
                         required=False)
+
+    parser.add_argument('--show_labels', dest='show_labels', action='store_true')
 
     args = parser.parse_args()
     main(args)
