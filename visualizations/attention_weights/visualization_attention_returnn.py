@@ -1,3 +1,5 @@
+from os import terminal_size
+
 import numpy as np
 import matplotlib.pyplot as plt
 import argparse
@@ -30,12 +32,12 @@ def main(args):
     np.set_printoptions(suppress=True)
 
     fig, ax = plt.subplots()
-    ax.matshow(att_weights, cmap=plt.cm.Blues)
+    ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5)
     ax.set_xticks(np.arange(len(source)))
     ax.set_yticks(np.arange(len(target)))
 
-    ax.set_xticklabels(source)
-    ax.set_yticklabels(target)
+    ax.set_xticklabels(source, size=20)
+    ax.set_yticklabels(target, size=20)
 
     plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
 
@@ -54,13 +56,18 @@ if __name__ == '__main__':
     parser.add_argument('attention', metavar='attention', type=str, help='path to attention file')
     parser.add_argument('t', metavar='t', type=int, help='time step to visualize')
 
+    # '/work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl'
+    d_t = "/home/nikita/NMT/visualizations/attention_weights/vocab.de-en.en.pkl"
+    # /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.de.pkl
+    d_s = "/home/nikita/NMT/visualizations/attention_weights/vocab.de-en.de.pkl"
+
     parser.add_argument('--target_vocab_file', metavar='target_vocab_file', type=str,
                         help='Path to vocab pickle file of targets',
-                        default='/work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl',
+                        default=d_t,
                         required=False)
     parser.add_argument('--source_vocab_file', metavar='source_vocab_file', type=str,
                         help='Path to vocab pickle file of source',
-                        default='/work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.de.pkl',
+                        default=d_s,
                         required=False)
 
     parser.add_argument('--show_labels', dest='show_labels', action='store_true')
