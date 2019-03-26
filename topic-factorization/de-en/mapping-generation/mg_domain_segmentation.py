@@ -114,6 +114,7 @@ for t, idx in zip(topics, range(len(topics))):
             topic_dic[vocab[word]] = (word, [idx])
         else:
             topic_dic[vocab[word]][1].append(idx)
+            topic_dic[vocab[word]][1] = list(set(topic_dic[vocab[word]][1]))
 
 
 print(topic_dic[0])
