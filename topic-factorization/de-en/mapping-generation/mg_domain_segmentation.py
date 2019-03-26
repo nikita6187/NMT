@@ -57,6 +57,7 @@ for text, idx in zip(all_lines, range(len(all_lines))):
             if token in vocab:
                 vocab_distribution[idx].append(token)
 
+vocab_distribution = [list(set(v)) for v in vocab_distribution]
 print("Fin segmentation")
 
 # Debug for now
