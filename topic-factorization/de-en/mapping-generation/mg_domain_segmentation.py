@@ -123,6 +123,7 @@ print(topic_dic[100])
 
 # save topic_dic in json
 if len(sys.argv) == 2:
+    print("Saving json")
     with open(sys.argv[1], 'w') as fp:
         json.dumps(topic_dic, fp)
 
