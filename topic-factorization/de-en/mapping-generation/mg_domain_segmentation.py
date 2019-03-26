@@ -46,7 +46,7 @@ print("Fin TED")
 
 all_lines = [LINES_ECB, LINES_EMEA, LINES_JRC, LINES_KDE4, LINES_NEWS, LINES_TED]
 amount_of_domains = len(all_lines)
-vocab_distribution = [[] for _ in range(amount_of_domains)]  # TODO: see if this results in side-effects
+vocab_distribution = [[] for _ in range(amount_of_domains)]
 
 # Go through all texts, and segment where each vocabulary item ends up
 for text, idx in zip(all_lines, range(amount_of_domains)):
@@ -110,8 +110,10 @@ for t, idx in zip(topics, range(len(topics))):
             topic_dic[vocab[word]] = (word, [idx])
         else:
             print(topic_dic[vocab[word]])
-            if topic_dic[vocab[word]][1] is not None:
-                topic_dic[vocab[word]] = (word, topic_dic[vocab[word]][1].append(idx))
+            # TODO: fix None error
+            new = topic_dic[vocab[word]][1].append(idx)
+            print(new)
+            topic_dic[vocab[word]] = (word, new)
 
 
 print(topic_dic)
