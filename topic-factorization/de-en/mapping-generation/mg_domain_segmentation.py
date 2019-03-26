@@ -15,7 +15,7 @@ TRAIN_TED = "/work/smt2/bahar/experiment/data-raw/train-bpe20k/train.TED2013.de-
 # Import vocab
 with open(VOCAB_FILE, "rb") as w:
     vocab = pickle.load(w)
-print(vocab)
+print("Len of vocab: " + str(len(vocab.keys())))
 print("Fin Vocab")
 
 # Import individual texts
@@ -44,10 +44,11 @@ with gzip.open(TRAIN_TED, 'rb') as f:
 print("Fin TED")
 
 all_lines = [LINES_ECB, LINES_EMEA, LINES_JRC, LINES_KDE4, LINES_NEWS, LINES_TED]
-vocab_distribution = [[] for _ in range(len(all_lines))]  # TODO: see if this resuslts in side-effects
+amount_of_domains = len(all_lines)
+vocab_distribution = [[] for _ in range(amount_of_domains)]  # TODO: see if this results in side-effects
 
 # Go through all texts, and segment where each vocabulary item ends up
-for text, idx in zip(all_lines, range(len(all_lines))):
+for text, idx in zip(all_lines, range(amount_of_domains)):
     # text now contains each line
     for line in text:
         # Get individual tokens
@@ -60,8 +61,17 @@ for text, idx in zip(all_lines, range(len(all_lines))):
 vocab_distribution = [list(set(v)) for v in vocab_distribution]
 print("Fin segmentation")
 
-# Debug for now
+print("Amount of vocab in each topic: ")
 print([len(dis) for dis in vocab_distribution])
+
+# Visualize overlap
+overlap = np.zeros((amount_of_domains, amount_of_domains))
+for t1 in range(amount_of_domains):
+    for t2 in range(amount_of_domains):
+        overlap[t1, t2] = len(set(vocab_distribution[t1]).intersection(set(vocab_distribution[t2])))
+print(overlap)
+
+# TODO: add <S> and etc to each vocab or make separate topic for them
 
 
 
