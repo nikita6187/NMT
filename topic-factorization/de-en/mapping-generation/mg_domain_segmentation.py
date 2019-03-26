@@ -111,6 +111,7 @@ for t, idx in zip(topics, range(len(topics))):
         if vocab[word] not in topic_dic.keys():
             topic_dic[vocab[word]] = (word, [idx])
         else:
+            print(topic_dic[vocab[word]])
             topic_dic[vocab[word]] = (word, topic_dic[vocab[word]][1].append(idx))
 
 
