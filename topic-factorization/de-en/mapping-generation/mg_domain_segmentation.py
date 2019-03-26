@@ -85,7 +85,8 @@ all_words_training_set = set(all_words_training_set)
 all_words_vocab = set(vocab.keys())
 all_words_non_training = list(all_words_vocab.difference(all_words_training_set))
 print("Len of words not in training set: " + str(all_words_non_training))
-topics = [t.extend(all_words_non_training) for t in topics]
+for t in topics:
+  t.extend(all_words_non_training)
 
 # fill up with most common words to make them same size
 full_value = max([len(t) for t in topics])
@@ -102,7 +103,8 @@ print([len(dis) for dis in vocab_distribution])
 
 # add <S> and etc to each vocab
 meta_to_add = ["</S>", "<UNK>", "<S>"]
-topics = [t.extend(meta_to_add) for t in topics]
+for t in topics:
+    t.extend(meta_to_add)
 
 print(topics)
 
