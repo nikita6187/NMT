@@ -110,6 +110,8 @@ for t, idx in zip(topics, range(len(topics))):
         topics_pairs[idx].append((word, vocab[word]))
         topic_dic[vocab[word]] = (word, idx)
 
+
+print(topic_dic)
 # TODO: save topic_dic in json
 
 
