@@ -102,11 +102,15 @@ for t, idx in zip(topics, range(len(topics))):
 print("Amount of vocab in each topic: ")
 print([len(dis) for dis in vocab_distribution])
 
+# convert to indices
+topic_dic = {}
+topics_pairs = [[] for _ in range(len(topics))]
+for t, idx in zip(topics, range(len(topics))):
+    for word in t:
+        topics_pairs[idx].append((word, vocab[word]))
+        topic_dic[vocab[word]] = (word, idx)
 
-
-# TODO: convert to indices
-
-# TODO: save in correct format
+# TODO: save topic_dic in json
 
 
 
