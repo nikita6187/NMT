@@ -52,9 +52,8 @@ for text, idx in zip(all_lines, range(len(all_lines))):
     for line in text:
         # Get individual tokens
         tokens = line.split()
-
         for token in tokens:
-            print(token)
+            token = token.decode("utf-8")
             if token in vocab:
                 vocab_distribution[idx].append(token)
 
