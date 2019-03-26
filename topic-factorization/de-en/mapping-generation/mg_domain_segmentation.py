@@ -103,7 +103,7 @@ for t, idx in zip(topics, range(len(topics))):
     # TODO: error due to duplicates, add only words which are new
     amount_to_fill = full_value - len(t)
     vocab_sorted = copy.deepcopy(words_ordered_list)
-    vocab_sorted = [w for w in vocab_sorted if w not in vocab]
+    vocab_sorted = [w for w in vocab_sorted if w not in topics[idx]]
     topics[idx].extend(vocab_sorted[0:amount_to_fill])
 
 print("Amount of vocab in each topic: ")
