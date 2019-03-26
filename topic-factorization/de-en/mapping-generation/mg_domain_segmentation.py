@@ -77,6 +77,7 @@ print(overlap)
 topics = copy.copy(vocab_distribution)
 
 # Add words which were not seen in training sets to all vocabs
+# This adds <S> etc. implicitly
 all_words_training_set = []
 for t in vocab_distribution:
     for w in t:
@@ -84,13 +85,13 @@ for t in vocab_distribution:
 all_words_training_set = set(all_words_training_set)
 all_words_vocab = set(vocab.keys())
 all_words_non_training = list(all_words_vocab.difference(all_words_training_set))
-print("Len of words not in training set: " + str(all_words_non_training))
+print("Len of words not in training set: " + str(len(all_words_non_training)))
 for t in topics:
-  t.extend(all_words_non_training)
+    t.extend(all_words_non_training)
 
 # fill up with most common words to make them same size
 full_value = max([len(t) for t in topics])
-words_ordered_list = list(vocab.values())
+words_ordered_list = list(vocab.items())
 words_ordered_list.sort(key=lambda x: x[1])
 words_ordered_list = [w[0] for w in words_ordered_list]
 
@@ -101,12 +102,7 @@ for t, idx in zip(topics, range(len(topics))):
 print("Amount of vocab in each topic: ")
 print([len(dis) for dis in vocab_distribution])
 
-# add <S> and etc to each vocab
-meta_to_add = ["</S>", "<UNK>", "<S>"]
-for t in topics:
-    t.extend(meta_to_add)
 
-print(topics)
 
 # TODO: convert to indices
 
