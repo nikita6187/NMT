@@ -104,15 +104,14 @@ print([len(dis) for dis in vocab_distribution])
 
 # convert to indices
 topic_dic = {}
-topics_pairs = [[] for _ in range(len(topics))]
 for t, idx in zip(topics, range(len(topics))):
     for word in t:
-        topics_pairs[idx].append((word, vocab[word]))
         if vocab[word] not in topic_dic.keys():
             topic_dic[vocab[word]] = (word, [idx])
         else:
             print(topic_dic[vocab[word]])
-            topic_dic[vocab[word]] = (word, topic_dic[vocab[word]][1].append(idx))
+            if topic_dic[vocab[word]][1] is not None:
+                topic_dic[vocab[word]] = (word, topic_dic[vocab[word]][1].append(idx))
 
 
 print(topic_dic)
