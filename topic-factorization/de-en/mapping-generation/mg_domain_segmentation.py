@@ -104,7 +104,7 @@ for t, idx in zip(topics, range(len(topics))):
     topics[idx].extend(copy.deepcopy(words_ordered_list)[0:amount_to_fill])
 
 print("Amount of vocab in each topic: ")
-print([len(dis) for dis in vocab_distribution])
+print([len(dis) for dis in topics])
 
 # convert to indices
 topic_dic = {}
