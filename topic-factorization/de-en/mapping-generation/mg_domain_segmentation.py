@@ -15,6 +15,7 @@ TRAIN_TED = "/work/smt2/bahar/experiment/data-raw/train-bpe20k/train.TED2013.de-
 # Import vocab
 with open(VOCAB_FILE, "rb") as w:
     vocab = pickle.load(w)
+print(vocab)
 print("Fin Vocab")
 
 # Import individual texts
@@ -53,6 +54,7 @@ for text, idx in zip(all_lines, range(len(all_lines))):
         tokens = line.split()
 
         for token in tokens:
+            print(token)
             if token in vocab:
                 vocab_distribution[idx].append(token)
 
