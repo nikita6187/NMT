@@ -114,14 +114,14 @@ for t, idx in zip(topics, range(len(topics))):
             topic_dic[vocab[word]] = (word, [idx])
         else:
             topic_dic[vocab[word]][1].append(idx)
-            topic_dic[vocab[word]][1] = list(set(topic_dic[vocab[word]][1]))
+            topic_dic[vocab[word]] = (topic_dic[vocab[word]][0] , list(set(topic_dic[vocab[word]][1])))
 
 
 print(topic_dic[0])
 print(topic_dic[5])
 print(topic_dic[100])
 
-# TODO: save topic_dic in json
+# save topic_dic in json
 if len(sys.argv) == 2:
     with open(sys.argv[1], 'w') as fp:
         json.dumps(topic_dic, fp)
