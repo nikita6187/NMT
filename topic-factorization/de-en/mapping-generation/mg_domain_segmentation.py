@@ -78,12 +78,12 @@ print(overlap)
 
 
 # Create topics out of distributions
-topics = copy.copy(vocab_distribution)
+topics = copy.deepcopy(vocab_distribution)
 
 # Add words which were not seen in training sets to all vocabs
 # This adds <S> etc. implicitly
 all_words_training_set = []
-for t in vocab_distribution:
+for t in topics:
     for w in t:
         all_words_training_set.append(w)
 all_words_training_set = set(all_words_training_set)
@@ -100,6 +100,7 @@ words_ordered_list.sort(key=lambda x: x[1])
 words_ordered_list = [w[0] for w in words_ordered_list]
 
 for t, idx in zip(topics, range(len(topics))):
+    # TODO: error due to duplicates, add only words which are new
     amount_to_fill = full_value - len(t)
     topics[idx].extend(copy.deepcopy(words_ordered_list)[0:amount_to_fill])
 
@@ -114,7 +115,7 @@ for t, idx in zip(topics, range(len(topics))):
             topic_dic[vocab[word]] = (word, [idx])
         else:
             topic_dic[vocab[word]][1].append(idx)
-            topic_dic[vocab[word]] = (topic_dic[vocab[word]][0] , list(set(topic_dic[vocab[word]][1])))
+            topic_dic[vocab[word]] = (topic_dic[vocab[word]][0], list(set(topic_dic[vocab[word]][1])))
 
 
 print(topic_dic[0])
