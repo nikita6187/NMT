@@ -108,7 +108,7 @@ topics_pairs = [[] for _ in range(len(topics))]
 for t, idx in zip(topics, range(len(topics))):
     for word in t:
         topics_pairs[idx].append((word, vocab[word]))
-        if vocab[word] not in topic_dic:
+        if vocab[word] not in topic_dic.keys():
             topic_dic[vocab[word]] = (word, [idx])
         else:
             topic_dic[vocab[word]] = (word, topic_dic[vocab[word]][1].append(idx))
