@@ -2,6 +2,10 @@ import numpy as np
 import gzip
 import pickle
 import copy
+import sys
+import json
+
+# USAGE: if you want to save the mapping, provide the save path as the first argument
 
 # Paths, only on target training dataset!
 VOCAB_FILE = "/work/smt2/bahar/experiment/data-raw/vocabs-bpe20k/target.vocab.pkl"
@@ -112,8 +116,13 @@ for t, idx in zip(topics, range(len(topics))):
             topic_dic[vocab[word]][1].append(idx)
 
 
-print(topic_dic)
-# TODO: save topic_dic in json
+print(topic_dic[0])
+print(topic_dic[5])
+print(topic_dic[100])
 
+# TODO: save topic_dic in json
+if len(sys.argv) == 2:
+    with open(sys.argv[1], 'w') as fp:
+        json.dumps(topic_dic, fp)
 
 
