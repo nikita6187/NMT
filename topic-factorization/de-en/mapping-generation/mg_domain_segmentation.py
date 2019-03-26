@@ -125,6 +125,6 @@ print(topic_dic[100])
 if len(sys.argv) == 2:
     print("Saving json")
     with open(sys.argv[1], 'w') as fp:
-        json.dumps(topic_dic, fp)
+        json.dump(topic_dic, fp)
 
 
