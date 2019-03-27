@@ -80,8 +80,8 @@ def chunks(l, n):
     p = max(range(0, len(l), m))
     print("---")
     print(p)
-    print(l)
-    if p < len(l):
+    print(len(l))
+    if p < len(l)-1:
         r.append(l[p:])
     return r
 
