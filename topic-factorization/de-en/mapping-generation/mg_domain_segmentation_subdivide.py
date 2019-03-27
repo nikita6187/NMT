@@ -6,7 +6,7 @@ import sys
 import json
 import math
 
-# USAGE: python3 mg_domain_segmentation_subdivide.py <amount to subdivide> <save path>
+# USAGE: python3 mg_domain_segmentation_subdivide.py <max_subdivide_size> <save path>
 
 # USAGE: if you want to save the mapping, provide the save path as the second argument
 
@@ -75,9 +75,9 @@ print([len(dis) for dis in vocab_distribution])
 
 # Sub segment
 def chunks(l, n):
-    m = math.floor(len(l)/n)
+    m = n
     r = [l[i:i+m] for i in range(0, len(l), m)]
-    p = max(range(0, len(l), m))
+    p = max(range(0, len(l), m)) + m
     print("---")
     print(p)
     print(len(l))
