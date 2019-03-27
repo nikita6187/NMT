@@ -77,7 +77,8 @@ def chunks(l, n):
 
 temp_dis = []
 for v in vocab_distribution:
-    temp_dis.extend(list(chunks(v, int(sys.argv[1]))))
+    print(chunks(v, int(sys.argv[1])))
+    temp_dis.extend(chunks(v, int(sys.argv[1])))
 vocab_distribution = temp_dis
 
 print("Amount of vocab in each topic: ")
