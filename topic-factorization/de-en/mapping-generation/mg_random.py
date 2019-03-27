@@ -6,7 +6,7 @@ import sys
 import json
 import math
 
-# USAGE: python3 mg_random.py <amount to subdivide> <save path>
+# USAGE: python3 mg_random.py <max_size_of_segment> <save path>
 
 # USAGE: if you want to save the mapping, provide the save path as the second argument
 
@@ -22,13 +22,20 @@ print("Fin Vocab")
 
 # generate vocab_distribution randomly
 def chunks(l, n):
-    for i in range(0, len(l), n):
-        yield l[i:i+n]
+    m = n
+    r = [l[i:i+m] for i in range(0, len(l), m)]
+    p = max(range(0, len(l), m)) + m
+    print("---")
+    print(p)
+    print(len(l))
+    if p < len(l)-1:
+        r.append(l[p:])
+    return r
 
 
 vocab_distribution = copy.deepcopy(vocab.values())
 np.random.shuffle(vocab_distribution)
-vocab_distribution = list(chunks(vocab_distribution, int(sys.argv[1])))
+vocab_distribution = chunks(vocab_distribution, int(sys.argv[1]))
 
 # Create topics out of distributions
 topics = copy.deepcopy(vocab_distribution)
