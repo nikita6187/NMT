@@ -69,13 +69,20 @@ for text, idx in zip(all_lines, range(amount_of_domains)):
 vocab_distribution = [list(set(v)) for v in vocab_distribution]
 print("Fin segmentation")
 
+print("Amount of vocab in each topic: ")
+print([len(dis) for dis in vocab_distribution])
+
 
 # Sub segment
 def chunks(l, n):
     m = math.floor(len(l)/n)
     r = [l[i:i+m] for i in range(0, len(l), m)]
     p = max(range(0, len(l), m))
-    r.append(l[p:])
+    print("---")
+    print(p)
+    print(l)
+    if p < len(l):
+        r.append(l[p:])
     return r
 
 
