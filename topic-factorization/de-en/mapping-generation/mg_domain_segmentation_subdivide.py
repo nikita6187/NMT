@@ -94,22 +94,11 @@ print(overlap)
 # Create topics out of distributions
 topics = copy.deepcopy(vocab_distribution)
 
-# Add words which were not seen in training sets to all vocabs
-# This adds <S> etc. implicitly
-all_words_training_set = []
-for t in topics:
-    for w in t:
-        all_words_training_set.append(w)
-all_words_training_set = set(all_words_training_set)
-all_words_vocab = set(vocab.keys())
-all_words_non_training = list(all_words_vocab.difference(all_words_training_set))
-print("Len of words not in training set: " + str(len(all_words_non_training)))
-for t in topics:
-    t.extend(all_words_non_training)
-
 # add <S>, </S> and <UNK> to each
 to_add = ['<S>', '</S>', '<UNK>']
-all_words_non_training = [v.extend(to_add) for v in topics]
+for v in topics:
+    v.extend(to_add)
+topics = [list(set(v)) for v in topics]
 
 print("Amount of vocab in each topic: ")
 print([len(set(dis)) for dis in topics])
@@ -130,9 +119,9 @@ print(topic_dic[5])
 print(topic_dic[100])
 
 # save topic_dic in json
-if len(sys.argv) == 2:
+if len(sys.argv) == 3:
     print("Saving json")
-    with open(sys.argv[1], 'w') as fp:
+    with open(sys.argv[2], 'w') as fp:
         json.dump(topic_dic, fp)
 
 
