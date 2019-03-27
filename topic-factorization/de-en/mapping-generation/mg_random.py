@@ -33,7 +33,7 @@ def chunks(l, n):
     return r
 
 
-vocab_distribution = list(vocab.values())
+vocab_distribution = list(vocab.keys())
 np.random.shuffle(vocab_distribution)
 vocab_distribution = chunks(vocab_distribution, int(sys.argv[1]))
 
