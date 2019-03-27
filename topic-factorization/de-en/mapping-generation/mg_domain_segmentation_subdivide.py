@@ -72,12 +72,12 @@ print("Fin segmentation")
 
 # Sub segment
 def chunks(l, n):
-    return [l[i:i+n] for i in range(0, len(l), n)]
+    m = len(l)/n
+    return [l[i:i+m] for i in range(0, len(l), m)]
 
 
 temp_dis = []
 for v in vocab_distribution:
-    print(chunks(v, int(sys.argv[1])))
     temp_dis.extend(chunks(v, int(sys.argv[1])))
 vocab_distribution = temp_dis
 
