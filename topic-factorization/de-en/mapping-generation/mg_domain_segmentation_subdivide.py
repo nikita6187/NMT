@@ -72,8 +72,10 @@ print("Fin segmentation")
 
 # Sub segment
 def chunks(l, n):
-    m = len(l)/n
-    return [l[i:i+m] for i in range(0, len(l), m)]
+    m = math.floor(len(l)/n)
+    r = [l[i:i+m] for i in range(0, len(l), m)]
+    p = max(range(0, len(l), m))
+    r.append(l[p:])
 
 
 temp_dis = []
