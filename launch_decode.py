@@ -19,7 +19,7 @@ def main(args):
     # Get all configs, these are only file names
     all_configs = [f for f in listdir(args.p) if isfile(join(args.p, f)) is True and f[-len("config"):] is "config"]
     for f in listdir(args.p):
-        print(f[-len("config"):])
+        print(f[-len("config"):] is "config")
         print(isfile(join(args.p, f)))
 
     print(all_log_dirs)
