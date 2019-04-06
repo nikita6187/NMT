@@ -17,7 +17,7 @@ def main(args):
     all_log_dirs = [args.p + '/logs/' + x + '/' for x in os.listdir(args.p + "/logs")]
 
     # Get all configs, these are only file names
-    all_configs = [f for f in listdir(args.p) if isfile(join(args.p, f)) and f[-len("config"):] is "config"]
+    all_configs = [f for f in listdir(args.p) if isfile(join(args.p, f)) is True and f[-len("config"):] is "config"]
     for f in listdir(args.p):
         print(f[-len("config"):])
         print(isfile(join(args.p, f)))
