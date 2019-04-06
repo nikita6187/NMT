@@ -22,6 +22,7 @@ def main(args):
     for config_path in all_configs:
         # only consider if its got log dir
         config_log_dir = args.p + config_path[:-len(".config")] + "/"
+        print(config_log_dir)
         if config_log_dir in all_log_dirs:
             if os.path.isdir(all_log_dirs + "net-model/"):
                 launch_single(args, config_log_dir, args.p + config_path)
