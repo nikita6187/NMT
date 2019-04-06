@@ -57,12 +57,6 @@ def launch_single(args, model_dir, config_path):
                             if isfile(join(model_dir + "/net-model/", f)) is True and
                             f[-len("meta"):] == "meta" and
                             f[:len("network")] == "network"]
-    for f in listdir(model_dir + "/net-model/"):
-        print(f)
-        print(isfile(join(model_dir + "/net-model/", f)) is True)
-        print(f[-len("meta"):] == "meta")
-        print(f[:len("network")] == "network")
-
     print(all_available_epochs)
 
     data = list(zip(data, range(len(data))))  # now tuple of (dev_score, epoch)
@@ -92,7 +86,7 @@ def launch_single(args, model_dir, config_path):
             print('Running: ' + str(launch_command) + ' from ' + model_dir)
 
             # subprocess.Popen(launch_command, cwd=config_dir)
-            #subprocess.Popen(launch_command, cwd=model_dir, shell=True)
+            subprocess.Popen(launch_command, cwd=model_dir, shell=True)
             print('Launched!')
 
 
