@@ -14,7 +14,7 @@ def main(args):
     args.p = os.path.abspath(args.p)
 
     # Get all folders:
-    all_log_dirs = [args.p + '/logs/' + x + '/' for x in os.listdir(args.p + "logs")]
+    all_log_dirs = [args.p + '/logs/' + x + '/' for x in os.listdir(args.p + "/logs")]
 
     # Get all configs, these are only file names
     all_configs = [f for f in listdir(args.p) if isfile(join(args.p, f)) and f[-len("config"):] is "config"]
