@@ -19,6 +19,8 @@ def main(args):
     # Get all configs, these are only file names
     all_configs = [f for f in listdir(args.p) if isfile(join(args.p, f)) and f[-len("config"):] is "config"]
 
+    print(all_log_dirs)
+
     for config_path in all_configs:
         # only consider if its got log dir
         config_log_dir = args.p + config_path[:-len(".config")] + "/"
