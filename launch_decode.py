@@ -55,7 +55,7 @@ def launch_single(args, model_dir, config_path):
     data = [float(x.split(",")[0]) for x in data]
     data = list(zip(data, range(len(data))))  # now tuple of (dev_score, epoch)
     data.sort(key=lambda x: x[0])
-    epochs_to_launch = data[-args.amount_of_epochs_to_try:]
+    epochs_to_launch = data[:args.amount_of_epochs_to_try]
 
     for dev_score, epoch in epochs_to_launch:
         # TODO: make folder for epoch
