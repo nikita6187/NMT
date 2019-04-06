@@ -27,30 +27,6 @@ def main(args):
                 launch_single(args, config_log_dir, args.p + config_path)
 
 
-    # Directory management
-    args.p = os.path.abspath(args.p)
-    file_dir = os.path.dirname(args.p)
-
-    file_name_w_extension = os.path.basename(args.p)
-    filename, file_extension = os.path.splitext(file_name_w_extension)
-
-    logs_dir = file_dir + '/logs'
-    config_dir = file_dir + '/logs/' + filename
-    config_log_dir = file_dir + '/logs/' + filename + '/log'
-
-    if not os.path.isdir(logs_dir):
-        print('Making logs folder: ' + str(logs_dir))
-        os.mkdir(logs_dir)
-
-    if not os.path.isdir(config_dir):
-        print('Making config folder: ' + str(config_dir))
-        os.mkdir(config_dir)
-
-    if not os.path.isdir(config_log_dir):
-        print('Making config log folder: ' + str(config_log_dir))
-        os.mkdir(config_log_dir)
-
-
 def launch_single(args, model_dir, config_path):
 
     search_dir = model_dir + "search/"
