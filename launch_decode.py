@@ -76,7 +76,7 @@ def launch_single(args, model_dir, config_path):
         print('Running: ' + str(launch_command) + ' from ' + model_dir)
 
         # subprocess.Popen(launch_command, cwd=config_dir)
-        #subprocess.Popen(launch_command, cwd=model_dir, shell=True)
+        subprocess.Popen(launch_command, cwd=model_dir, shell=True)
         print('Launched!')
 
 
