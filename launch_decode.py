@@ -53,8 +53,15 @@ def launch_single(args, model_dir, config_path):
     data = [float(x.split(",")[0]) for x in data]
 
     # TODO: check by list of existing models
-    all_available_epochs = [int(f[len("network."):-len(".meta")]) for f in listdir(args.p) if isfile(join(args.p, f)) is True and
-                            f[-len("meta"):] == "meta" and f[:len("network")] == "network"]
+    all_available_epochs = [int(f[len("network."):-len(".meta")]) for f in listdir(args.p)
+                            if isfile(join(args.p, f)) is True and
+                            f[-len("meta"):] == "meta" and
+                            f[:len("network")] == "network"]
+    for f in listdir(args.p):
+        print(f)
+        print(isfile(join(args.p, f)) is True)
+        print(f[-len("meta"):] == "meta")
+        print(f[:len("network")] == "network")
 
     print(all_available_epochs)
 
