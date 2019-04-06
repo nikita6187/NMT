@@ -46,14 +46,22 @@ def launch_single(args, model_dir, config_path):
         print('Making logs folder: ' + str(search_dir_year_beam))
         os.mkdir(search_dir_year_beam)
 
-    # TODO: get epoch
-    # TODO: read newbob
     with open(model_dir + "newbob.data") as json_file:
         data = json_file.readlines()
     data = [x for x in data if "dev_score" in x]
     data = [x.split()[1] for x in data]
     data = [float(x.split(",")[0]) for x in data]
+
+    # TODO: check by list of existing models
+    all_available_epochs = [int(f[len("network."):-len(".meta")]) for f in listdir(args.p) if isfile(join(args.p, f)) is True and
+                            f[-len("meta"):] == "meta" and f[:len("network")] == "network"]
+
+    print(all_available_epochs)
+
     data = list(zip(data, range(len(data))))  # now tuple of (dev_score, epoch)
+
+    data = [d for d in data if d[1] in all_available_epochs]
+
     data.sort(key=lambda x: x[0])
     epochs_to_launch = data[:args.amount_of_epochs_to_try]
 
@@ -62,22 +70,23 @@ def launch_single(args, model_dir, config_path):
         epoch = str(epoch)
         print("Picking epoch " + epoch + " with dev_score " + str(dev_score))
         search_dir_year_beam_epoch = search_dir_year_beam + epoch + "/"
+
+        # Only launch if it hasn't been done before for these settings
         if not os.path.isdir(search_dir_year_beam_epoch):
             print('Making logs folder: ' + str(search_dir_year_beam_epoch))
             os.mkdir(search_dir_year_beam_epoch)
+            # Launching of config
+            path_to_runner = "/work/smt2/makarov/NMT/decode.sh"
+            launch_command = "qsub -l gpu=1 -l h_rt=1:00:00 -l num_proc=5 -l h_vmem=10G -m abe -cwd {} {} {} {} {} {}"
+            launch_command = launch_command.format(path_to_runner, args.year, config_path, epoch, args.beam,
+                                                   search_dir_year_beam_epoch)
 
-        # Launching of config
-        path_to_runner = "/work/smt2/makarov/NMT/decode.sh"
-        launch_command = "qsub -l gpu=1 -l h_rt=1:00:00 -l num_proc=5 -l h_vmem=10G -m abe -cwd {} {} {} {} {} {}"
-        launch_command = launch_command.format(path_to_runner, args.year, config_path, epoch, args.beam,
-                                               search_dir_year_beam_epoch)
+            # launch_command = shlex.split(launch_command)
+            print('Running: ' + str(launch_command) + ' from ' + model_dir)
 
-        # launch_command = shlex.split(launch_command)
-        print('Running: ' + str(launch_command) + ' from ' + model_dir)
-
-        # subprocess.Popen(launch_command, cwd=config_dir)
-        subprocess.Popen(launch_command, cwd=model_dir, shell=True)
-        print('Launched!')
+            # subprocess.Popen(launch_command, cwd=config_dir)
+            #subprocess.Popen(launch_command, cwd=model_dir, shell=True)
+            print('Launched!')
 
 
 if __name__ == '__main__':
