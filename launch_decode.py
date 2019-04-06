@@ -28,6 +28,14 @@ def main(args):
                 launch_single(args, config_log_dir, args.p + "/" + config_path)
 
 
+def isint(value):
+    try:
+        int(value)
+        return True
+    except ValueError:
+        return False
+
+
 def launch_single(args, model_dir, config_path):
 
     search_dir = model_dir + "search/"
@@ -56,7 +64,8 @@ def launch_single(args, model_dir, config_path):
     all_available_epochs = [int(f[len("network."):-len(".meta")]) for f in listdir(model_dir + "/net-model/")
                             if isfile(join(model_dir + "/net-model/", f)) is True and
                             f[-len("meta"):] == "meta" and
-                            f[:len("network")] == "network"]
+                            f[:len("network")] == "network" and
+                            isint(f[len("network."):-len(".meta")])]
     print(all_available_epochs)
 
     data = list(zip(data, range(len(data))))  # now tuple of (dev_score, epoch)
