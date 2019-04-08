@@ -51,9 +51,12 @@ def main(args):
                 text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
                                ha="center", va="center", color="black")
 
-    fig.subplots_adjust(top=0.8, left=0.1)
-
-    plt.show()
+    #fig.subplots_adjust(top=0.8, left=0.1)
+    if args.save_fig is None:
+        plt.show()
+    else:
+        plt.savefig(args.save_fig, bbox_inches="tight")
+>>>>>>> d5ca28cb5206725d093a869b06fc7e1c48166bfa
 
 
 if __name__ == '__main__':
@@ -80,6 +83,10 @@ if __name__ == '__main__':
                         required=False)
 
     parser.add_argument('--show_labels', dest='show_labels', action='store_true')
+    parser.add_argument('--save_fig', metavar='save_fig', type=str,
+                        help='Path to save figure',
+                        default=None,
+                        required=False)
 
     args = parser.parse_args()
     main(args)
