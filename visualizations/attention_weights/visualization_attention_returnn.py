@@ -56,7 +56,6 @@ def main(args):
         plt.show()
     else:
         plt.savefig(args.save_fig, bbox_inches="tight")
->>>>>>> d5ca28cb5206725d093a869b06fc7e1c48166bfa
 
 
 if __name__ == '__main__':
