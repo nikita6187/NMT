@@ -47,7 +47,10 @@ def main(args):
                 text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
                                ha="center", va="center", color="black")
 
-    plt.show()
+    if args.save_fig is None:
+        plt.show()
+    else:
+        plt.savefig(args.save_fig, bbox_inches="tight")
 
 
 if __name__ == '__main__':
@@ -71,6 +74,10 @@ if __name__ == '__main__':
                         required=False)
 
     parser.add_argument('--show_labels', dest='show_labels', action='store_true')
+    parser.add_argument('--save_fig', metavar='save_fig', type=str,
+                        help='Path to save figure',
+                        default=None,
+                        required=False)
 
     args = parser.parse_args()
     main(args)
