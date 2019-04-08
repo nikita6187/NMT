@@ -25,16 +25,20 @@ def main(args):
     # Visualize
     d = np.load(args.attention).item()
     d = [v for (k, v) in d.items()]
-    att_weights = d[args.t]['rec_dec_06_att_weights']
+    att_weights = d[args.t]['rec_att_weights']
     target = [target_int_to_vocab[w] for w in d[args.t]['classes']]
     source = [source_int_to_vocab[w] for w in d[args.t]['data']]
 
+    att_weights = np.squeeze(att_weights, axis=-1)
     np.set_printoptions(suppress=True)
+
 
     fig, ax = plt.subplots()
     ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5)
     ax.set_xticks(np.arange(len(source)))
     ax.set_yticks(np.arange(len(target)))
+
+    fig.tight_layout()
 
     ax.set_xticklabels(source, size=20)
     ax.set_yticklabels(target, size=20)
@@ -47,6 +51,8 @@ def main(args):
                 text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
                                ha="center", va="center", color="black")
 
+    fig.subplots_adjust(top=0.8, left=0.1)
+
     plt.show()
 
 
@@ -57,9 +63,12 @@ if __name__ == '__main__':
     parser.add_argument('t', metavar='t', type=int, help='time step to visualize')
 
     # '/work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl'
-    d_t = "/home/nikita/NMT/visualizations/attention_weights/vocab.de-en.en.pkl"
+    #d_t = "/home/nikita/NMT/visualizations/attention_weights/vocab.de-en.en.pkl"
+    d_t = "/u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/dataset/target.vocab.pkl"
+
     # /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.de.pkl
-    d_s = "/home/nikita/NMT/visualizations/attention_weights/vocab.de-en.de.pkl"
+    #d_s = "/home/nikita/NMT/visualizations/attention_weights/vocab.de-en.de.pkl"
+    d_s = "/u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/dataset/source.vocab.pkl"
 
     parser.add_argument('--target_vocab_file', metavar='target_vocab_file', type=str,
                         help='Path to vocab pickle file of targets',
