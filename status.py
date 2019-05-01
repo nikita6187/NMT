@@ -64,8 +64,8 @@ def main(args):
         mem_usage = subprocess.Popen("grep train " + dir + "log/crnn.train.log | tail -1",
                                       shell=True, stdout=subprocess.PIPE)
         mem_usage = str(mem_usage.communicate()[0])
-        if len(mem_usage.split()) >= 17:
-            mem_usage = mem_usage.split()[17]
+        if len(mem_usage.split()) >= 18:
+            mem_usage = mem_usage.split()[18]
         else:
             mem_usage = ""
 
