@@ -65,7 +65,7 @@ def main(args):
                                       shell=True, stdout=subprocess.PIPE)
         mem_usage = str(mem_usage.communicate()[0])
         if len(mem_usage.split()) >= 18:
-            mem_usage = mem_usage.split()[18]
+            mem_usage = mem_usage.split()[18][:-1]
         else:
             mem_usage = ""
 
