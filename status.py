@@ -9,9 +9,9 @@ def main(args):
     # Get all folders:
     all_dirs = [args.p + '/' + x + '/' for x in os.listdir(args.p)]
 
-    full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7}".format("Name           ",
+    full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7}".format("Name           ",
                                                                 "Current Epoch", "Epoch Time", "Learning Rate",
-                                                                str("Last convergences"), "Last Time", "FER")
+                                                                str("Last convergences"), "Last Time", "FER", "Memory")
     print(full_out)
 
     # Iterate through all folders and get data
@@ -60,11 +60,20 @@ def main(args):
         change_time = str(change_time.communicate()[0])
         change_time = "/".join(change_time.split()[5:8])
 
+        # Get memory usage
+        mem_usage = subprocess.Popen("grep train " + dir + "log/crnn.train.log | tail -1",
+                                      shell=True, stdout=subprocess.PIPE)
+        mem_usage = str(mem_usage.communicate()[0])
+        if len(mem_usage.split()) >= 17:
+            mem_usage = mem_usage.split()[17]
+        else:
+            mem_usage = ""
+
         # print
         data = (name, curr_epoch, epoch_time, lr, str(last_convergences))
 
-        full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7}".format(name, curr_epoch, epoch_time, lr,
-                                                                    str(last_convergences), change_time, fer)
+        full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7}".format(name, curr_epoch, epoch_time, lr,
+                                                                    str(last_convergences), change_time, fer, mem_usage)
         print(full_out)
 
 
