@@ -61,7 +61,7 @@ def main(args):
         change_time = "/".join(change_time.split()[5:8])
 
         # Get memory usage
-        mem_usage = subprocess.Popen("grep train " + dir + "log/crnn.train.log | tail -1",
+        mem_usage = subprocess.Popen("grep mem_usage " + dir + "log/crnn.train.log | tail -1",
                                       shell=True, stdout=subprocess.PIPE)
         mem_usage = str(mem_usage.communicate()[0])
         if len(mem_usage.split()) >= 18:
