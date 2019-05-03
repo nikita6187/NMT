@@ -33,7 +33,8 @@ def main(args):
                 l = k
                 break
     att_weights = d[args.t][l]  # TODO: assuming only 1 layer
-    target = [target_int_to_vocab[w] for w in d[args.t]['classes']]
+    d[args.t]['output'] = d[args.t]['output'][:d[args.t]['output_len']]
+    target = [target_int_to_vocab[w] for w in d[args.t]['output']]  # was 'classes'
     source = [source_int_to_vocab[w] for w in d[args.t]['data']]
     
     att_weights = np.average(att_weights, axis=-1)
