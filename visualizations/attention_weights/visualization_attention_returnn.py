@@ -25,11 +25,19 @@ def main(args):
     # Visualize
     d = np.load(args.attention).item()
     d = [v for (k, v) in d.items()]
-    att_weights = d[args.t]['rec_att_weights']
+    print(list(d[args.t].keys()))
+    l = ""
+    for k in list(d[args.t].keys()):
+        if len(k) > len("rec_"):
+            if k[:len("rec_")] == "rec_":
+                l = k
+                break
+    att_weights = d[args.t][l]  # TODO: assuming only 1 layer
     target = [target_int_to_vocab[w] for w in d[args.t]['classes']]
     source = [source_int_to_vocab[w] for w in d[args.t]['data']]
-
-    att_weights = np.squeeze(att_weights, axis=-1)
+    
+    att_weights = np.average(att_weights, axis=-1)
+    #att_weights = np.squeeze(att_weights, axis=-1)
     np.set_printoptions(suppress=True)
 
 
