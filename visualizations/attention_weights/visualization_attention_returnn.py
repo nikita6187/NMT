@@ -24,7 +24,9 @@ def main(args):
 
     # Visualize
     d = np.load(args.attention).item()
+    print(len(d))
     d = [v for (k, v) in d.items()]
+    print(len(d))
     print(list(d[args.t].keys()))
     l = ""
     for k in list(d[args.t].keys()):
