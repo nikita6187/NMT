@@ -6,6 +6,8 @@ import sys
 import json
 import math
 
+np.set_printoptions(threshold=sys.maxsize, suppress=True, linewidth=150)
+
 # USAGE: python3 mg_domain_segmentation_subdivide.py <max_subdivide_size> <save path>
 
 # USAGE: if you want to save the mapping, provide the save path as the second argument
@@ -95,6 +97,7 @@ print("Amount of vocab in each topic: ")
 print([len(dis) for dis in vocab_distribution])
 
 # Visualize overlap
+amount_of_domains = len(vocab_distribution)
 overlap = np.zeros((amount_of_domains, amount_of_domains))
 for t1 in range(amount_of_domains):
     for t2 in range(amount_of_domains):

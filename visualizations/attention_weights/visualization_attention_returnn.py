@@ -55,6 +55,7 @@ def main(args):
     ax.set_yticklabels(target, size=20)
 
     plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
+    plt.margins(x=50)    
 
     if args.show_labels:
         for i in range(len(target)):
