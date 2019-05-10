@@ -7,6 +7,7 @@ import argparse
 import re
 import json
 import pickle
+import matplotlib.gridspec as gridspec
 
 
 # default target vocab: /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl
@@ -40,33 +41,68 @@ def main(args):
     target = [target_int_to_vocab[w] for w in d[args.t]['output']]  # was 'classes'
     source = [source_int_to_vocab[w] for w in d[args.t]['data']]
 
-    att_weights = d[args.t][l]  # TODO: assuming only 1 layer
+    att_weights = d[args.t][l]  # TODO: assuming only 1 layer, [J, I, H]
+    target_len = len(target)
+    source_len = len(source)
 
     # Process att_weights
-    att_weights = np.average(att_weights, axis=-1)
     # att_weights = np.squeeze(att_weights, axis=-1)
 
     np.set_printoptions(suppress=True)
 
+    if args.multihead:
 
-    fig, ax = plt.subplots()
-    ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5)
-    ax.set_xticks(np.arange(len(source)))
-    ax.set_yticks(np.arange(len(target)))
+        colours = ['black', 'darkblue', 'blue', 'royalblue', 'deepskyblue', 'turquoise', 'mediumspringgreen','green']
 
-    fig.tight_layout()
+        fig = plt.figure(figsize=(len(source), len(target)))
+        #plt.axis('off')
+        gs1 = gridspec.GridSpec(len(target), len(source))
+        gs1.update(wspace=0.05, hspace=0.1)
 
-    ax.set_xticklabels(source, size=20)
-    ax.set_yticklabels(target, size=20)
+        print("att weights shape: " + str(att_weights.shape))
+        print("source len: " + str(source_len))
+        print("target len: " + str(target_len))
 
-    plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
-    plt.margins(x=50)    
+        for y in range(target_len):
+            for x in range(source_len):
+                ax1 = plt.subplot(gs1[y, x])
+                viz = att_weights[y, x]
+                ax1.bar(height=viz, x=range(viz.shape[0]), width=0.5, color=colours)
+                ax1.set_xticklabels([])
+                ax1.set_yticklabels([])
+                ax1.tick_params(axis='both', which='both', bottom='off', top='off', labelbottom='off', right='off',
+                                left='off', labelleft='off')
+                ax1.set_ylim((0, 1.0))
 
-    if args.show_labels:
-        for i in range(len(target)):
-            for j in range(len(source)):
-                text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
-                               ha="center", va="center", color="black")
+                # label y
+                if ax1.is_first_col():
+                    ax1.set_ylabel(target[y], fontsize=20, rotation=0, ha="right", rotation_mode="anchor")
+
+                # label x
+                if ax1.is_first_row():
+                    ax1.set_title(source[x], fontsize=20, rotation=45, ha="left", rotation_mode="anchor")
+
+    else:
+        att_weights = np.average(att_weights, axis=-1)  # [I, J, 1]
+        fig, ax = plt.subplots()
+        ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5)
+
+        ax.set_xticks(np.arange(len(source)))
+        ax.set_yticks(np.arange(len(target)))
+
+        fig.tight_layout()
+
+        ax.set_xticklabels(source, size=20)
+        ax.set_yticklabels(target, size=20)
+
+        plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
+        plt.margins(x=50)
+
+        if args.show_labels:
+            for i in range(len(target)):
+                for j in range(len(source)):
+                    text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
+                                   ha="center", va="center", color="black")
 
     #fig.subplots_adjust(top=0.8, left=0.1)
     if args.save_fig is None:
@@ -97,7 +133,7 @@ if __name__ == '__main__':
                         help='Path to vocab pickle file of source',
                         default=d_s,
                         required=False)
-
+    parser.add_argument('--multihead', dest='multihead', action='store_true')
     parser.add_argument('--show_labels', dest='show_labels', action='store_true')
     parser.add_argument('--save_fig', metavar='save_fig', type=str,
                         help='Path to save figure',
