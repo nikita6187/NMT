@@ -1,5 +1,6 @@
 from os import terminal_size
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import argparse
@@ -34,13 +35,17 @@ def main(args):
             if k[:len("rec_")] == "rec_":
                 l = k
                 break
-    att_weights = d[args.t][l]  # TODO: assuming only 1 layer
+
     d[args.t]['output'] = d[args.t]['output'][:d[args.t]['output_len']]
     target = [target_int_to_vocab[w] for w in d[args.t]['output']]  # was 'classes'
     source = [source_int_to_vocab[w] for w in d[args.t]['data']]
-    
+
+    att_weights = d[args.t][l]  # TODO: assuming only 1 layer
+
+    # Process att_weights
     att_weights = np.average(att_weights, axis=-1)
-    #att_weights = np.squeeze(att_weights, axis=-1)
+    # att_weights = np.squeeze(att_weights, axis=-1)
+
     np.set_printoptions(suppress=True)
 
 
@@ -74,7 +79,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Inspect distributions')
     parser.add_argument('attention', metavar='attention', type=str, help='path to attention file')
-    parser.add_argument('t', metavar='t', type=int, help='time step to visualize')
+    parser.add_argument('t', metavar='t', type=int, help='batch step to visualize')
 
     # '/work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl'
     #d_t = "/home/nikita/NMT/visualizations/attention_weights/vocab.de-en.en.pkl"
