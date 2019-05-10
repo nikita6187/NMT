@@ -56,7 +56,7 @@ def launch_single(args, model_dir, config_path):
 
     with open(model_dir + "newbob.data") as json_file:
         data = json_file.readlines()
-    data = [x for x in data if "dev_score" in x]
+    data = [x for x in data if "dev_error_output/output_prob" in x]
     data = [x.split()[1] for x in data]
     data = [float(x.split(",")[0]) for x in data]
 
@@ -71,7 +71,7 @@ def launch_single(args, model_dir, config_path):
     data = list(zip(data, range(len(data))))  # now tuple of (dev_score, epoch)
 
     data = [d for d in data if d[1] in all_available_epochs]
-
+    # TODO: maybe use FER instead
     data.sort(key=lambda x: x[0])
     epochs_to_launch = data[:args.amount_of_epochs_to_try]
 
