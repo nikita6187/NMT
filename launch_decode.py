@@ -71,7 +71,6 @@ def launch_single(args, model_dir, config_path):
     data = list(zip(data, range(len(data))))  # now tuple of (dev_score, epoch)
 
     data = [d for d in data if d[1] in all_available_epochs]
-    # TODO: maybe use FER instead
     data.sort(key=lambda x: x[0])
     epochs_to_launch = data[:args.amount_of_epochs_to_try]
 

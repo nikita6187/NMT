@@ -34,7 +34,7 @@ def launch_single(args, model_dir, config_path):
 
     with open(model_dir + "newbob.data") as json_file:
         data = json_file.readlines()
-    data = [x for x in data if "dev_score" in x]
+    data = [x for x in data if "dev_error_output/output_prob" in x]
     data = [x.split()[1] for x in data]
     data = [float(x.split(",")[0]) for x in data]
 
