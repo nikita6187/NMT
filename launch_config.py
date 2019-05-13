@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--memory', metavar='memory', type=str,
                         help='Max memory needed',
-                        default="30",
+                        default="16",
                         required=False)
 
     parser.add_argument('--js', metavar='js', type=str,
