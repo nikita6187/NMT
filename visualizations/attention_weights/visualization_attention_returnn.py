@@ -8,6 +8,7 @@ import re
 import json
 import pickle
 import matplotlib.gridspec as gridspec
+import matplotlib.transforms as mtrans
 
 
 # default target vocab: /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl
@@ -30,25 +31,29 @@ def main(args):
     d = [v for (k, v) in d.items()]
     print(len(d))
     print(list(d[args.t].keys()))
-    l = ""
+    l = "attention_score"
+    #l = "posterior_attention"
     for k in list(d[args.t].keys()):
         if len(k) > len("rec_"):
             if k[:len("rec_")] == "rec_":
                 l = k
                 break
 
+    print("Encoder len: " + str(d[args.t]['encoder_len']))
+    print("Output len: " + str(d[args.t]['output_len']))
+
     d[args.t]['output'] = d[args.t]['output'][:d[args.t]['output_len']]
-    target = [target_int_to_vocab[w] for w in d[args.t]['output']]  # was 'classes'
+    #print(d[args.t].keys())
+    target = [target_int_to_vocab[w] for w in d[args.t]['output']]  # was 'classes' or 'output'
     source = [source_int_to_vocab[w] for w in d[args.t]['data']]
 
     att_weights = d[args.t][l]  # TODO: assuming only 1 layer, [J, I, H]
+    att_weights = att_weights[:d[args.t]['output_len'], :d[args.t]['encoder_len']]
     target_len = len(target)
     source_len = len(source)
 
     # Process att_weights
     # att_weights = np.squeeze(att_weights, axis=-1)
-
-    np.set_printoptions(suppress=True)
 
     if args.multihead:
 
@@ -63,8 +68,14 @@ def main(args):
         print("source len: " + str(source_len))
         print("target len: " + str(target_len))
 
+        i = 0
+
         for y in range(target_len):
             for x in range(source_len):
+
+                i += 1
+                print(str(i) + "/" + str(target_len * source_len))
+
                 ax1 = plt.subplot(gs1[y, x])
                 viz = att_weights[y, x]
                 ax1.bar(height=viz, x=range(viz.shape[0]), width=0.5, color=colours)
@@ -77,13 +88,17 @@ def main(args):
                 # label y
                 if ax1.is_first_col():
                     ax1.set_ylabel(target[y], fontsize=20, rotation=0, ha="right", rotation_mode="anchor")
+                    ax1.yaxis.set_label_coords(0, 0.1)
 
                 # label x
                 if ax1.is_first_row():
                     ax1.set_title(source[x], fontsize=20, rotation=45, ha="left", rotation_mode="anchor")
 
+
     else:
-        att_weights = np.average(att_weights, axis=-1)  # [I, J, 1]
+        if len(att_weights.shape) == 3:
+            att_weights = np.average(att_weights, axis=-1)  # [I, J, 1]
+
         fig, ax = plt.subplots()
         ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5)
 
