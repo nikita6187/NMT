@@ -9,6 +9,7 @@ import json
 import pickle
 import matplotlib.gridspec as gridspec
 import matplotlib.transforms as mtrans
+import math
 
 
 # default target vocab: /work/smt3/bahar/expriments/wmt/2018/de-en/data/julian-data/nn-vocabs/vocab.de-en.en.pkl
@@ -31,71 +32,158 @@ def main(args):
     d = [v for (k, v) in d.items()]
     print(len(d))
     print(list(d[args.t].keys()))
-    l = "attention_score"
-    #l = "posterior_attention"
-    for k in list(d[args.t].keys()):
-        if len(k) > len("rec_"):
-            if k[:len("rec_")] == "rec_":
-                l = k
-                break
+
+    if args.all_layers:
+        l = []
+        for k in list(d[args.t].keys()):
+            if len(k) > len("rec_"):
+                if k[:len("rec_")] == "rec_":
+                    l.append(k)
+        l.sort()
+        print("Using layers: " + str(l))
+    else:
+        l = "attention_score"
+        for k in list(d[args.t].keys()):
+            if len(k) > len("rec_"):
+                if k[:len("rec_")] == "rec_":
+                    l = k
+                    break
 
     print("Encoder len: " + str(d[args.t]['encoder_len']))
     print("Output len: " + str(d[args.t]['output_len']))
 
     d[args.t]['output'] = d[args.t]['output'][:d[args.t]['output_len']]
-    #print(d[args.t].keys())
     target = [target_int_to_vocab[w] for w in d[args.t]['output']]  # was 'classes' or 'output'
     source = [source_int_to_vocab[w] for w in d[args.t]['data']]
 
-    att_weights = d[args.t][l]  # TODO: assuming only 1 layer, [J, I, H]
-    att_weights = att_weights[:d[args.t]['output_len'], :d[args.t]['encoder_len']]
+    if args.all_layers:
+        att_weights = []
+        for layer in l:
+            att_weights.append(d[args.t][layer][:d[args.t]['output_len'], :d[args.t]['encoder_len']])
+    else:
+        att_weights = d[args.t][l]  # TODO: assuming only 1 layer, [J, I, H]
+        att_weights = att_weights[:d[args.t]['output_len'], :d[args.t]['encoder_len']]
     target_len = len(target)
     source_len = len(source)
 
-    # Process att_weights
-    # att_weights = np.squeeze(att_weights, axis=-1)
-
     if args.multihead:
 
-        colours = ['black', 'darkblue', 'blue', 'royalblue', 'deepskyblue', 'turquoise', 'mediumspringgreen','green']
+        if args.all_layers:
 
-        fig = plt.figure(figsize=(len(source), len(target)))
-        #plt.axis('off')
-        gs1 = gridspec.GridSpec(len(target), len(source))
-        gs1.update(wspace=0.05, hspace=0.1)
+            all_y = []
 
-        print("att weights shape: " + str(att_weights.shape))
-        print("source len: " + str(source_len))
-        print("target len: " + str(target_len))
+            for y in range(target_len):
+                all_x = []
+                for x in range(source_len):
+                    all_heads = []
+                    for layer in range(len(l)):
+                        all_heads.append(att_weights[layer][y, x, :])
+                    c = np.stack(all_heads, axis=0)
+                    all_x.append(c)
+                d = np.concatenate(all_x, axis=1)
+                all_y.append(d)
 
-        i = 0
+            viz = np.concatenate(all_y, axis=0)
+            print("Viz: " + str(viz.shape))
 
-        for y in range(target_len):
-            for x in range(source_len):
+            fig, ax = plt.subplots()
+            ax.matshow(viz, cmap=plt.cm.Blues, aspect=0.5, extent=[0, viz.shape[1], 0, viz.shape[0]])
 
-                i += 1
-                print(str(i) + "/" + str(target_len * source_len))
+            heads = att_weights[0].shape[-1]
+            amount_layers = len(l)
 
-                ax1 = plt.subplot(gs1[y, x])
-                viz = att_weights[y, x]
-                ax1.bar(height=viz, x=range(viz.shape[0]), width=0.5, color=colours)
-                ax1.set_xticklabels([])
-                ax1.set_yticklabels([])
-                ax1.tick_params(axis='both', which='both', bottom='off', top='off', labelbottom='off', right='off',
-                                left='off', labelleft='off')
-                ax1.set_ylim((0, 1.0))
+            source = [[s] for s in source]
+            new_source = []
+            for s in source:
+                text = s.copy()
+                s = [""] * (int(math.floor((heads - 1)/2)))
+                s.extend(text)
+                s.extend([""] * int((math.ceil((heads - 1)/2))))
+                new_source.append(s)
+            source = new_source
+            source = [item for sublist in source for item in sublist]
 
-                # label y
-                if ax1.is_first_col():
-                    ax1.set_ylabel(target[y], fontsize=20, rotation=0, ha="right", rotation_mode="anchor")
-                    ax1.yaxis.set_label_coords(0, 0.1)
+            target = [[s] for s in target]
+            new_target = []
+            for s in target:
+                text = s.copy()
+                s = [""] * (int(math.floor((amount_layers - 1)/2)))
+                s.extend(text)
+                s.extend([""] * int((math.ceil((amount_layers - 1)/2))))
+                new_target.append(s)
+            target = new_target
+            target = [item for sublist in target for item in sublist]
 
-                # label x
-                if ax1.is_first_row():
-                    ax1.set_title(source[x], fontsize=20, rotation=45, ha="left", rotation_mode="anchor")
+            ax.set_xticks(np.arange(len(source)))
+            ax.set_yticks(np.arange(len(target)))
+
+            fig.tight_layout()
+
+            ax.set_xticklabels(source, size=20)
+            t = target.copy()
+            t.reverse()
+            ax.set_yticklabels(t, size=20)
+
+            for y, idx in zip(target, range(len(target))):
+                if idx % amount_layers == 0:
+                    ax.axhline(idx, linestyle='-', color='k')
+
+            for x, idx in zip(source, range(len(source))):
+                if idx % heads == 0:
+                    ax.axvline(idx, linestyle='-', color='k')
+
+            #plt.grid(b=True, which='major', color='black', linestyle='-')
+            plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
+            plt.margins(x=50)
+
+        else:
+
+            colours = ['black', 'darkblue', 'blue', 'royalblue', 'deepskyblue', 'turquoise', 'mediumspringgreen',
+                       'green']
+
+            fig = plt.figure(figsize=(len(source), len(target)))
+            gs1 = gridspec.GridSpec(len(target), len(source))
+            gs1.update(wspace=0.05, hspace=0.1)
+
+            if args.all_layers is False:
+                print("att weights shape: " + str(att_weights.shape))
+            print("source len: " + str(source_len))
+            print("target len: " + str(target_len))
+
+            i = 0
+
+            for y in range(target_len):
+                for x in range(source_len):
+
+                    i += 1
+                    print(str(i) + "/" + str(target_len * source_len))
+
+                    ax1 = plt.subplot(gs1[y, x])
+
+
+                    viz = att_weights[y, x]
+                    ax1.bar(height=viz, x=range(viz.shape[0]), width=0.5, color=colours)
+
+                    ax1.set_xticklabels([])
+                    ax1.set_yticklabels([])
+                    ax1.tick_params(axis='both', which='both', bottom='off', top='off', labelbottom='off', right='off',
+                                    left='off', labelleft='off')
+                    ax1.set_ylim((0, 1.0))
+
+                    # label y
+                    if ax1.is_first_col():
+                        ax1.set_ylabel(target[y], fontsize=20, rotation=0, ha="right", rotation_mode="anchor")
+                        ax1.yaxis.set_label_coords(0, 0.1)
+
+                    # label x
+                    if ax1.is_first_row():
+                        ax1.set_title(source[x], fontsize=20, rotation=45, ha="left", rotation_mode="anchor")
 
 
     else:
+
+        assert args.all_layers is False, "all_layers parameters can only be used if multihead set to true!"
+
         if len(att_weights.shape) == 3:
             att_weights = np.average(att_weights, axis=-1)  # [I, J, 1]
 
@@ -116,8 +204,9 @@ def main(args):
         if args.show_labels:
             for i in range(len(target)):
                 for j in range(len(source)):
-                    text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
-                                   ha="center", va="center", color="black")
+                    if args.all_layers is False:
+                        text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
+                                       ha="center", va="center", color="black")
 
     #fig.subplots_adjust(top=0.8, left=0.1)
     if args.save_fig is None:
@@ -149,6 +238,7 @@ if __name__ == '__main__':
                         default=d_s,
                         required=False)
     parser.add_argument('--multihead', dest='multihead', action='store_true')
+    parser.add_argument('--all_layers', dest='all_layers', action='store_true')
     parser.add_argument('--show_labels', dest='show_labels', action='store_true')
     parser.add_argument('--save_fig', metavar='save_fig', type=str,
                         help='Path to save figure',
