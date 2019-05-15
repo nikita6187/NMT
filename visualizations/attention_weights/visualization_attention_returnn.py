@@ -42,7 +42,10 @@ def main(args):
         l.sort()
         print("Using layers: " + str(l))
     else:
-        l = "attention_score"
+        if args.layer_to_viz is None:
+            l = "attention_score"
+        else:
+            l = args.layer_to_viz
         for k in list(d[args.t].keys()):
             if len(k) > len("rec_"):
                 if k[:len("rec_")] == "rec_":
@@ -242,6 +245,11 @@ if __name__ == '__main__':
     parser.add_argument('--show_labels', dest='show_labels', action='store_true')
     parser.add_argument('--save_fig', metavar='save_fig', type=str,
                         help='Path to save figure',
+                        default=None,
+                        required=False)
+
+    parser.add_argument('--layer_to_viz', metavar='layer_to_viz', type=str,
+                        help='layer_to_viz',
                         default=None,
                         required=False)
 
