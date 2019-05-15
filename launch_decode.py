@@ -12,6 +12,8 @@ import json
 def main(args):
 
     args.p = os.path.abspath(args.p)
+    
+    assert args.lp in ["de-en", "zh-en"], "Language pair not supported"
 
     # Get all folders:
     all_log_dirs = [args.p + '/logs/' + x + '/' for x in os.listdir(args.p + "/logs")]
@@ -85,7 +87,11 @@ def launch_single(args, model_dir, config_path):
             print('Making logs folder: ' + str(search_dir_year_beam_epoch))
             os.mkdir(search_dir_year_beam_epoch)
             # Launching of config
-            path_to_runner = "/work/smt2/makarov/NMT/decode.sh"
+            if args.lp == "de-en":
+                path_to_runner = "/work/smt2/makarov/NMT/decode_de-en.sh"
+            if args.lp == "zh-en":
+                path_to_runner = "/work/smt2/makarov/NMT/decode_zh-en.sh"          
+            path_to_runner = "/work/smt2/makarov/NMT/decode_zh-en.sh"
             launch_command = "qsub -l gpu=1 -l h_rt=1:00:00 -l num_proc=5 -l h_vmem=10G -m abe -cwd {} {} {} {} {} {}"
             launch_command = launch_command.format(path_to_runner, args.year, config_path, epoch, args.beam,
                                                    search_dir_year_beam_epoch)
@@ -111,6 +117,9 @@ if __name__ == '__main__':
 
     parser.add_argument('amount_of_epochs_to_try', metavar='amount_of_epochs_to_try', type=int,
                         help='amount of epochs to launch from newbob')
+    
+    parser.add_argument('lp', metavar='lp', type=str,
+                help='language pair to use')    
 
     parser.add_argument('--memory', metavar='memory', type=str,
                         help='Max memory needed',
