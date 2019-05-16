@@ -93,7 +93,7 @@ def main(args):
             if args.viz_step:
                 if int(d[idx]["tag"][len("line-"):]) == args.viz_step:
                     print("Visualizing step: " + str(d[idx]["tag"]))
-
+                    print(data[-1])
                     fig, ax = plt.subplots()
                     #viz = np.put(np.zeros(shape=(len(target_list), len(source_list))), peaked, 1)
                     viz = np.zeros(shape=(peaked.shape[0], len(source_list)))
