@@ -96,7 +96,7 @@ def main(args):
 
                     fig, ax = plt.subplots()
                     #viz = np.put(np.zeros(shape=(len(target_list), len(source_list))), peaked, 1)
-                    viz = np.zeros(shape=(len(target_list), len(source_list)))
+                    viz = np.zeros(shape=(peaked.shape[0], len(source_list)))
                     Y = np.arange(peaked.shape[0])[:]
                     viz[Y, peaked] = 1
 
