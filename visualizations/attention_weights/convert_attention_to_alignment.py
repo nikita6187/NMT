@@ -94,11 +94,9 @@ def main(args):
                 if int(d[idx]["tag"][len("line-"):]) == args.viz_step:
                     print("Visualizing step: " + str(d[idx]["tag"]))
 
-                    if len(att_weights.shape) == 3:
-                        att_weights = np.average(att_weights, axis=-1)  # [I, J, 1]
-
                     fig, ax = plt.subplots()
-                    ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5)
+                    viz = np.put(np.zeros(shape=(len(target_list), len(source_list))), peaked, 1)
+                    ax.matshow(viz, cmap=plt.cm.Blues, aspect=0.5)
 
                     ax.set_xticks(np.arange(len(source_list)))
                     ax.set_yticks(np.arange(len(target_list)))
@@ -110,8 +108,8 @@ def main(args):
 
                     plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
                     plt.margins(x=50)
-                    plt.show()
-                    #plt.savefig("./test.png", bbox_inches="tight")
+                    #plt.show()
+                    plt.savefig("./test.png", bbox_inches="tight")
 
         del d
 
