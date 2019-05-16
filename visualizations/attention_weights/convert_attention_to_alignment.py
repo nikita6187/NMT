@@ -24,7 +24,6 @@ def natural_keys(text):
 def get_returnn_files(args):
     r_files = [f for f in os.listdir(args.attention) if "_ep" in f]  # Super hacky
     r_files.sort(key=natural_keys)
-    print(r_files)
     return r_files
 
 
