@@ -9,9 +9,10 @@ def main(args):
     # Get all folders:
     all_dirs = [args.p + '/' + x + '/' for x in os.listdir(args.p)]
 
-    full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7}".format("Name           ",
+    full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7} {8:<5}".format("Name           ",
                                                                 "Current Epoch", "Epoch Time", "Learning Rate",
-                                                                str("Last convergences"), "Last Time", "FER", "Memory")
+                                                                str("Last convergences"), "Last Time", "FER", "Memory",
+                                                                                             "Bleu")
     print(full_out)
 
     # Iterate through all folders and get data
@@ -69,11 +70,29 @@ def main(args):
         else:
             mem_usage = ""
 
+        # Get best 2018 bleu if possible
+        if os.path.isdir(dir + "search/2018/beam12/"):
+            bleu = subprocess.Popen("python3 /work/smt2/makarov/NMT/run_nested_program.py " + dir
+                                    + "search/2018/beam12/" + " tail -3 {} | grep newstest2018",
+                                          shell=True, stdout=subprocess.PIPE)
+            bleu = bleu.communicate()[0].decode("utf-8")
+            bleus = bleu.split("\n")
+
+            if len(bleus) > 1:
+                bleus = [b for b in bleus if "\t" in b]
+                bleus = [b.split("\t")[1] for b in bleus]
+                bleus = [b.split(" ")[0] for b in bleus]
+                bleus = [float(b) for b in bleus]
+                max_bleu = max(bleus)
+            else:
+                max_bleu = 0.0
+        else:
+            max_bleu = 0.0
         # print
         data = (name, curr_epoch, epoch_time, lr, str(last_convergences))
 
-        full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7}".format(name, curr_epoch, epoch_time, lr,
-                                                                    str(last_convergences), change_time, fer, mem_usage)
+        full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7} {8:<5}".format(name, curr_epoch, epoch_time, lr,
+                                                                    str(last_convergences), change_time, fer, mem_usage, max_bleu)
         print(full_out)
 
 
