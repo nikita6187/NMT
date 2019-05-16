@@ -83,7 +83,7 @@ def main(args):
             alignment_list = []
 
             target_list = [target_int_to_vocab[w] for w in d[idx]['output']]
-            source_list = [source_int_to_vocab[w] for w in d[args.t]['data']]
+            source_list = [source_int_to_vocab[w] for w in d[idx]['data']]
 
             for i in range(peaked.shape[0]):
                 alignment_list.append("S " + str(peaked[i]) + " " + str(i))
