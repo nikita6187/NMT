@@ -83,7 +83,10 @@ def main(args):
                 bleus = [b.split("\t")[1] for b in bleus]
                 bleus = [b.split(" ")[0] for b in bleus]
                 bleus = [float(b) for b in bleus]
-                max_bleu = max(bleus)
+                if len(bleus) > 0:
+                    max_bleu = max(bleus)
+                else:
+                    max_bleu = 0.0
             else:
                 max_bleu = 0.0
         else:
