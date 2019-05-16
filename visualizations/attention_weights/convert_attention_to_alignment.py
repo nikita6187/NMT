@@ -8,7 +8,10 @@ np.set_printoptions(suppress=True)
 
 
 def get_returnn_files(args):
-    return [f for f in os.listdir(args.attention) if "_ep" in f]  # Super hacky
+    r_files = [f for f in os.listdir(args.attention) if "_ep" in f]  # Super hacky
+    r_files.sort()
+    print(r_files)
+    return r_files
 
 
 def dumpclean(obj, spec="average"):
@@ -117,8 +120,7 @@ def main(args):
 
         del d
 
-    # TODO: export data
-    data.sort()
+    #data.sort()  # We want to preserve old order
 
     if args.debug:
         print(data)
