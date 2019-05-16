@@ -3,13 +3,27 @@ import matplotlib.pyplot as plt
 import argparse
 import os
 import pickle
+import re
 
 np.set_printoptions(suppress=True)
 
 
+def atoi(text):
+    return int(text) if text.isdigit() else text
+
+
+def natural_keys(text):
+    '''
+    alist.sort(key=natural_keys) sorts in human order
+    http://nedbatchelder.com/blog/200712/human_sorting.html
+    (See Toothy's implementation in the comments)
+    '''
+    return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+
+
 def get_returnn_files(args):
     r_files = [f for f in os.listdir(args.attention) if "_ep" in f]  # Super hacky
-    r_files.sort()
+    r_files.sort(key=natural_keys)
     print(r_files)
     return r_files
 
