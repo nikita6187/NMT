@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 import os
+import pickle
 
 np.set_printoptions(suppress=True)
 
@@ -41,6 +42,15 @@ def main(args):
 
     del d
 
+    # Get dictionaries
+    with open(args.target_vocab_file, 'rb') as w:
+        target_dictionary = pickle.load(w)
+    target_int_to_vocab = {target_dictionary[w]: w for w in target_dictionary.keys()}
+
+    with open(args.source_vocab_file, 'rb') as w:
+        source_dictionary = pickle.load(w)
+    source_int_to_vocab = {source_dictionary[w]: w for w in source_dictionary.keys()}
+
     # Data management
     data = []
 
@@ -72,10 +82,13 @@ def main(args):
             peaked = np.argmax(s, axis=-1)
             alignment_list = []
 
+            target_list = [target_int_to_vocab[w] for w in d[idx]['output']]
+            source_list = [source_int_to_vocab[w] for w in d[args.t]['data']]
+
             for i in range(peaked.shape[0]):
                 alignment_list.append("S " + str(peaked[i]) + " " + str(i))
 
-            data.append((d[idx]["tag"], alignment_list))
+            data.append((d[idx]["tag"], source_list, target_list, alignment_list))
 
         del d
 
@@ -89,12 +102,16 @@ def main(args):
         for dat in data:
             #lines.append(" ".join(dat[1]))
             st = ""
-            for a in dat[1]:
+            for a in dat[3]:
                 st += " " + a
-            lines.append(st)
+
+            src = " ".join(dat[1])
+            trgt = " ".join(dat[2])
+
+            lines.append(src + "#" + trgt + "# alignment" + st)
 
         for line in lines:
-            print("# alignment" + line)
+            print(line)
 
 
 if __name__ == '__main__':
@@ -108,6 +125,18 @@ if __name__ == '__main__':
                         required=False)
 
     parser.add_argument('--debug', dest='debug', action='store_true', default=False,
+                        required=False)
+
+    d_t = "/u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/dataset/target.vocab.pkl"
+    d_s = "/u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/dataset/source.vocab.pkl"
+
+    parser.add_argument('--target_vocab_file', metavar='target_vocab_file', type=str,
+                        help='Path to vocab pickle file of targets',
+                        default=d_t,
+                        required=False)
+    parser.add_argument('--source_vocab_file', metavar='source_vocab_file', type=str,
+                        help='Path to vocab pickle file of source',
+                        default=d_s,
                         required=False)
 
     args = parser.parse_args()
