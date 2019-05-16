@@ -16,8 +16,8 @@ python3 /work/smt2/makarov/returnn-hmm/rnn.py ${CONFIG} ++load_epoch ${EPOCH} ++
 deactivate
 
 # Post processing
-cat ${OUTPUT_FOLDER}scoring_${YEAR}_beam${BEAM_SIZE}.bpe | sed 's/@@ //g' | /u/bahar/tools/postprocessing/pp.sh > ${OUTPUT_FOLDER}hyp_${YEAR}_beam${BEAM_SIZE}.pp
+cat ${OUTPUT_FOLDER}scoring_${YEAR}_beam${BEAM_SIZE}.bpe | sed "s/ //g" | sed "s/▁/ /g" | /u/bahar/tools/postprocessing/pp.sh > ${OUTPUT_FOLDER}hyp_${YEAR}_beam${BEAM_SIZE}.pp
 
 # Scoring
-/u/bahar/bin/score-zhen.sh ${YEAR} ${OUTPUT_FOLDER}hyp_${YEAR}_beam${BEAM_SIZE}.pp > ${OUTPUT_FOLDER}eval_${YEAR}_beam${BEAM_SIZE}.txt
+/u/bahar/bin/score-zhen.sh newstest${YEAR} ${OUTPUT_FOLDER}hyp_${YEAR}_beam${BEAM_SIZE}.pp > ${OUTPUT_FOLDER}eval_${YEAR}_beam${BEAM_SIZE}.txt
 
