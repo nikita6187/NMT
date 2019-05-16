@@ -82,8 +82,8 @@ def main(args):
             peaked = np.argmax(s, axis=-1)
             alignment_list = []
 
-            target_list = [target_int_to_vocab[w] for w in d[idx]['output']]
-            source_list = [source_int_to_vocab[w] for w in d[idx]['data']]
+            target_list = [target_int_to_vocab[w] for w in d[idx]['output'][:d[idx]['output_len'] - 0 if args.with_eos else -1]]
+            source_list = [source_int_to_vocab[w] for w in d[idx]['data'][:None if args.with_eos else -1]]
 
             for i in range(peaked.shape[0]):
                 alignment_list.append("S " + str(peaked[i]) + " " + str(i))
