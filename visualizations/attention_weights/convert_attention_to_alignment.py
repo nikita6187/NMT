@@ -82,6 +82,12 @@ def main(args):
             peaked = np.argmax(s, axis=-1)
             alignment_list = []
 
+            print("---")
+            print(d[idx]['output_len'])
+            print(d[idx]['output'])
+            print(d[idx]['output_len'] - 0 if args.with_eos else -1)
+            print(d[idx]['output'][:d[idx]['output_len'] - 0 if args.with_eos else -1])
+
             target_list = [target_int_to_vocab[w] for w in d[idx]['output'][:d[idx]['output_len'] - 0 if args.with_eos else -1]]
             source_list = [source_int_to_vocab[w] for w in d[idx]['data'][:None if args.with_eos else -1]]
 
@@ -89,6 +95,10 @@ def main(args):
                 alignment_list.append("S " + str(peaked[i]) + " " + str(i))
 
             data.append((d[idx]["tag"], source_list, target_list, alignment_list))
+
+            if args.viz_step:
+
+
 
         del d
 
@@ -108,7 +118,7 @@ def main(args):
             src = " ".join(dat[1])
             trgt = " ".join(dat[2])
 
-            stc = src + "#" + trgt + "# alignment" + st if args.show_src_trgt else "# alignment" + st
+            stc = src + " # " + trgt + " # alignment" + st if args.show_src_trgt else "# alignment" + st
             lines.append(stc)
 
         for line in lines:
@@ -130,6 +140,9 @@ if __name__ == '__main__':
 
     parser.add_argument('--show_src_trgt', dest='show_src_trgt', action='store_true', default=False,
                         required=False)
+
+    parser.add_argument('--viz_step', metavar='viz_step', type=int,
+                        help='which step to visualize in matplotlib', required=False)
 
     d_t = "/u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/dataset/target.vocab.pkl"
     d_s = "/u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/dataset/source.vocab.pkl"
