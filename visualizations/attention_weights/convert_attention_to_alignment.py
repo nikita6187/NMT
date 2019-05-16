@@ -110,8 +110,8 @@ def main(args):
 
                     plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
                     plt.margins(x=50)
-                    #plt.show()
-                    plt.savefig("./test.png", bbox_inches="tight")
+                    plt.show()
+                    #plt.savefig("./test.png", bbox_inches="tight")
 
         del d
 
