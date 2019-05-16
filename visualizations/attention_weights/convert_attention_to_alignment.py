@@ -91,8 +91,7 @@ def main(args):
             data.append((d[idx]["tag"], source_list, target_list, alignment_list))
 
             if args.viz_step:
-                print(d[idx]["tag"][len("line-")-1:])
-                if int(d[idx]["tag"][len("line-")-1:]) == args.viz_step:
+                if int(d[idx]["tag"][len("line-"):]) == args.viz_step:
                     print("Visualizing step: " + str(d[idx]["tag"]))
 
                     if len(att_weights.shape) == 3:
