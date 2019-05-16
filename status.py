@@ -12,7 +12,7 @@ def main(args):
     full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7} {8:<5} {9:<5}".format("Name           ",
                                                                 "Current Epoch", "Epoch Time", "Learning Rate",
                                                                 str("Last convergences"), "Last Time", "FER", "Memory",
-                                                                                             "Bleu18", "Bleu19")
+                                                                                             "Bleu18", "Bleu17")
     print(full_out)
 
     # Iterate through all folders and get data
