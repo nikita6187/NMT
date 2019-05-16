@@ -82,13 +82,7 @@ def main(args):
             peaked = np.argmax(s, axis=-1)
             alignment_list = []
 
-            print("---")
-            print(d[idx]['output_len'])
-            print(d[idx]['output'])
-            print(d[idx]['output_len'] - 0 if args.with_eos else -1)
-            print(d[idx]['output'][:d[idx]['output_len'] - 0 if args.with_eos else -1])
-
-            target_list = [target_int_to_vocab[w] for w in d[idx]['output'][:d[idx]['output_len'] - 0 if args.with_eos else -1]]
+            target_list = [target_int_to_vocab[w] for w in d[idx]['output'][:None if args.with_eos else d[idx]['output_len'] - 1]]
             source_list = [source_int_to_vocab[w] for w in d[idx]['data'][:None if args.with_eos else -1]]
 
             for i in range(peaked.shape[0]):
