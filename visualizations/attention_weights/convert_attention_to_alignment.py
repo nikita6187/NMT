@@ -95,7 +95,12 @@ def main(args):
                     print("Visualizing step: " + str(d[idx]["tag"]))
 
                     fig, ax = plt.subplots()
-                    viz = np.put(np.zeros(shape=(len(target_list), len(source_list))), peaked, 1)
+                    #viz = np.put(np.zeros(shape=(len(target_list), len(source_list))), peaked, 1)
+                    viz = np.zeros(shape=(len(target_list), len(source_list)))
+                    Y = np.arange(len(target_list))[:,None]
+                    X = np.arange(len(source_list))
+                    viz[Y, X, peaked] = 1
+
                     ax.matshow(viz, cmap=plt.cm.Blues, aspect=0.5)
 
                     ax.set_xticks(np.arange(len(source_list)))
