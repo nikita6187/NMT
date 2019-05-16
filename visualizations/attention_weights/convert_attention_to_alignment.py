@@ -96,7 +96,7 @@ def main(args):
 
             data.append((d[idx]["tag"], source_list, target_list, alignment_list))
 
-            if args.viz_step:
+            #if args.viz_step:
 
 
 
