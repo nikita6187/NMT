@@ -90,9 +90,28 @@ def main(args):
 
             data.append((d[idx]["tag"], source_list, target_list, alignment_list))
 
-            #if args.viz_step:
+            if args.viz_step:
+                if int(d[idx]["tag"][len("tag-")-1:]) == args.viz_step:
+                    print("Visualizing step: " + str(d[idx]["tag"]))
 
+                    if len(att_weights.shape) == 3:
+                        att_weights = np.average(att_weights, axis=-1)  # [I, J, 1]
 
+                    fig, ax = plt.subplots()
+                    ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5)
+
+                    ax.set_xticks(np.arange(len(source_list)))
+                    ax.set_yticks(np.arange(len(target_list)))
+
+                    fig.tight_layout()
+
+                    ax.set_xticklabels(source_list, size=20)
+                    ax.set_yticklabels(target_list, size=20)
+
+                    plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
+                    plt.margins(x=50)
+                    #plt.show()
+                    plt.savefig("./test.png", bbox_inches="tight")
 
         del d
 
@@ -135,7 +154,7 @@ if __name__ == '__main__':
     parser.add_argument('--show_src_trgt', dest='show_src_trgt', action='store_true', default=False,
                         required=False)
 
-    parser.add_argument('--viz_step', metavar='viz_step', type=int,
+    parser.add_argument('--viz_step', metavar='viz_step', type=int, default=None,
                         help='which step to visualize in matplotlib', required=False)
 
     d_t = "/u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/dataset/target.vocab.pkl"
