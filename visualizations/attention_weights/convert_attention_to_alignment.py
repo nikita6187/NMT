@@ -108,7 +108,8 @@ def main(args):
             src = " ".join(dat[1])
             trgt = " ".join(dat[2])
 
-            lines.append(src + "#" + trgt + "# alignment" + st)
+            stc = src + "#" + trgt + "# alignment" + st if args.show_src_trgt else "# alignment" + st
+            lines.append(stc)
 
         for line in lines:
             print(line)
@@ -125,6 +126,9 @@ if __name__ == '__main__':
                         required=False)
 
     parser.add_argument('--debug', dest='debug', action='store_true', default=False,
+                        required=False)
+
+    parser.add_argument('--show_src_trgt', dest='show_src_trgt', action='store_true', default=False,
                         required=False)
 
     d_t = "/u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/dataset/target.vocab.pkl"
