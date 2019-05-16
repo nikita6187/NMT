@@ -9,10 +9,10 @@ def main(args):
     # Get all folders:
     all_dirs = [args.p + '/' + x + '/' for x in os.listdir(args.p)]
 
-    full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7} {8:<5}".format("Name           ",
+    full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7} {8:<5} {9:<5}".format("Name           ",
                                                                 "Current Epoch", "Epoch Time", "Learning Rate",
                                                                 str("Last convergences"), "Last Time", "FER", "Memory",
-                                                                                             "Bleu")
+                                                                                             "Bleu18", "Bleu19")
     print(full_out)
 
     # Iterate through all folders and get data
@@ -72,30 +72,54 @@ def main(args):
 
         # Get best 2018 bleu if possible
         if os.path.isdir(dir + "search/2018/beam12/"):
-            bleu = subprocess.Popen("python3 /work/smt2/makarov/NMT/run_nested_program.py " + dir
+            bleu18 = subprocess.Popen("python3 /work/smt2/makarov/NMT/run_nested_program.py " + dir
                                     + "search/2018/beam12/" + " tail -3 {} | grep newstest2018",
                                           shell=True, stdout=subprocess.PIPE)
-            bleu = bleu.communicate()[0].decode("utf-8")
-            bleus = bleu.split("\n")
+            bleu18 = bleu18.communicate()[0].decode("utf-8")
+            bleus18 = bleu18.split("\n")
 
-            if len(bleus) > 1:
-                bleus = [b for b in bleus if "\t" in b]
-                bleus = [b.split("\t")[1] for b in bleus]
-                bleus = [b.split(" ")[0] for b in bleus]
-                bleus = [float(b) for b in bleus]
-                if len(bleus) > 0:
-                    max_bleu = max(bleus)
+            if len(bleus18) > 1:
+                bleus18 = [b for b in bleus18 if "\t" in b]
+                bleus18 = [b.split("\t")[1] for b in bleus18]
+                bleus18 = [b.split(" ")[0] for b in bleus18]
+                bleus18 = [float(b) for b in bleus18]
+                if len(bleus18) > 0:
+                    max_bleu18 = max(bleus18)
                 else:
-                    max_bleu = 0.0
+                    max_bleu18 = 0.0
             else:
-                max_bleu = 0.0
+                max_bleu18 = 0.0
         else:
-            max_bleu = 0.0
+            max_bleu18 = 0.0
+
+        # Get best 2017 bleu if possible
+        if os.path.isdir(dir + "search/2017/beam12/"):
+            bleu17 = subprocess.Popen("python3 /work/smt2/makarov/NMT/run_nested_program.py " + dir
+                                      + "search/2017/beam12/" + " tail -3 {} | grep newstest2017",
+                                      shell=True, stdout=subprocess.PIPE)
+            bleu17 = bleu17.communicate()[0].decode("utf-8")
+            bleus17 = bleu17.split("\n")
+
+            if len(bleus17) > 1:
+                bleus17 = [b for b in bleus17 if "\t" in b]
+                bleus17 = [b.split("\t")[1] for b in bleus17]
+                bleus17 = [b.split(" ")[0] for b in bleus17]
+                bleus17 = [float(b) for b in bleus17]
+                if len(bleus17) > 0:
+                    max_bleu17 = max(bleus17)
+                else:
+                    max_bleu17 = 0.0
+            else:
+                max_bleu17 = 0.0
+        else:
+            max_bleu17 = 0.0
+
         # print
         data = (name, curr_epoch, epoch_time, lr, str(last_convergences))
 
-        full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7} {8:<5}".format(name, curr_epoch, epoch_time, lr,
-                                                                    str(last_convergences), change_time, fer, mem_usage, max_bleu)
+        full_out = "{0:<60} {1:<15} {2:<15} {3:<22} {4:<36} {5:<15} {6:<7} {7:<7} {8:<5} {9:<5}".format(name, curr_epoch, epoch_time, lr,
+                                                                    str(last_convergences), change_time, fer, mem_usage, max_bleu18,
+                                                                                                 max_bleu17)
         print(full_out)
 
 
