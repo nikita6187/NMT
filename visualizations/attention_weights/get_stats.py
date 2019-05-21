@@ -39,16 +39,20 @@ def main(args):
 
     # Get layers
     layers = []
+    print(d[0].keys())
     for k in list(d[0].keys()):
         if len(k) > len("rec_"):
             if k[:len("rec_")] == "rec_":
                 layers.append(k)
+    if "posterior_attention" in d[0].keys():
+        layers.append("posterior_attention")
+    if "attention_score" in d[0].keys():
+        layers.append("attention_score")
+
     layers.sort()
     print("Using layers: " + str(layers))
 
     del d
-
-    # TODO: non-monotonicity check excluding EOS
 
     # Data management
     data = {
@@ -56,12 +60,14 @@ def main(args):
         "amount_of_attention_heads": 0,
         "non_monotonicity": 0.0,
         "amount_of_seqs": 0,
+        "std_deviation": 0,
     }
 
     for layer in layers:
         data[layer + "_attendence"] = 0.0
         data[layer + "_amount_of_heads"] = 0
         data[layer + "_non_monotonicity"] = 0.0
+        data[layer + "_std"] = 0.0
 
     # Go through all files and get data
     for file, idx in zip(all_files, range(len(all_files))):
@@ -77,42 +83,60 @@ def main(args):
 
             # Go over every layer
             for layer in layers:
+                if layer in d[idx]:
+                    att_weights = d[idx][layer]
+                    att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
 
-                att_weights = d[idx][layer]
-                att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
+                    if len(att_weights.shape) == 3:
+                        # Multihead attention
+                        s = att_weights[:, -1, :]
 
-                if len(att_weights.shape) == 3:
-                    # Multihead attention
-                    s = att_weights[:, -1, :]
+                        # Get deviation across J
+                        std = np.std(att_weights, axis=0)
+                        std = np.mean(std)
 
-                    non_mon = att_weights[:, :-1].copy()
-                    for h in range(att_weights.shape[-1]):
-                        np.fill_diagonal(non_mon[:, :, h], 0)
-                else:
-                    # Normal attention
-                    s = att_weights[:, -1]
-                    non_mon = att_weights[:, :-1].copy()
-                    np.fill_diagonal(non_mon, 0)
+                        non_mon = att_weights[:, :-1].copy()
+                        for h in range(att_weights.shape[-1]):
+                            np.fill_diagonal(non_mon[:, :, h], 0)
+                    else:
+                        # Normal attention
+                        std = np.std(att_weights, axis=0)
+                        std = np.mean(std)
 
-                # Data management
-                data["eos_attendence"] += np.sum(s)
-                data["amount_of_attention_heads"] += s.size
-                data[layer + "_attendence"] += np.sum(s)
-                data[layer + "_amount_of_heads"] += s.size
+                        s = att_weights[:, -1]
+                        non_mon = att_weights[:, :-1].copy()
+                        np.fill_diagonal(non_mon, 0)
 
-                data["non_monotonicity"] += np.sum(non_mon)
-                data[layer + "_non_monotonicity"] += np.sum(non_mon)
+                    # Data management
+                    data["eos_attendence"] += np.sum(s)
+                    data["amount_of_attention_heads"] += s.size
+
+                    data[layer + "_attendence"] += np.sum(s)
+                    data[layer + "_amount_of_heads"] += s.size
+
+                    data["non_monotonicity"] += np.sum(non_mon)
+                    data[layer + "_non_monotonicity"] += np.sum(non_mon)
+
+                    data[layer + "_std"] += std
         del d
 
     # Process and print data
     data["average_eos_attendence"] = data["eos_attendence"] / float(data["amount_of_attention_heads"])
     data["average_non_monotonicity"] = data["non_monotonicity"] / float(data["amount_of_attention_heads"])
+    full_std = 0.0
 
     for layer in layers:
         data[layer + "_average_eos_attendence"] = data[layer + "_attendence"] / float(data[layer + "_amount_of_heads"])
-        data[layer + "_average_non_monotonicity"] = data[layer + "_non_monotonicity"] / float(data[layer + "_amount_of_heads"])
+        # data[layer + "_average_non_monotonicity"] = data[layer + "_non_monotonicity"] / float(data[layer + "_amount_of_heads"])
+
+        if layer == "rec_dec_06_att_weights" or layer == "posterior_attention" or layer == "attention_score":
+            data[layer + "_average_std"] = data[layer + "_std"] / float(data["amount_of_seqs"])
+        full_std += data[layer + "_std"] / float(data["amount_of_seqs"])
+
+    data["average_std"] = full_std / float(len(layers))
 
     dumpclean(data)
+    #print("Warning: EOS inlcudes also last token!!")
 
 
 if __name__ == '__main__':

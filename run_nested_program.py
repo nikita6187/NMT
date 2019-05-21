@@ -13,6 +13,8 @@ def main(path, program):
     all_dirs = [path + '/' + x for x in os.listdir(path) if os.path.isdir(os.path.join(path,x))]
     all_files = [f for f in listdir(path) if isfile(join(path, f)) is True]
 
+    subprocess.Popen("echo {}".format(path), shell=True)
+
     # Apply program to all files
     for file in all_files:
         file = path + "/" + file

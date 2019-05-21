@@ -47,6 +47,20 @@ def dumpclean(obj, spec="average"):
         print(obj)
 
 
+def get_data(idx, layer, d, args):
+    att_weights = d[idx][layer]
+    att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
+
+    if len(att_weights.shape) == 3:
+        # Multihead attention
+        s = att_weights[:, :None if args.with_eos else -1, :]
+        s = np.average(s, axis=-1)
+    else:
+        # Normal attention
+        s = att_weights[:, :None if args.with_eos else -1]
+    return s
+
+
 def main(args):
 
     all_files = get_returnn_files(args=args)
@@ -54,7 +68,18 @@ def main(args):
     # Get a random file for meta data
     d = np.load(all_files[0]).item()
 
-    assert args.layer_to_use in d[0].keys(), "layer_to_use not in keys: " + str(d[0].keys())
+    if args.layer_to_use:
+        assert args.layer_to_use in d[0].keys(), "layer_to_use not in keys: " + str(d[0].keys())
+        layer = args.layer_to_use
+    else:
+        # Get layers
+        layers = []
+        for k in list(d[0].keys()):
+            if len(k) > len("rec_"):
+                if k[:len("rec_")] == "rec_":
+                    layers.append(k)
+        layers.sort()
+        print("Using layers: " + str(layers))
 
     del d
 
@@ -70,8 +95,6 @@ def main(args):
     # Data management
     data = []
 
-    layer = args.layer_to_use
-
     # Go through all files and get data
     for file, idx in zip(all_files, range(len(all_files))):
         d = np.load(file).item()
@@ -83,22 +106,21 @@ def main(args):
         batch_size = len(d.keys())
         for idx in range(batch_size):
 
-            att_weights = d[idx][layer]
-            att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
-
-            if len(att_weights.shape) == 3:
-                # Multihead attention
-                s = att_weights[:, :None if args.with_eos else -1, :]
-                s = np.average(s, axis=-1)
+            if args.layer_to_use:
+                s = get_data(idx, layer, d, args)
             else:
-                # Normal attention
-                s = att_weights[:, :None if args.with_eos else -1]
+                # TODO: average over all layers
+                s_s = []
+                for layer in layers:
+                    s_s.append(get_data(idx, layer, d, args))
+                s = np.mean(s_s, axis=0)
 
             # Data management
             peaked = np.argmax(s, axis=-1)
             alignment_list = []
 
-            target_list = [target_int_to_vocab[w] for w in d[idx]['output'][:None if args.with_eos else d[idx]['output_len'] - 1]]
+            target_list = [target_int_to_vocab[w] for w in
+                           d[idx]['output'][:None if args.with_eos else d[idx]['output_len'] - 1]]
             source_list = [source_int_to_vocab[w] for w in d[idx]['data'][:None if args.with_eos else -1]]
 
             for i in range(peaked.shape[0]):
@@ -111,7 +133,7 @@ def main(args):
                     print("Visualizing step: " + str(d[idx]["tag"]))
                     print(data[-1])
                     fig, ax = plt.subplots()
-                    #viz = np.put(np.zeros(shape=(len(target_list), len(source_list))), peaked, 1)
+                    # viz = np.put(np.zeros(shape=(len(target_list), len(source_list))), peaked, 1)
                     viz = np.zeros(shape=(peaked.shape[0], len(source_list)))
                     Y = np.arange(peaked.shape[0])[:]
                     viz[Y, peaked] = 1
@@ -129,11 +151,9 @@ def main(args):
                     plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
                     plt.margins(x=50)
                     plt.show()
-                    #plt.savefig("./test.png", bbox_inches="tight")
+                    # plt.savefig("./test.png", bbox_inches="tight")
 
         del d
-
-    #data.sort()  # We want to preserve old order
 
     if args.debug:
         print(data)
@@ -159,8 +179,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Inspect distributions')
     parser.add_argument('attention', metavar='attention', type=str, help='path to attention folder')
 
-    parser.add_argument('layer_to_use', metavar='layer_to_use', type=str,
-                        help='layer_to_use')
+    parser.add_argument('--layer_to_use', metavar='--layer_to_use', type=str, default=None,
+                        help='layer_to_use', required=False)
 
     parser.add_argument('--with_eos', dest='with_eos', action='store_true', default=False,
                         required=False)

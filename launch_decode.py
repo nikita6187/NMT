@@ -87,14 +87,26 @@ def launch_single(args, model_dir, config_path):
             print('Making logs folder: ' + str(search_dir_year_beam_epoch))
             os.mkdir(search_dir_year_beam_epoch)
             # Launching of config
+            if args.lp == "zh-en":
+                path_to_runner = "/work/smt2/makarov/NMT/decode_zh-en.sh"
+                launch_command = "qsub -l gpu=1 -l h_rt=1:00:00 -l num_proc=5 -l h_vmem=10G -m abe -cwd {} {} {} {} {} {} {} {}"
+                print(args.year)
+                if str(args.year) == "2015":
+                    test_or_dev = "newsdev"
+                    z_year = "2017"
+                else:
+                    test_or_dev = "newstest"
+                    z_year = args.year
+
+                launch_command = launch_command.format(path_to_runner, z_year, config_path, epoch, args.beam,
+                                                   search_dir_year_beam_epoch, test_or_dev, args.max_seqs)
+
             if args.lp == "de-en":
                 path_to_runner = "/work/smt2/makarov/NMT/decode_de-en.sh"
-            if args.lp == "zh-en":
-                path_to_runner = "/work/smt2/makarov/NMT/decode_zh-en.sh"          
-            path_to_runner = "/work/smt2/makarov/NMT/decode_zh-en.sh"
-            launch_command = "qsub -l gpu=1 -l h_rt=1:00:00 -l num_proc=5 -l h_vmem=10G -m abe -cwd {} {} {} {} {} {}"
-            launch_command = launch_command.format(path_to_runner, args.year, config_path, epoch, args.beam,
-                                                   search_dir_year_beam_epoch)
+    	        #path_to_runner = "/work/smt2/makarov/NMT/decode_zh-en.sh"
+                launch_command = "qsub -l gpu=1 -l h_rt=1:00:00 -l num_proc=5 -l h_vmem=10G -m abe -cwd {} {} {} {} {} {} {}"
+                launch_command = launch_command.format(path_to_runner, args.year, config_path, epoch, args.beam,
+                                                   search_dir_year_beam_epoch, args.max_seqs)
 
             # launch_command = shlex.split(launch_command)
             print('Running: ' + str(launch_command) + ' from ' + model_dir)
@@ -120,6 +132,11 @@ if __name__ == '__main__':
     
     parser.add_argument('lp', metavar='lp', type=str,
                 help='language pair to use')    
+
+    parser.add_argument('--max_seqs', metavar='max_seqs', type=str,
+                        help='max_seqs',
+                        default="8000",
+                        required=False)
 
     parser.add_argument('--memory', metavar='memory', type=str,
                         help='Max memory needed',

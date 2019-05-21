@@ -59,9 +59,15 @@ def main(args):
         max_time = get_max_time(batch=batch, args=args)
         arrays = []
         arrays_post = []
+        batch_size = 0
         for time in range(max_time + 1):
             # TODO: then load all files for a batch
-            x = np.load(args.folder + "/" + str(batch) + "_" + str(time) + "_attention.npy").item()
+            if os.path.isfile(args.folder + "/" + str(batch) + "_" + str(time) + "_attention.npy"):
+                x = np.load(args.folder + "/" + str(batch) + "_" + str(time) + "_attention.npy").item()
+            else:
+                arrays.append(np.zeros(10))
+                arrays_post.append(np.zeros(10))
+                continue
             # TODO: get correct size
             # TODO: handle search
             tensor = x["attention_tensor"]  # [J, B, 1]
@@ -76,33 +82,36 @@ def main(args):
                 tensor_post = np.transpose(tensor_post, axes=(1, 0))
                 tensor_post = tensor_post[::args.beam_size]
                 tensor_post = np.transpose(tensor_post, axes=(1, 0))
-
+            if batch_size == 0:
+                batch_size = tensor.shape[1]
             arrays.append(tensor)  # Each of shape [J, B]
             arrays_post.append(tensor_post)  # Each of shape [J, B]
 
         # TODO: merge along time axis
-        full_tensor = np.stack(arrays, axis=0)  # Of shape [I, J, B]
-        full_tensor = np.transpose(full_tensor, axes=(2, 0, 1))  # [B, I, J]
-        batch_size = full_tensor.shape[0]
-
-        full_tensor_post = np.stack(arrays_post, axis=0)  # Of shape [I, J, B]
-        full_tensor_post = np.transpose(full_tensor_post, axes=(2, 0, 1))  # [B, I, J]
-
+        testy = min([s.shape == arrays[0].shape for s in arrays])
+        print(testy)
 
         # TODO: load corresponding npy file from returnn file
         r_fname = args.folder + "/" + args.r_prefix + "_ep" + str("{:03d}").format(r_epoch) + "_data_" + str(curr_seq) + "_" \
                      + str(curr_seq + batch_size - 1) + ".npy"
         r_data = np.load(r_fname).item()
 
-        assert r_data is not None, "r_data is None!"
+        if testy:
+            full_tensor = np.stack(arrays, axis=0)  # Of shape [I, J, B]
+            full_tensor = np.transpose(full_tensor, axes=(2, 0, 1))  # [B, I, J]
 
-        for tensor_batch in range(batch_size):
-            s = full_tensor[tensor_batch]
-            r_data[tensor_batch]["attention_score"] = s
-            r_data[tensor_batch]["posterior_attention"] = full_tensor_post[tensor_batch]
+            full_tensor_post = np.stack(arrays_post, axis=0)  # Of shape [I, J, B]
+            full_tensor_post = np.transpose(full_tensor_post, axes=(2, 0, 1))  # [B, I, J]
 
-        # TODO: save in returnn format
-        np.save(r_fname, r_data)
+            assert r_data is not None, "r_data is None!"
+
+            for tensor_batch in range(batch_size):
+                s = full_tensor[tensor_batch]
+                r_data[tensor_batch]["attention_score"] = s
+                r_data[tensor_batch]["posterior_attention"] = full_tensor_post[tensor_batch]
+
+            # TODO: save in returnn format
+            np.save(r_fname, r_data)
 
         curr_seq += batch_size
 

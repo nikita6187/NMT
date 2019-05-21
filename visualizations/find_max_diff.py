@@ -8,6 +8,7 @@ import os
 
 # 1 - 2
 
+np.set_printoptions(suppress=True)
 
 def main(args):
 
@@ -41,8 +42,10 @@ def main(args):
         for idx in range(len(d1)):
             m1 = d1[idx]['rec_dec_06_att_weights']
             m2 = d2[idx]['rec_dec_06_att_weights']
-            s1 = np.sum(m1.transpose()[-1])
-            s2 = np.sum(m2.transpose()[-1])
+            #s1 = np.sum(m1.transpose()[-1])
+            #s2 = np.sum(m2.transpose()[-1])
+            s1 = np.sum(m1[:-2:,:])
+            s2 = np.sum(m2[:-2:,:])
             diff = s1-s2
             avg_diff = float(diff)/float(m1.shape[1])
             difference[f1][idx] = (diff, avg_diff)
