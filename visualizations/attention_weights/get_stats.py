@@ -89,13 +89,13 @@ def main(args):
 
                     if len(att_weights.shape) == 3:
                         # Multihead attention
-                        s = att_weights[:, -1, :]
+                        s = att_weights[:, -1 if not args.eos_minus_2 else -2:, :]
 
                         # Get deviation across J
                         std = np.std(att_weights, axis=0)
                         std = np.mean(std)
 
-                        non_mon = att_weights[:, :-1].copy()
+                        non_mon = att_weights[:, :-1 if not args.eos_minus_2 else -2].copy()
                         for h in range(att_weights.shape[-1]):
                             np.fill_diagonal(non_mon[:, :, h], 0)
                     else:
@@ -103,8 +103,8 @@ def main(args):
                         std = np.std(att_weights, axis=0)
                         std = np.mean(std)
 
-                        s = att_weights[:, -1]
-                        non_mon = att_weights[:, :-1].copy()
+                        s = att_weights[:, -1 if not args.eos_minus_2 else -2:]
+                        non_mon = att_weights[:, :-1 if not args.eos_minus_2 else -2].copy()
                         np.fill_diagonal(non_mon, 0)
 
                     # Data management
@@ -135,13 +135,19 @@ def main(args):
 
     data["average_std"] = full_std / float(len(layers))
 
+    # TODO: average attendence to all? something like that
+
     dumpclean(data)
-    #print("Warning: EOS inlcudes also last token!!")
+    if args.eos_minus_2:
+        print("Warning: EOS inlcudes also last token!!")
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Inspect distributions')
     parser.add_argument('attention', metavar='attention', type=str, help='path to attention folder')
+
+    parser.add_argument('--eos_minus_2', dest='eos_minus_2', action="store_true",
+                        help='When examining eos, whether to also use the symbol before EOS')
 
     args = parser.parse_args()
     main(args)
