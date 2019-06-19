@@ -33,7 +33,7 @@ def main(args):
     source_int_to_vocab = {source_dictionary[w]: w for w in source_dictionary.keys()}
 
     # Visualize
-    d = np.load(args.attention).item()
+    d = np.load(args.attention, allow_pickle=True).item()
     print(len(d))
     d = [v for (k, v) in d.items()]
     print(len(d))
@@ -42,9 +42,13 @@ def main(args):
     if args.all_layers:
         l = []
         for k in list(d[args.t].keys()):
-            if len(k) > len("rec_"):
-                if k[:len("rec_")] == "rec_":
+            if args.encoder:
+                if "enc" in k and k != "encoder_len":
                     l.append(k)
+            else:
+                if len(k) > len("rec_"):
+                    if k[:len("rec_")] == "rec_":
+                            l.append(k)
         l.sort()
         print("Using layers: " + str(l))
     else:
@@ -53,10 +57,15 @@ def main(args):
             for k in list(d[args.t].keys()):
                 if len(k) > len("rec_"):
                     if k[:len("rec_")] == "rec_":
-                        l = k
+                        if args.encoder:
+                            if "enc" in k:
+                                l = k
+                        else:
+                            l = k
                         break
         else:
             l = args.layer_to_viz
+        print("Using layer: " + str(l))
 
     print("Encoder len: " + str(d[args.t]['encoder_len']))
     print("Output len: " + str(d[args.t]['output_len']))
@@ -64,16 +73,31 @@ def main(args):
     d[args.t]['output'] = d[args.t]['output'][:d[args.t]['output_len']]
     target = [target_int_to_vocab[w].replace("▁", "") for w in d[args.t]['output']]  # was 'classes' or 'output'
     source = [source_int_to_vocab[w].replace("▁", "") for w in d[args.t]['data']]
+
+    if args.encoder:
+        target = source
+
     print(source)
+
     if args.all_layers:
         att_weights = []
         for layer in l:
-            att_weights.append(d[args.t][layer][:d[args.t]['output_len'], :d[args.t]['encoder_len']])
+            if args.encoder:
+                att_weights.append(d[args.t][layer][:d[args.t]['encoder_len'], :d[args.t]['encoder_len']])
+                att_weights[-1] = np.transpose(att_weights[-1], axes=(1, 2, 0))
+            else:
+                att_weights.append(d[args.t][layer][:d[args.t]['output_len'], :d[args.t]['encoder_len']])
     else:
         att_weights = d[args.t][l]  # TODO: assuming only 1 layer, [J, I, H]
-        att_weights = att_weights[:d[args.t]['output_len'], :d[args.t]['encoder_len']]
+        print(att_weights.shape)
+        if args.encoder:
+            att_weights = np.transpose(att_weights, axes=(1, 2, 0))
+            att_weights = att_weights[:d[args.t]['encoder_len'], :d[args.t]['encoder_len']]
+        else:
+            att_weights = att_weights[:d[args.t]['output_len'], :d[args.t]['encoder_len']]
     target_len = len(target)
     source_len = len(source)
+    print("target len: " + str(target_len))
 
     if args.multihead:
 
@@ -96,7 +120,7 @@ def main(args):
             print("Viz: " + str(viz.shape))
 
             fig, ax = plt.subplots()
-            ax.matshow(viz, cmap=plt.cm.Blues, aspect=0.5, extent=[0, viz.shape[1], 0, viz.shape[0]])
+            ax.matshow(viz, cmap=plt.cm.Blues_r, aspect=0.5, extent=[0, viz.shape[1], 0, viz.shape[0]])
 
             heads = att_weights[0].shape[-1]
             amount_layers = len(l)
@@ -269,7 +293,13 @@ if __name__ == '__main__':
 
     parser.add_argument('--lp', metavar='lp', type=str,
                         help='Language pair',
-                        default=None,
+                        default="de-en",
+                        required=False)
+
+    parser.add_argument('--encoder',
+                        help='Whether to visualize only the encoder',
+                        default=False,
+                        action='store_true',
                         required=False)
 
     args = parser.parse_args()

@@ -4,6 +4,7 @@ import argparse
 import os
 import pickle
 import re
+import copy
 
 np.set_printoptions(suppress=True)
 
@@ -49,7 +50,7 @@ def dumpclean(obj, spec="average"):
 
 def get_data(idx, layer, d, args):
     att_weights = d[idx][layer]
-    att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
+    att_weights = att_weights[:d[idx]['output_len'] -0 if args.with_eos else -1, :d[idx]['encoder_len']]  # [I, J (, H)]
 
     if len(att_weights.shape) == 3:
         # Multihead attention
@@ -61,12 +62,99 @@ def get_data(idx, layer, d, args):
     return s
 
 
+def merge_bpes(str_list, axis, matrix, args):
+    assert matrix.shape[axis] == len(str_list), "Merge bpes: matrix shape incorrect for axis and string"
+
+    # Matrix of shape [I, J]
+    if axis == 1:
+        matrix = np.transpose(matrix, axes=(1, 0))  # In this case [J, I]
+
+    # get which rows need to be merged
+    rows_to_merge = []
+    word_start = False
+    sub_rows = []
+    curr_str = ""
+    new_str = []
+
+    for i in range(len(str_list)):
+
+        if word_start is False and "@@" not in str_list[i]:
+            new_str.append(str_list[i])
+            continue
+
+        if word_start is False and str_list[i][-2:] == "@@":
+            sub_rows = [i]
+            curr_str = str_list[i][:-2]
+            word_start = True
+            continue
+
+        if word_start is True and str_list[i][-2:] == "@@":
+            curr_str += str_list[i][:-2]
+            sub_rows.append(i)
+            continue
+
+        if word_start is True and str_list[i][-2:] != "@@":
+            sub_rows.append(i)
+            curr_str += str_list[i]
+            new_str.append(curr_str)
+            rows_to_merge.append(copy.copy(sub_rows))
+            word_start = False
+            continue
+
+    # merge rows with appropriate strategy
+    new_matrix = np.zeros((matrix.shape[0] - len(rows_to_merge), matrix.shape[1]))
+    amount_merged = 0
+    amount_non_merged = 0
+
+    if not rows_to_merge:
+        if axis == 1:
+            matrix = np.transpose(matrix, axes=(1, 0))
+        return matrix, new_str
+
+    # Add in rows before first occurence
+    for i in range(rows_to_merge[0][0]):
+        new_matrix[i] = matrix[i]
+        amount_non_merged += 1
+
+    for sub_row, idx in zip(rows_to_merge, range(len(rows_to_merge))):  # Assume that they are ordered
+        new_row = np.zeros_like(matrix[0])
+        for i in sub_row:
+            if args.merge_bpes == "max" and np.max(matrix[i]) > np.max(new_row):
+                new_row = np.copy(matrix[i])
+            if args.merge_bpes == "avg":
+                new_row += matrix[i]
+            if args.merge_bpes == "first" and i == sub_row[0]:
+                new_row = np.copy(matrix[i])
+            amount_merged += 1
+
+        # avg new_row if needed
+        if args.merge_bpes == "avg":
+            new_row /= float(len(sub_row))
+
+        new_matrix[sub_row[0] - amount_non_merged + 1] = new_row
+
+        amount_non_merged += 1
+
+        # Add in normal rows
+        i = sub_row[-1] + 1
+        while (idx == len(rows_to_merge) - 1 and i < matrix.shape[0]) or (i < matrix.shape[0] and i != rows_to_merge[idx+1][0]):
+            new_matrix[i - amount_merged + 1] = matrix[i]
+            amount_non_merged += 1
+            i += 1
+
+    # transpose back
+    if axis == 1:
+        new_matrix = np.transpose(new_matrix, axes=(1, 0))  # In this case [I, J]
+
+    return new_matrix, new_str
+
+
 def main(args):
 
     all_files = get_returnn_files(args=args)
 
     # Get a random file for meta data
-    d = np.load(all_files[0]).item()
+    d = np.load(args.attention + "/" + all_files[0], allow_pickle=True).item()
 
     if args.layer_to_use:
         assert args.layer_to_use in d[0].keys(), "layer_to_use not in keys: " + str(d[0].keys())
@@ -79,7 +167,8 @@ def main(args):
                 if k[:len("rec_")] == "rec_":
                     layers.append(k)
         layers.sort()
-        print("Using layers: " + str(layers))
+        if args.debug:
+            print("Using layers: " + str(layers))
 
     del d
 
@@ -97,7 +186,7 @@ def main(args):
 
     # Go through all files and get data
     for file, idx in zip(all_files, range(len(all_files))):
-        d = np.load(file).item()
+        d = np.load(args.attention + "/" + file, allow_pickle=True).item()
 
         if args.debug:
             print(str(idx) + "/" + str(len(all_files)))
@@ -109,19 +198,25 @@ def main(args):
             if args.layer_to_use:
                 s = get_data(idx, layer, d, args)
             else:
-                # TODO: average over all layers
+                # average over all layers
                 s_s = []
                 for layer in layers:
                     s_s.append(get_data(idx, layer, d, args))
                 s = np.mean(s_s, axis=0)
-
-            # Data management
-            peaked = np.argmax(s, axis=-1)
-            alignment_list = []
+            # s is [I, J]
 
             target_list = [target_int_to_vocab[w] for w in
                            d[idx]['output'][:None if args.with_eos else d[idx]['output_len'] - 1]]
             source_list = [source_int_to_vocab[w] for w in d[idx]['data'][:None if args.with_eos else -1]]
+
+            if args.merge_bpes:
+                # first merge columns
+                s, source_list = merge_bpes(source_list, 1, s, args)
+                s, target_list = merge_bpes(target_list, 0, s, args)
+
+            # Data management
+            peaked = np.argmax(s, axis=-1)
+            alignment_list = []
 
             for i in range(peaked.shape[0]):
                 alignment_list.append("S " + str(peaked[i]) + " " + str(i))
@@ -129,7 +224,7 @@ def main(args):
             data.append((d[idx]["tag"], source_list, target_list, alignment_list))
 
             if args.viz_step:
-                if int(d[idx]["tag"][len("line-"):]) == args.viz_step:
+                if int(d[idx]["tag"][len("line-"):]) == args.viz_step - 1:
                     print("Visualizing step: " + str(d[idx]["tag"]))
                     print(data[-1])
                     fig, ax = plt.subplots()
@@ -181,6 +276,9 @@ if __name__ == '__main__':
 
     parser.add_argument('--layer_to_use', metavar='--layer_to_use', type=str, default=None,
                         help='layer_to_use', required=False)
+
+    parser.add_argument('--merge_bpes', metavar='--merge_bpes', type=str, default=None,
+                        help='Merge bpes, either "max", "avg" or "first"', required=False)
 
     parser.add_argument('--with_eos', dest='with_eos', action='store_true', default=False,
                         required=False)
