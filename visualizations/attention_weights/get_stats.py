@@ -61,6 +61,7 @@ def main(args):
         "non_monotonicity": 0.0,
         "amount_of_seqs": 0,
         "std_deviation": 0,
+        "entropy": 0,
     }
 
     for layer in layers:
@@ -68,6 +69,7 @@ def main(args):
         data[layer + "_amount_of_heads"] = 0
         data[layer + "_non_monotonicity"] = 0.0
         data[layer + "_std"] = 0.0
+        data[layer + "_entropy"] = 0.0
 
     # Go through all files and get data
     for file, idx in zip(all_files, range(len(all_files))):
@@ -110,6 +112,7 @@ def main(args):
                     # Data management
                     data["eos_attendence"] += np.sum(s)
                     data["amount_of_attention_heads"] += s.size
+                    data["entropy"] += np.sum(np.log(s))
 
                     data[layer + "_attendence"] += np.sum(s)
                     data[layer + "_amount_of_heads"] += s.size
@@ -118,15 +121,19 @@ def main(args):
                     data[layer + "_non_monotonicity"] += np.sum(non_mon)
 
                     data[layer + "_std"] += std
+
+                    data[layer + "_entropy"] += np.sum(np.log(s))
         del d
 
     # Process and print data
     data["average_eos_attendence"] = data["eos_attendence"] / float(data["amount_of_attention_heads"])
     data["average_non_monotonicity"] = data["non_monotonicity"] / float(data["amount_of_attention_heads"])
+    data["entropy"] = data["entropy"] / float(data["amount_of_attention_heads"])
     full_std = 0.0
 
     for layer in layers:
         data[layer + "_average_eos_attendence"] = data[layer + "_attendence"] / float(data[layer + "_amount_of_heads"])
+        data[layer + "_entropy"] = data[layer + "_entropy"] / float(data[layer + "_amount_of_heads"])
         # data[layer + "_average_non_monotonicity"] = data[layer + "_non_monotonicity"] / float(data[layer + "_amount_of_heads"])
 
         if layer == "rec_dec_06_att_weights" or layer == "posterior_attention" or layer == "attention_score":
@@ -138,6 +145,7 @@ def main(args):
     # TODO: average attendence to all? something like that
 
     dumpclean(data)
+    dumpclean(data, spec="entropy")
     if args.eos_minus_2:
         print("Warning: EOS inlcudes also last token!!")
 
