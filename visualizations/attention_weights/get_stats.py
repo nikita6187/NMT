@@ -35,7 +35,7 @@ def main(args):
     all_files = get_returnn_files(args=args)
 
     # Get a random file for meta data
-    d = np.load(all_files[0]).item()
+    d = np.load(all_files[0], allow_pickle=True).item()
 
     # Get layers
     layers = []
@@ -73,7 +73,7 @@ def main(args):
 
     # Go through all files and get data
     for file, idx in zip(all_files, range(len(all_files))):
-        d = np.load(file).item()
+        d = np.load(file, allow_pickle=True).item()
 
         print(str(idx) + "/" + str(len(all_files)))
 
@@ -112,7 +112,7 @@ def main(args):
                     # Data management
                     data["eos_attendence"] += np.sum(s)
                     data["amount_of_attention_heads"] += s.size
-                    data["entropy"] += np.sum(np.log(s))
+                    data["entropy"] += np.sum(-np.log(s))
 
                     data[layer + "_attendence"] += np.sum(s)
                     data[layer + "_amount_of_heads"] += s.size
@@ -122,7 +122,7 @@ def main(args):
 
                     data[layer + "_std"] += std
 
-                    data[layer + "_entropy"] += np.sum(np.log(s))
+                    data[layer + "_entropy"] += np.sum(-np.log(s))
         del d
 
     # Process and print data
