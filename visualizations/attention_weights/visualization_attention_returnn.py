@@ -82,6 +82,7 @@ def main(args):
         target = source
 
     print(source)
+    print(target)
 
     if args.all_layers:
         att_weights = []
@@ -222,7 +223,7 @@ def main(args):
         print("Vizualizing layer: " + str(l))
         fontP = font_manager.FontProperties(fname="/u/makarov/fonts/PingFang.ttc")
         #fontP.set_family('DejaVu Sans Mono')
-        fontP.set_size(20) 
+        fontP.set_size(20)
         
         if args.all_layers:
             # Average over all layers
@@ -237,8 +238,10 @@ def main(args):
         ax.set_xticks(np.arange(len(source)))
         ax.set_yticks(np.arange(len(target)))
 
-        ax.set_xticklabels(source, fontproperties=fontP)  #size=20)
         ax.set_yticklabels(target, fontproperties=fontP)  #size=20)
+        if args.asr:
+            fontP.set_size(2)
+        ax.set_xticklabels(source, fontproperties=fontP)  # size=20)
 
         plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
         #plt.margins(x=100)
