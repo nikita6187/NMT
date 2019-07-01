@@ -74,7 +74,7 @@ def main(args):
     target = [target_int_to_vocab[w].replace("▁", "") for w in d[args.t]['output']]  # was 'classes' or 'output'
 
     if args.asr:
-        source = [str(i) for i in range(len(d[args.t]['data']))]
+        source = [str(i) for i in range(d[args.t]['encoder_len'])]
     else:
         source = [source_int_to_vocab[w].replace("▁", "") for w in d[args.t]['data']]
 
@@ -308,7 +308,6 @@ if __name__ == '__main__':
                         default=False,
                         action='store_true',
                         required=False)
-
 
     parser.add_argument('--asr',
                         help='When using asr mode the source seq is not shown',
