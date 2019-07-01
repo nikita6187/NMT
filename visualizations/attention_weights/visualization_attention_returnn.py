@@ -325,17 +325,20 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Lang
-    if args.lp == "de-en":
-        args.source_vocab_file = d_de_en_de
-        args.target_vocab_file = d_de_en_en
-    elif args.lp == "en-de":
-        args.target_vocab_file = d_de_en_de
-        args.source_vocab_file = d_de_en_en
-    elif args.lp == "zh-en":
-        args.target_vocab_file = d_zh_en_en
-        args.source_vocab_file = d_zh_en_zh
-    elif args.lp == "en-zh":
-        args.source_vocab_file = d_zh_en_en
-        args.target_vocab_file = d_zh_en_zh
+    if args.asr is False:
+        if args.lp == "de-en":
+            args.source_vocab_file = d_de_en_de
+            args.target_vocab_file = d_de_en_en
+        elif args.lp == "en-de":
+            args.target_vocab_file = d_de_en_de
+            args.source_vocab_file = d_de_en_en
+        elif args.lp == "zh-en":
+            args.target_vocab_file = d_zh_en_en
+            args.source_vocab_file = d_zh_en_zh
+        elif args.lp == "en-zh":
+            args.source_vocab_file = d_zh_en_en
+            args.target_vocab_file = d_zh_en_zh
+    else:
+        args.source_vocab_file = d_de_en_de  # just some value
 
     main(args)
