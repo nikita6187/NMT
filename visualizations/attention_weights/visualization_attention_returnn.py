@@ -74,7 +74,7 @@ def main(args):
     target = [target_int_to_vocab[w].replace("▁", "") for w in d[args.t]['output']]  # was 'classes' or 'output'
 
     if args.asr:
-        source = [str(i) for i in range(len(d[args.t]['data']), 10)]
+        source = [str(i) for i in range(len(d[args.t]['data']))]
     else:
         source = [source_int_to_vocab[w].replace("▁", "") for w in d[args.t]['data']]
 
@@ -246,7 +246,7 @@ def main(args):
         plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
         #plt.margins(x=100)
 
-        fig.set_size_inches(0.8 * len(source), 1.0 * len(target))
+        fig.set_size_inches(0.8 * len(source) if not args.asr else 0.01 * len(source), 1.0 * len(target))
         fig.tight_layout()
 
         if args.show_labels:
