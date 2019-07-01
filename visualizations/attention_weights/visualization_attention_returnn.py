@@ -74,7 +74,7 @@ def main(args):
     target = [target_int_to_vocab[w].replace("▁", "") for w in d[args.t]['output']]  # was 'classes' or 'output'
 
     if args.asr:
-        source = [str(i) for i in range(len(d[args.t]['data']))]
+        source = [str(i) for i in range(len(d[args.t]['data']), 10)]
     else:
         source = [source_int_to_vocab[w].replace("▁", "") for w in d[args.t]['data']]
 
