@@ -28,7 +28,7 @@ def main(args):
         with open(args.target_vocab_file, 'rb') as w:
             target_dictionary = pickle.load(w)
     except:
-        with open(args.target_vocab_file, 'rb') as w:
+        with open(args.target_vocab_file) as w:
             target_dictionary = json.load(w)
     target_int_to_vocab = {target_dictionary[w]: w for w in target_dictionary.keys()}
 
