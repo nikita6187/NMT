@@ -24,8 +24,12 @@ from matplotlib import font_manager
 def main(args):
 
     # Get dictionaries
-    with open(args.target_vocab_file, 'rb') as w:
-        target_dictionary = pickle.load(w)
+    try:
+        with open(args.target_vocab_file, 'rb') as w:
+            target_dictionary = pickle.load(w)
+    except:
+        with open(args.target_vocab_file, 'rb') as w:
+            target_dictionary = json.loads(w)
     target_int_to_vocab = {target_dictionary[w]: w for w in target_dictionary.keys()}
 
     with open(args.source_vocab_file, 'rb') as w:
