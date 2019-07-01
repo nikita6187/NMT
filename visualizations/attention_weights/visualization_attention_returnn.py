@@ -240,8 +240,11 @@ def main(args):
 
         ax.set_yticklabels(target, fontproperties=fontP)  #size=20)
         if args.asr:
-            fontP.set_size(2)
-        ax.set_xticklabels(source, fontproperties=fontP)  # size=20)
+            fontA = font_manager.FontProperties(fname="/u/makarov/fonts/PingFang.ttc")
+            fontA.set_size(2)
+            ax.set_xticklabels(source, fontproperties=fontA)  # size=20)
+        else:
+            ax.set_xticklabels(source, fontproperties=fontP)  # size=20)
 
         plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
         #plt.margins(x=100)
