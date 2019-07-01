@@ -344,5 +344,7 @@ if __name__ == '__main__':
             args.target_vocab_file = d_zh_en_zh
     else:
         args.source_vocab_file = d_de_en_de  # just some value
+        if args.target_vocab_file is None:
+            args.target_vocab_file = d_de_en_en
 
     main(args)
