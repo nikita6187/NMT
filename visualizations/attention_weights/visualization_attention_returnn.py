@@ -31,6 +31,7 @@ def main(args):
         with open(args.target_vocab_file, 'r') as w:
             raw = w.read()
         raw = raw.replace("\'", "\"")
+        print(raw)
         target_dictionary = json.loads(raw)
     target_int_to_vocab = {target_dictionary[w]: w for w in target_dictionary.keys()}
 
