@@ -157,7 +157,7 @@ def main(args):
 
             fig.tight_layout()
 
-            ax.set_xticklabels(source, size=20)
+            ax.set_xticklabels(source, size=20 if not args.asr else 1)
             t = target.copy()
             t.reverse()
             ax.set_yticklabels(t, size=20)
