@@ -133,7 +133,7 @@ def main(args):
             print("Viz: " + str(viz.shape))
 
             fig, ax = plt.subplots()
-            ax.matshow(viz, cmap=plt.cm.Blues_r, aspect=0.5, extent=[0, viz.shape[1], 0, viz.shape[0]])
+            ax.matshow(viz, cmap=plt.cm.Blues, aspect=0.5, extent=[0, viz.shape[1], 0, viz.shape[0]])
 
             heads = att_weights[0].shape[-1]
             amount_layers = len(l)
@@ -165,7 +165,7 @@ def main(args):
 
             fig.tight_layout()
 
-            ax.set_xticklabels(source, size=20 if not args.asr else 1)
+            ax.set_xticklabels(source, size=20 if not args.asr else 5)
             t = target.copy()
             t.reverse()
             ax.set_yticklabels(t, size=20)
