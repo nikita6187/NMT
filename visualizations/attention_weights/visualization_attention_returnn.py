@@ -30,14 +30,16 @@ def main(args):
     except:
         with open(args.target_vocab_file, 'r') as w:
             raw = w.read()
-        raw = raw.replace("\'", "\"")
-        raw = raw.replace("\\", "\\\\")
-        print(raw)
-        target_dictionary = json.loads(raw)
+        target_dictionary = eval(raw)
     target_int_to_vocab = {target_dictionary[w]: w for w in target_dictionary.keys()}
 
-    with open(args.source_vocab_file, 'rb') as w:
-        source_dictionary = pickle.load(w)
+    try:
+        with open(args.source_vocab_file, 'rb') as w:
+            source_dictionary = pickle.load(w)
+    except:
+        with open(args.source_vocab_file, 'r') as w:
+            raw = w.read()
+        source_dictionary = eval(raw)
     source_int_to_vocab = {source_dictionary[w]: w for w in source_dictionary.keys()}
 
     # Visualize
@@ -133,7 +135,8 @@ def main(args):
             print("Viz: " + str(viz.shape))
 
             fig, ax = plt.subplots()
-            ax.matshow(viz, cmap=plt.cm.Blues, aspect=0.5, extent=[0, viz.shape[1], 0, viz.shape[0]])
+            ax.matshow(viz, cmap=plt.cm.Blues_r, aspect=0.5 if not args.asr else 2.0,
+                       extent=[0, viz.shape[1], 0, viz.shape[0]])
 
             heads = att_weights[0].shape[-1]
             amount_layers = len(l)
@@ -165,7 +168,7 @@ def main(args):
 
             fig.tight_layout()
 
-            ax.set_xticklabels(source, size=20 if not args.asr else 5)
+            ax.set_xticklabels(source, size=20 if not args.asr else 8)
             t = target.copy()
             t.reverse()
             ax.set_yticklabels(t, size=20)
@@ -221,7 +224,8 @@ def main(args):
 
                     # label x
                     if ax1.is_first_row():
-                        ax1.set_title(source[x], fontsize=20, rotation=45, ha="left", rotation_mode="anchor")
+                        ax1.set_title(source[x], fontsize=20 if not args.asr else 5,
+                                      rotation=45, ha="left", rotation_mode="anchor")
 
 
     else:
@@ -229,7 +233,11 @@ def main(args):
         #assert args.all_layers is False, "all_layers parameters can only be used if multihead set to true!"
 
         print("Vizualizing layer: " + str(l))
-        fontP = font_manager.FontProperties(fname="/u/makarov/fonts/PingFang.ttc")
+
+        # TODO: reset back
+        font_name = "/u/makarov/fonts/PingFang.ttc" if not args.asr else None
+
+        fontP = font_manager.FontProperties(fname=font_name)
         #fontP.set_family('DejaVu Sans Mono')
         fontP.set_size(20)
         
@@ -241,15 +249,15 @@ def main(args):
             att_weights = np.average(att_weights, axis=-1)  # [I, J, 1]
 
         fig, ax = plt.subplots()
-        ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5)
+        ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5 if not args.asr else 2.0)
 
         ax.set_xticks(np.arange(len(source)))
         ax.set_yticks(np.arange(len(target)))
 
         ax.set_yticklabels(target, fontproperties=fontP)  #size=20)
         if args.asr:
-            fontA = font_manager.FontProperties(fname="/u/makarov/fonts/PingFang.ttc")
-            fontA.set_size(2)
+            fontA = font_manager.FontProperties(fname=font_name)
+            fontA.set_size(5)
             ax.set_xticklabels(source, fontproperties=fontA)  # size=20)
         else:
             ax.set_xticklabels(source, fontproperties=fontP)  # size=20)
@@ -257,7 +265,7 @@ def main(args):
         plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
         #plt.margins(x=100)
 
-        fig.set_size_inches(0.8 * len(source) if not args.asr else 0.05 * len(source), 1.0 * len(target))
+        #fig.set_size_inches(0.8 * len(source) if not args.asr else 0.8 * len(source), 1.0 * len(target))
         fig.tight_layout()
 
         if args.show_labels:
@@ -343,8 +351,10 @@ if __name__ == '__main__':
             args.source_vocab_file = d_zh_en_en
             args.target_vocab_file = d_zh_en_zh
     else:
-        args.source_vocab_file = d_de_en_de  # just some value
         if args.target_vocab_file is None:
             args.target_vocab_file = d_de_en_en
+            args.source_vocab_file = d_de_en_de  # just some value
+        else:
+            args.source_vocab_file = args.target_vocab_file
 
     main(args)
