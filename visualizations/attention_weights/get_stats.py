@@ -112,7 +112,7 @@ def main(args):
                     # Data management
                     data["eos_attendence"] += np.sum(s)
                     data["amount_of_attention_heads"] += s.size
-                    data["entropy"] += np.sum(-np.log(s))
+                    data["entropy"] += np.sum(-np.log(s) * s)
 
                     data[layer + "_attendence"] += np.sum(s)
                     data[layer + "_amount_of_heads"] += s.size
@@ -122,7 +122,7 @@ def main(args):
 
                     data[layer + "_std"] += std
 
-                    data[layer + "_entropy"] += np.sum(-np.log(s))
+                    data[layer + "_entropy"] += np.sum(-np.log(s) * s)
         del d
 
     # Process and print data
