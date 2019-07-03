@@ -153,11 +153,14 @@ def main(args):
     data["average_eos_attendence"] = data["eos_attendence"] / float(data["amount_of_attention_heads"])
     data["average_non_monotonicity"] = data["non_monotonicity"] / float(data["amount_of_attention_heads"])
     data["entropy"] = data["entropy"] / float(data["amount_of_attention_heads"])
+    data["distance"] = data["distance"] / float(data["amount_of_attention_heads"])
     full_std = 0.0
 
     for layer in layers:
         data[layer + "_average_eos_attendence"] = data[layer + "_attendence"] / float(data[layer + "_amount_of_heads"])
         data[layer + "_entropy"] = data[layer + "_entropy"] / float(data[layer + "_amount_of_heads"])
+        data[layer + "_distance"] = data[layer + "_distance"] / float(data[layer + "_amount_of_heads"])
+
         # data[layer + "_average_non_monotonicity"] = data[layer + "_non_monotonicity"] / float(data[layer + "_amount_of_heads"])
 
         if layer == "rec_dec_06_att_weights" or layer == "posterior_attention" or layer == "attention_score":
@@ -170,6 +173,7 @@ def main(args):
 
     dumpclean(data)
     dumpclean(data, spec="entropy")
+    dumpclean(data, spec="distance")
     if args.eos_minus_2:
         print("Warning: EOS inlcudes also last token!!")
     if args.eos:
