@@ -173,6 +173,8 @@ def main(args):
 
     dumpclean(data)
     dumpclean(data, spec="entropy")
+
+    np.set_printoptions(suppress=True)
     dumpclean(data, spec="distance")
     if args.eos_minus_2:
         print("Warning: EOS inlcudes also last token!!")
