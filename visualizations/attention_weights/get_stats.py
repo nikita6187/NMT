@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 import os
+import scipy.spatial.distance
 
 np.set_printoptions(suppress=True)
 
@@ -62,6 +63,7 @@ def main(args):
         "amount_of_seqs": 0,
         "std_deviation": 0,
         "entropy": 0,
+        "distance": 0.0,
     }
 
     for layer in layers:
@@ -70,6 +72,7 @@ def main(args):
         data[layer + "_non_monotonicity"] = 0.0
         data[layer + "_std"] = 0.0
         data[layer + "_entropy"] = 0.0
+        data[layer + "_distance"] = 0.0
 
     # Go through all files and get data
     for file, idx in zip(all_files, range(len(all_files))):
@@ -89,15 +92,17 @@ def main(args):
                     att_weights = d[idx][layer]
                     att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
 
+                    eos_offset = 0 if args.eos else -1
+
                     if len(att_weights.shape) == 3:
                         # Multihead attention
-                        s = att_weights[:, -1 if not args.eos_minus_2 else -2:, :]
+                        s = att_weights[:, eos_offset if not args.eos_minus_2 else -2:, :]
 
                         # Get deviation across J
                         std = np.std(att_weights, axis=0)
                         std = np.mean(std)
 
-                        non_mon = att_weights[:, :-1 if not args.eos_minus_2 else -2].copy()
+                        non_mon = att_weights[:, :eos_offset if not args.eos_minus_2 else -2].copy()
                         for h in range(att_weights.shape[-1]):
                             np.fill_diagonal(non_mon[:, :, h], 0)
                     else:
@@ -105,14 +110,31 @@ def main(args):
                         std = np.std(att_weights, axis=0)
                         std = np.mean(std)
 
-                        s = att_weights[:, -1 if not args.eos_minus_2 else -2:]
-                        non_mon = att_weights[:, :-1 if not args.eos_minus_2 else -2].copy()
+                        s = att_weights[:, eos_offset if not args.eos_minus_2 else -2:]
+                        non_mon = att_weights[:, :eos_offset if not args.eos_minus_2 else -2].copy()
                         np.fill_diagonal(non_mon, 0)
 
                     # Data management
                     data["eos_attendence"] += np.sum(s)
                     data["amount_of_attention_heads"] += s.size
                     data["entropy"] += np.sum(-np.log(s) * s)
+
+                    dist = []
+                    if len(s.shape) == 3:
+                        # do for all heads
+                        for h in range(s.shape[-1]):
+                            dis = scipy.spatial.distance.cdist(s[:, :, h], s[:, :, h])
+                            dis = dis[~np.eye(dis.shape[0], dtype=bool)].reshape(dis.shape[0], -1)
+                            dis = np.average(dis)
+                            dist.append(dis)
+                    else:
+                        dis = scipy.spatial.distance.cdist(s, s)
+                        dis = dis[~np.eye(dis.shape[0], dtype=bool)].reshape(dis.shape[0], -1)
+                        dis = np.average(dis)
+                        dist = [dis]
+
+                    full_dis = sum(dist)/len(dist)
+                    data["distance"] += full_dis
 
                     data[layer + "_attendence"] += np.sum(s)
                     data[layer + "_amount_of_heads"] += s.size
@@ -123,6 +145,8 @@ def main(args):
                     data[layer + "_std"] += std
 
                     data[layer + "_entropy"] += np.sum(-np.log(s) * s)
+                    data[layer + "_distance"] += full_dis
+
         del d
 
     # Process and print data
@@ -148,6 +172,8 @@ def main(args):
     dumpclean(data, spec="entropy")
     if args.eos_minus_2:
         print("Warning: EOS inlcudes also last token!!")
+    if args.eos:
+        print("WARNING: EOS also examined!")
 
 
 if __name__ == '__main__':
@@ -156,6 +182,9 @@ if __name__ == '__main__':
 
     parser.add_argument('--eos_minus_2', dest='eos_minus_2', action="store_true",
                         help='When examining eos, whether to also use the symbol before EOS')
+
+    parser.add_argument('--eos', dest='eos', action="store_true",
+                        help='To also look at EOS')
 
     args = parser.parse_args()
     main(args)
