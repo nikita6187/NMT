@@ -92,7 +92,7 @@ def main(args):
                     att_weights = d[idx][layer]
                     att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
 
-                    eos_offset = 0 if args.eos else -1
+                    eos_offset = -1
 
                     if len(att_weights.shape) == 3:
                         # Multihead attention
@@ -120,15 +120,15 @@ def main(args):
                     data["entropy"] += np.sum(-np.log(s) * s)
 
                     dist = []
-                    if len(s.shape) == 3:
+                    if len(att_weights.shape) == 3:
                         # do for all heads
-                        for h in range(s.shape[-1]):
-                            dis = scipy.spatial.distance.cdist(s[:, :, h], s[:, :, h])
+                        for h in range(att_weights.shape[-1]):
+                            dis = scipy.spatial.distance.cdist(att_weights[:, :, h], att_weights[:, :, h])
                             dis = dis[~np.eye(dis.shape[0], dtype=bool)].reshape(dis.shape[0], -1)
                             dis = np.average(dis)
                             dist.append(dis)
                     else:
-                        dis = scipy.spatial.distance.cdist(s, s)
+                        dis = scipy.spatial.distance.cdist(att_weights, att_weights)
                         dis = dis[~np.eye(dis.shape[0], dtype=bool)].reshape(dis.shape[0], -1)
                         dis = np.average(dis)
                         dist = [dis]
