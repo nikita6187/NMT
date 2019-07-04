@@ -265,8 +265,8 @@ def main(args):
         plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
         #plt.margins(x=100)
 
-        #fig.set_size_inches(0.8 * len(source) if not args.asr else 0.8 * len(source), 1.0 * len(target))
-        fig.tight_layout()
+        fig.set_size_inches(0.8 * len(source) if not args.asr else 0.2 * len(source), 1.0 * len(target))
+        #fig.tight_layout()
 
         if args.show_labels:
             for i in range(len(target)):
