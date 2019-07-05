@@ -15,6 +15,7 @@ When using ASR attention weights, you need to activate the ```--asr``` parameter
 
 In most cases, just set to ```--target_vocab_file /u/bahar/workspace/asr/librispeech/test-20190121/dataset/trans.bpe.vocab```.
 
+In the examples below the file and time index are already set, but you need to change them to see other examples! 
 
 ## Transformer
 
