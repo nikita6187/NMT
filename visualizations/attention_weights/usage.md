@@ -19,6 +19,10 @@ By setting ``--do_search`` as a parameter, the attention weights will be retriev
 
 <b>WARNING:</b> different versions of RETURNN use different ways of saving the attention weights. This means that if you have a newer version you might need to set the dimension order differently in ```get-attention-weights.py```, usually around lines 312 and 343.
 
+Some more examples:
+- ASR Transformer: https://github.com/nikita68/NMT/blob/master/hmm-factorization/experiments/asr2019/attention_weights.asr.sh
+- ASR LSTM: https://github.com/nikita68/NMT/blob/master/hmm-factorization/experiments/asr2019/attention_weights.asr.lstm.sh
+
 # Step 2: Actual Visualization
 In general, the script is located in ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py <filename> <time index>```.
 
@@ -58,5 +62,7 @@ Navigate to ```/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm
 Then run ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py base2.smlp2.specaug.datarndperm_noscale.bs18k.curric3.retrain1_ep250_data_1202_1206.npy 0 --asr --target_vocab_file /u/bahar/workspace/asr/librispeech/test-20190121/dataset/trans.bpe.vocab --all_layers```
 
 #### LSTM Prior
-NOTE: still not working
+Navigate to ```/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm-prior/forward-dev-other```.
+
+Then run ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py ./exp3.ctc.ogg-priorAtt-lr0005-k10-specAug_ep183_data_110_110.npy 0 --target_vocab_file /u/bahar/workspace/asr/librispeech/test-20190121/dataset/trans.bpe.vocab --asr --all_layers`
 
