@@ -78,5 +78,5 @@ Then run ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visu
 #### LSTM Prior
 Navigate to ```/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm-prior/forward-dev-other```.
 
-Then run ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py ./exp3.ctc.ogg-priorAtt-lr0005-k10-specAug_ep183_data_110_110.npy 0 --target_vocab_file /u/bahar/workspace/asr/librispeech/test-20190121/dataset/trans.bpe.vocab --asr --all_layers`
+Then run ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py ./exp3.ctc.ogg-priorAtt-lr0005-k10-specAug_ep183_data_110_110.npy 0 --target_vocab_file /u/bahar/workspace/asr/librispeech/test-20190121/dataset/trans.bpe.vocab --asr --all_layers```
 
