@@ -43,8 +43,7 @@ Navigate to ```/work/smt2/makarov/NMT/hmm-factorization/de-en/hard-baseline/logs
 
 Then for example see all attention heads of all layers using this:
 
-```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py transformer-newBaseline_ep240_data_2648_2660.npy 0 --all_layers --multihead
-```
+```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py transformer-newBaseline_ep240_data_2648_2660.npy 0 --all_layers --multihead```
 
 
 ## ASR
