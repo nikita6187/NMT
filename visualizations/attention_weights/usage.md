@@ -32,7 +32,22 @@ The parameter ```--layer_to_viz <layer_name>``` allows you to select a single la
 If you also use ```--multihead``` it will show all heads, either for all layers or for the currently selected layer. If this option is not activated, then the script with average over heads.
 You can also save figures in high resolution using ```--save_fig <path>```.
 
-### ASR
+# Examples
+
+## NMT
+
+For NMT, you need to set the ```--lp <language_pair>```, if not using de-en. Available options: ```de-en, en-de, zh-en, en-zh```. If using something outside of these, then you need to manually set the source and target vocab files using ```--source_vocab_file``` and ```--target_vocab_file```.
+
+#### Transformer
+Navigate to ```/work/smt2/makarov/NMT/hmm-factorization/de-en/hard-baseline/logs/transformer-newBaseline/alignments/forward/attention-weights-full```.
+
+Then for example see all attention heads of all layers using this:
+
+```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py transformer-newBaseline_ep240_data_2648_2660.npy 0 --all_layers --multihead
+```
+
+
+## ASR
 
 When using ASR attention weights, you need to activate the ```--asr``` parameter, as well as set the correct target dictionary, which is done with ``--target_vocab_file``.
 
