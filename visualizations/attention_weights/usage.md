@@ -19,6 +19,10 @@ By setting ``--do_search`` as a parameter, the attention weights will be retriev
 
 <b>WARNING:</b> different versions of RETURNN use different ways of saving the attention weights. This means that if you have a newer version you might need to set the dimension order differently in ```get-attention-weights.py```, usually around lines 312 and 343.
 
+Some more examples:
+- ASR Transformer: https://github.com/nikita68/NMT/blob/master/hmm-factorization/experiments/asr2019/attention_weights.asr.sh
+- ASR LSTM: https://github.com/nikita68/NMT/blob/master/hmm-factorization/experiments/asr2019/attention_weights.asr.lstm.sh
+
 # Step 2: Actual Visualization
 In general, the script is located in ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py <filename> <time index>```.
 
@@ -28,7 +32,21 @@ The parameter ```--layer_to_viz <layer_name>``` allows you to select a single la
 If you also use ```--multihead``` it will show all heads, either for all layers or for the currently selected layer. If this option is not activated, then the script with average over heads.
 You can also save figures in high resolution using ```--save_fig <path>```.
 
-### ASR
+# Examples
+
+## NMT
+
+For NMT, you need to set the ```--lp <language_pair>```, if not using de-en. Available options: ```de-en, en-de, zh-en, en-zh```. If using something outside of these, then you need to manually set the source and target vocab files using ```--source_vocab_file``` and ```--target_vocab_file```.
+
+#### Transformer
+Navigate to ```/work/smt2/makarov/NMT/hmm-factorization/de-en/hard-baseline/logs/transformer-newBaseline/alignments/forward/attention-weights-full```.
+
+Then for example see all attention heads of all layers using this:
+
+```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py transformer-newBaseline_ep240_data_2648_2660.npy 0 --all_layers --multihead```
+
+
+## ASR
 
 When using ASR attention weights, you need to activate the ```--asr``` parameter, as well as set the correct target dictionary, which is done with ``--target_vocab_file``.
 
@@ -58,5 +76,7 @@ Navigate to ```/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm
 Then run ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py base2.smlp2.specaug.datarndperm_noscale.bs18k.curric3.retrain1_ep250_data_1202_1206.npy 0 --asr --target_vocab_file /u/bahar/workspace/asr/librispeech/test-20190121/dataset/trans.bpe.vocab --all_layers```
 
 #### LSTM Prior
-NOTE: still not working
+Navigate to ```/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm-prior/forward-dev-other```.
+
+Then run ```python3 /work/smt2/makarov/NMT/visualizations/attention_weights/visualization_attention_returnn.py ./exp3.ctc.ogg-priorAtt-lr0005-k10-specAug_ep183_data_110_110.npy 0 --target_vocab_file /u/bahar/workspace/asr/librispeech/test-20190121/dataset/trans.bpe.vocab --asr --all_layers```
 
