@@ -84,7 +84,7 @@ def main(args):
     target = [target_int_to_vocab[w].replace("▁", "") for w in d[args.t]['output']]  # was 'classes' or 'output'
 
     if args.asr:
-        source = [str(i) for i in range(d[args.t]['encoder_len'])]
+        source = ["" for i in range(d[args.t]['encoder_len'])]
     else:
         source = [source_int_to_vocab[w].replace("▁", "") for w in d[args.t]['data']]
 
@@ -103,7 +103,7 @@ def main(args):
             else:
                 att_weights.append(d[args.t][layer][:d[args.t]['output_len'], :d[args.t]['encoder_len']])
     else:
-        att_weights = d[args.t][l]  # TODO: assuming only 1 layer, [J, I, H]
+        att_weights = d[args.t][l]  # assuming only 1 layer, [J, I, H]
         print(att_weights.shape)
         if args.encoder:
             att_weights = np.transpose(att_weights, axes=(1, 2, 0))
@@ -187,45 +187,68 @@ def main(args):
 
         else:
 
-            colours = ['black', 'darkblue', 'blue', 'royalblue', 'deepskyblue', 'turquoise', 'mediumspringgreen',
-                       'green']
-
-            fig = plt.figure(figsize=(len(source), len(target)))
-            gs1 = gridspec.GridSpec(len(target), len(source))
-            gs1.update(wspace=0.05, hspace=0.1)
-
-            if args.all_layers is False:
-                print("att weights shape: " + str(att_weights.shape))
-            print("source len: " + str(source_len))
-            print("target len: " + str(target_len))
-
-            i = 0
+            all_y = []
 
             for y in range(target_len):
+                all_x = []
                 for x in range(source_len):
+                    all_x.append(att_weights[y, x, :].reshape(1, -1))
+                d = np.concatenate(all_x, axis=1)
+                all_y.append(d)
 
-                    i += 1
-                    print(str(i) + "/" + str(target_len * source_len))
+            viz = np.concatenate(all_y, axis=0)
+            print("Viz: " + str(viz.shape))
 
-                    ax1 = plt.subplot(gs1[y, x])
-                    viz = att_weights[y, x]
-                    ax1.bar(height=viz, x=range(viz.shape[0]), width=0.5, color=colours)
+            fig, ax = plt.subplots()
+            ax.matshow(viz, cmap=plt.cm.Blues, aspect=5 if not args.asr else 20,
+                       extent=[0, viz.shape[1], 0, viz.shape[0]])
 
-                    ax1.set_xticklabels([])
-                    ax1.set_yticklabels([])
-                    ax1.tick_params(axis='both', which='both', bottom='off', top='off', labelbottom='off', right='off',
-                                    left='off', labelleft='off')
-                    ax1.set_ylim((0, 1.0))
+            heads = att_weights[0].shape[-1]
+            amount_layers = 1
 
-                    # label y
-                    if ax1.is_first_col():
-                        ax1.set_ylabel(target[y], fontsize=20, rotation=0, ha="right", rotation_mode="anchor")
-                        ax1.yaxis.set_label_coords(0, 0.1)
+            source = [[s] for s in source]
+            new_source = []
+            for s in source:
+                text = s.copy()
+                s = [""] * (int(math.floor((heads - 1) / 2)))
+                s.extend(text)
+                s.extend([""] * int((math.ceil((heads - 1) / 2))))
+                new_source.append(s)
+            source = new_source
+            source = [item for sublist in source for item in sublist]
 
-                    # label x
-                    if ax1.is_first_row():
-                        ax1.set_title(source[x], fontsize=20 if not args.asr else 5,
-                                      rotation=45, ha="left", rotation_mode="anchor")
+            target = [[s] for s in target]
+            new_target = []
+            for s in target:
+                text = s.copy()
+                s = [""] * (int(math.floor((amount_layers - 1) / 2)))
+                s.extend(text)
+                s.extend([""] * int((math.ceil((amount_layers - 1) / 2))))
+                new_target.append(s)
+            target = new_target
+            target = [item for sublist in target for item in sublist]
+
+            ax.set_xticks(np.arange(len(source)))
+            ax.set_yticks(np.arange(len(target)))
+
+            fig.tight_layout()
+
+            ax.set_xticklabels(source, size=20 if not args.asr else 2)
+            t = target.copy()
+            t.reverse()
+            ax.set_yticklabels(t, size=20)
+
+            for y, idx in zip(target, range(len(target))):
+                if idx % amount_layers == 0:
+                    ax.axhline(idx, linestyle='-', color='k')
+
+            for x, idx in zip(source, range(len(source))):
+                if idx % heads == 0:
+                    ax.axvline(idx, linestyle='-', color='k')
+
+            # plt.grid(b=True, which='major', color='black', linestyle='-')
+            plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
+            plt.margins(x=50)
 
 
     else:
@@ -236,8 +259,9 @@ def main(args):
 
         # TODO: reset back
         font_name = "/u/makarov/fonts/PingFang.ttc" if not args.asr else None
-
+        #font_name = None
         fontP = font_manager.FontProperties(fname=font_name)
+        #fontP = font_manager.FontProperties()
         #fontP.set_family('DejaVu Sans Mono')
         fontP.set_size(20)
         
@@ -249,24 +273,27 @@ def main(args):
             att_weights = np.average(att_weights, axis=-1)  # [I, J, 1]
 
         fig, ax = plt.subplots()
-        ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5 if not args.asr else 2.0)
+        ax.matshow(att_weights, cmap=plt.cm.Blues, aspect=0.5 if not args.asr else 1.5)
 
         ax.set_xticks(np.arange(len(source)))
         ax.set_yticks(np.arange(len(target)))
 
-        ax.set_yticklabels(target, fontproperties=fontP)  #size=20)
+        fig.set_size_inches(0.8 * len(source), 1.0 * len(target))  # 0.8, 1.0
+        fig.tight_layout()
+
         if args.asr:
             fontA = font_manager.FontProperties(fname=font_name)
-            fontA.set_size(5)
+            fontA.set_size(10)
             ax.set_xticklabels(source, fontproperties=fontA)  # size=20)
+            ax.set_yticklabels(target, fontproperties=fontA)  # size=20)
         else:
-            ax.set_xticklabels(source, fontproperties=fontP)  # size=20)
+            ax.set_xticklabels(source, fontproperties=fontP)  # )
+            ax.set_yticklabels(target, fontproperties=fontP)  # size=20)
 
         plt.setp(ax.get_xticklabels(), rotation=45, ha="left", rotation_mode="anchor")
-        #plt.margins(x=100)
 
-        fig.set_size_inches(0.8 * len(source) if not args.asr else 0.2 * len(source), 1.0 * len(target))
-        #fig.tight_layout()
+        #if not args.asr:
+        #plt.margins(x=600)
 
         if args.show_labels:
             for i in range(len(target)):
@@ -274,11 +301,11 @@ def main(args):
                     text = ax.text(j, i, '{0:.2f}'.format(att_weights[i, j]).rstrip("0"),
                                    ha="center", va="center", color="black")
 
-    #fig.subplots_adjust(top=0.8, left=0.1)
+    fig.subplots_adjust(top=0.8, left=0.2   )
     if args.save_fig is None:
         plt.show()
     else:
-        plt.savefig(args.save_fig, dpi=300)
+        plt.savefig(args.save_fig, dpi=300) #, bbox_inches='tight', pad_inches=1)
 
 
 if __name__ == '__main__':
@@ -356,5 +383,8 @@ if __name__ == '__main__':
             args.source_vocab_file = d_de_en_de  # just some value
         else:
             args.source_vocab_file = args.target_vocab_file
+
+    if not args.layer_to_viz:
+        args.all_layers = True
 
     main(args)
