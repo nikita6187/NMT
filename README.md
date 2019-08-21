@@ -1,4 +1,4 @@
-# NMT
+# NMT Experiments at i6
 
 ## Structure
 The structure contains the configs and some results on the work on the Attention Mixture Model (also called HMM Factorization), as well as the topic aware decomposition for domain adaptation. 
