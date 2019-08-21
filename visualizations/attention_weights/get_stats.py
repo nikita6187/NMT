@@ -4,7 +4,7 @@ import argparse
 import os
 import scipy.spatial.distance
 
-np.set_printoptions(suppress=True)
+np.set_printoptions(suppress=True, precision=2)
 
 
 def get_returnn_files(args):
@@ -13,7 +13,7 @@ def get_returnn_files(args):
 
 def dumpclean(obj, spec="average"):
     if isinstance(obj, dict):
-        for k, v in obj.items():
+        for k, v in sorted(obj.items()):
             if hasattr(v, '__iter__'):
                 if spec in str(k):
                     print(k)
@@ -22,16 +22,21 @@ def dumpclean(obj, spec="average"):
                 if spec in str(k):
                     print('%s : %s' % (k, v))
     elif isinstance(obj, list):
+        print(obj)
+        print("\n\n")
+        """
         for v in obj:
             if hasattr(v, '__iter__'):
                 dumpclean(v)
             else:
                 print(v)
+        """
     else:
         print(obj)
 
 
 def main(args):
+    amount_of_heads = args.amount_of_heads
 
     all_files = get_returnn_files(args=args)
 
@@ -64,6 +69,7 @@ def main(args):
         "std_deviation": 0,
         "entropy": 0,
         "distance": 0.0,
+        "layers_processed": 0,
     }
 
     for layer in layers:
@@ -73,6 +79,8 @@ def main(args):
         data[layer + "_std"] = 0.0
         data[layer + "_entropy"] = 0.0
         data[layer + "_distance"] = 0.0
+        data[layer + "_distance_heads"] = [0.0] * amount_of_heads
+        data[layer + "_layers_processed"] = 0
 
     # Go through all files and get data
     for file, idx in zip(all_files, range(len(all_files))):
@@ -85,12 +93,13 @@ def main(args):
         for idx in range(batch_size):
 
             data["amount_of_seqs"] += 1
-
+            
             # Go over every layer
             for layer in layers:
                 if layer in d[idx]:
                     att_weights = d[idx][layer]
                     att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
+                    att_weights[att_weights == 0] = np.finfo(float).eps * 2
 
                     eos_offset = -1
 
@@ -117,25 +126,30 @@ def main(args):
                     # Data management
                     data["eos_attendence"] += np.sum(s)
                     data["amount_of_attention_heads"] += s.size
-                    data["entropy"] += np.sum(-np.log(s) * s)
+                    data["entropy"] += np.sum(-np.log(att_weights) * att_weights)
+                    data["layers_processed"] += 1
 
                     dist = []
+                    dist_to_use = "cityblock"
                     if len(att_weights.shape) == 3:
                         # do for all heads
                         for h in range(att_weights.shape[-1]):
-                            dis = scipy.spatial.distance.cdist(att_weights[:, :, h], att_weights[:, :, h])
+                            dis = scipy.spatial.distance.cdist(att_weights[:, :, h], att_weights[:, :, h],
+                                                               metric=dist_to_use)
                             dis = dis[~np.eye(dis.shape[0], dtype=bool)].reshape(dis.shape[0], -1)
                             dis = np.average(dis)
                             dist.append(dis)
                     else:
-                        dis = scipy.spatial.distance.cdist(att_weights, att_weights)
+                        dis = scipy.spatial.distance.cdist(att_weights, att_weights, metric=dist_to_use)
                         dis = dis[~np.eye(dis.shape[0], dtype=bool)].reshape(dis.shape[0], -1)
                         dis = np.average(dis)
                         dist = [dis]
 
                     full_dis = sum(dist)/len(dist)
                     data["distance"] += full_dis
+                    data[layer + "_distance_heads"] = [data[layer + "_distance_heads"][i] + dist[i] for i in range(amount_of_heads)]
 
+                    data[layer + "_layers_processed"] += 1.0
                     data[layer + "_attendence"] += np.sum(s)
                     data[layer + "_amount_of_heads"] += s.size
 
@@ -144,7 +158,7 @@ def main(args):
 
                     data[layer + "_std"] += std
 
-                    data[layer + "_entropy"] += np.sum(-np.log(s) * s)
+                    data[layer + "_entropy"] += np.sum(-np.log(att_weights) * att_weights)
                     data[layer + "_distance"] += full_dis
 
         del d
@@ -153,13 +167,15 @@ def main(args):
     data["average_eos_attendence"] = data["eos_attendence"] / float(data["amount_of_attention_heads"])
     data["average_non_monotonicity"] = data["non_monotonicity"] / float(data["amount_of_attention_heads"])
     data["entropy"] = data["entropy"] / float(data["amount_of_attention_heads"])
-    data["distance"] = data["distance"] / float(data["amount_of_attention_heads"])
+    data["distance_ovl"] = data["distance"] / float(data["layers_processed"])
     full_std = 0.0
 
     for layer in layers:
         data[layer + "_average_eos_attendence"] = data[layer + "_attendence"] / float(data[layer + "_amount_of_heads"])
         data[layer + "_entropy"] = data[layer + "_entropy"] / float(data[layer + "_amount_of_heads"])
-        data[layer + "_distance"] = data[layer + "_distance"] / float(data[layer + "_amount_of_heads"])
+        data[layer + "_distance_ovl"] = data[layer + "_distance"] / float(data[layer + "_layers_processed"])
+
+        data[layer + "_distance_heads"] = np.asarray([x/float(data[layer + "_layers_processed"]) for x in data[layer + "_distance_heads"]])
 
         # data[layer + "_average_non_monotonicity"] = data[layer + "_non_monotonicity"] / float(data[layer + "_amount_of_heads"])
 
@@ -172,14 +188,16 @@ def main(args):
     # TODO: average attendence to all? something like that
 
     dumpclean(data)
+    print("--------------------------------------------------------")
     dumpclean(data, spec="entropy")
 
-    np.set_printoptions(suppress=True)
-    dumpclean(data, spec="distance")
+    print("--------------------------------------------------------")
+
+    dumpclean(data, spec="distance_ovl")
+    print("--------------------------------------------------------")
+    dumpclean(data, spec="_distance_heads")
     if args.eos_minus_2:
         print("Warning: EOS inlcudes also last token!!")
-    if args.eos:
-        print("WARNING: EOS also examined!")
 
 
 if __name__ == '__main__':
@@ -188,9 +206,6 @@ if __name__ == '__main__':
 
     parser.add_argument('--eos_minus_2', dest='eos_minus_2', action="store_true",
                         help='When examining eos, whether to also use the symbol before EOS')
-
-    parser.add_argument('--eos', dest='eos', action="store_true",
-                        help='To also look at EOS')
-
+    parser.add_argument('--amount_of_heads', metavar='amount_of_heads', type=int, help='Amount of heads', default=8)
     args = parser.parse_args()
     main(args)

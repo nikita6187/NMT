@@ -44,16 +44,15 @@ def launch_single(args, model_dir, config_path):
     data = [x.split()[1] for x in data]
     data = [float(x.split(",")[0]) for x in data]
 
-    # TODO: check by list of existing models
+    # check by list of existing models
     all_available_epochs = [int(f[len("network."):-len(".meta")]) for f in listdir(model_dir + "/net-model/")
                             if isfile(join(model_dir + "/net-model/", f)) is True and
                             f[-len("meta"):] == "meta" and
                             f[:len("network")] == "network" and
                             isint(f[len("network."):-len(".meta")])]
-    print(all_available_epochs)
+    print("All available epochs: " + str(all_available_epochs))
 
-    data = list(zip(data, range(len(data))))  # now tuple of (dev_score, epoch)
-
+    data = list(zip(data, range(len(data))))  # now tuple of (dev_score, epoch)     
     data = [d for d in data if d[1] in all_available_epochs]
 
     data.sort(key=lambda x: x[0])
@@ -85,7 +84,7 @@ def launch_single(args, model_dir, config_path):
                                                        search_dir_year_beam_epoch, test_or_dev, args.max_seqs)
 
             if args.lp == "de-en":
-                path_to_runner = "/work/smt2/makarov/NMT/decode_de-en.sh"
+                path_to_runner = "/work/smt2/makarov/NMT/decode_de-en.sh" if not args.exp else "/work/smt2/makarov/NMT/decode_de-en.experiments.sh"
                 # path_to_runner = "/work/smt2/makarov/NMT/decode_zh-en.sh"
                 launch_command = "qsub -l gpu=1 -l h_rt=1:00:00 -l num_proc=5 -l h_vmem=10G -m abe -cwd {} {} {} {} {} {} {}"
                 launch_command = launch_command.format(path_to_runner, args.year, config_path, epoch, args.beam,
@@ -123,6 +122,13 @@ if __name__ == '__main__':
                         help='max_seqs',
                         default="8000",
                         required=False)
+
+    parser.add_argument('--exp',
+                        help='When using experimental versions, only de-en',
+                        default=False,
+                        action='store_true',
+                        required=False)
+
 
     parser.add_argument('--use_dev_score', dest='use_dev_score', action='store_true')
 

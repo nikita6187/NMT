@@ -32,7 +32,7 @@ def main(args):
         os.mkdir(config_log_dir)
 
     # Launching of config
-    path_to_runner = "/work/smt2/makarov/NMT/train.sh"
+    path_to_runner = "/work/smt2/makarov/NMT/train.sh" if not args.exp else "/work/smt2/makarov/NMT/train.experiments.sh"
     launch_command = "qsub -l gpu=1 -l h_rt=150:00:00 -l num_proc=5 -l h_vmem={}G -l qname='*1080*|*TITAN*' -m abe -js {} -cwd {} {}"
     launch_command = launch_command.format(args.memory, args.js, path_to_runner, args.p)
        
@@ -57,6 +57,12 @@ if __name__ == '__main__':
     parser.add_argument('--js', metavar='js', type=str,
                         help='Priority',
                         default="0",
+                        required=False)
+
+    parser.add_argument('--exp',
+                        help='When using train.experiments.sh',
+                        default=False,
+                        action='store_true',
                         required=False)
 
     args = parser.parse_args()

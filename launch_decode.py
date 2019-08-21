@@ -27,7 +27,8 @@ def main(args):
         print(config_log_dir)
         if config_log_dir in all_log_dirs:
             if os.path.isdir(config_log_dir + "/net-model/"):
-                launch_single(args, config_log_dir, args.p + "/" + config_path)
+                if os.path.isfile(config_log_dir + "newbob.data"):
+                    launch_single(args, config_log_dir, args.p + "/" + config_path)
 
 
 def isint(value):

@@ -50,19 +50,37 @@ def dumpclean(obj, spec="average"):
 
 def get_data(idx, layer, d, args):
     att_weights = d[idx][layer]
-    att_weights = att_weights[:d[idx]['output_len'] -0 if args.with_eos else -1, :d[idx]['encoder_len']]  # [I, J (, H)]
+    att_weights = att_weights[:d[idx]['output_len'], :d[idx]['encoder_len']]  # [I, J (, H)]
 
     if len(att_weights.shape) == 3:
         # Multihead attention
-        s = att_weights[:, :None if args.with_eos else -1, :]
+        #s = att_weights[:, :None if args.with_eos else -2, :]
+        if args.with_eos:
+            s = att_weights
+        else:
+            s = att_weights[:, :-2 if att_weights.shape[0] > 2 else -1, :]  # THIS REMOVES LAST 2 TOKENS
         s = np.average(s, axis=-1)
     else:
         # Normal attention
-        s = att_weights[:, :None if args.with_eos else -1]
+        # s = att_weights[:, :None if args.with_eos else -1]
+
+        if args.with_eos:
+            s = att_weights
+        else:
+            s = att_weights[:, :-2 if att_weights.shape[0] > 2 else -1]  # THIS REMOVES LAST 2 TOKENS
     return s
 
 
 def merge_bpes(str_list, axis, matrix, args):
+
+    if args.debug:
+        if matrix.shape[axis] != len(str_list):
+            print(matrix.shape[axis])
+            print(len(str_list))
+
+    if matrix.shape[axis] == 1:
+        return matrix, ["</S>"]
+
     assert matrix.shape[axis] == len(str_list), "Merge bpes: matrix shape incorrect for axis and string"
 
     # Matrix of shape [I, J]
@@ -206,8 +224,8 @@ def main(args):
             # s is [I, J]
 
             target_list = [target_int_to_vocab[w] for w in
-                           d[idx]['output'][:None if args.with_eos else d[idx]['output_len'] - 1]]
-            source_list = [source_int_to_vocab[w] for w in d[idx]['data'][:None if args.with_eos else -1]]
+                           d[idx]['output'][:None if args.with_eos else d[idx]['output_len'] - 0]]
+            source_list = [source_int_to_vocab[w] for w in d[idx]['data'][:None if args.with_eos else -2]]
 
             if args.merge_bpes:
                 # first merge columns
@@ -263,7 +281,7 @@ def main(args):
             src = " ".join(dat[1])
             trgt = " ".join(dat[2])
 
-            stc = src + " # " + trgt + " # alignment" + st if args.show_src_trgt else "# alignment" + st
+            stc = src + " # " + trgt + " # alignment" + st if args.show_src_trgt else "" + st
             lines.append(stc)
 
         for line in lines:
@@ -281,7 +299,7 @@ if __name__ == '__main__':
                         help='Merge bpes, either "max", "avg" or "first"', required=False)
 
     parser.add_argument('--with_eos', dest='with_eos', action='store_true', default=False,
-                        required=False)
+                        required=False, help="Puts last 2 tokens back into consideration.")
 
     parser.add_argument('--debug', dest='debug', action='store_true', default=False,
                         required=False)
