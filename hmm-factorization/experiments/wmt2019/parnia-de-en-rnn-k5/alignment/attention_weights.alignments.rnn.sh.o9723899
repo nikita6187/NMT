@@ -1,0 +1,29 @@
++------- PROLOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ...........: 9723899
+| Started at .......: Wed Aug  7 10:28:19 CEST 2019
+| Execution host ...: cluster-cn-240
+| Cluster queue ....: 4-GPU-1080
+| Script ...........: /var/spool/sge/cluster-cn-240/job_scripts/9723899
+| > YEAR=$1
+| > CONFIG=$2
+| > EPOCH=$3
+| > BEAM_SIZE=$4
+| > OUTPUT_FOLDER=$5
+| > DIR_FOLDER=$6
+| > 
+| > shift
+| > shift
+| > shift
+|
++------- PROLOGUE SCRIPT -----------------------------------------------
++------- EPILOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ..............: 9723899
+| Stopped at ..........: Wed Aug  7 10:28:22 CEST 2019
+| Resources requested .: h_vmem=1536G,h_rss=5G,pxe=ubuntu_16.04,s_core=0,h_rt=3600,h_fsize=20G,gpu=1,scratch_free=5G,num_proc=5
+| Resources used ......: cpu=00:00:00, mem=0.00000 GB s, io=0.00000 GB, vmem=N/A, maxvmem=N/A, last_file_cache=5M, last_rss=3M, max-cache=119M
+| Memory used .........: 124M / 5.000G (2.4%)
+| Total time used .....: 0:00:03
+|
++------- EPILOGUE SCRIPT -----------------------------------------------

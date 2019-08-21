@@ -1,0 +1,29 @@
++------- PROLOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ...........: 9130714
+| Started at .......: Fri May 17 17:53:54 CEST 2019
+| Execution host ...: cluster-cn-224
+| Cluster queue ....: 4-GPU-980
+| Script ...........: /var/spool/sge/cluster-cn-224/job_scripts/9130714
+| > YEAR=$1
+| > CONFIG=$2
+| > EPOCH=$3
+| > BEAM_SIZE=$4
+| > OUTPUT_FOLDER=$5
+| > EXTRA_OPTION=$6
+| > 
+| > export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda-9.0/lib64:/usr/local/cudnn-9.0-v7.1/lib64:/usr/local/cuda/extras/CUPTI/lib64/:/usr/local/cuda-9.1/extras/CUPTI/lib64/:/usr/local/cuda-9.0/extras/CUPTI/lib64
+| > 
+| > source /u/bahar/settings/python3-returnn-tf1.9/bin/activate
+|
++------- PROLOGUE SCRIPT -----------------------------------------------
++------- EPILOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ..............: 9130714
+| Stopped at ..........: Fri May 17 17:54:01 CEST 2019
+| Resources requested .: h_vmem=1536G,h_rss=10G,h_fsize=20G,h_rt=3600,s_core=0,pxe=ubuntu_16.04,gpu=1,scratch_free=5G,num_proc=5
+| Resources used ......: cpu=00:00:00, mem=0.00000 GB s, io=0.00000 GB, vmem=N/A, maxvmem=N/A, last_file_cache=62M, last_rss=3M, max-cache=116M
+| Memory used .........: 178M / 10.000G (1.7%)
+| Total time used .....: 0:00:08
+|
++------- EPILOGUE SCRIPT -----------------------------------------------

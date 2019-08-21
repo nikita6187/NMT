@@ -1,0 +1,18 @@
+usage: get-attention-weights.py [-h] [--epoch EPOCH] [--data DATA]
+                                [--do_search] [--beam_size BEAM_SIZE]
+                                [--dump_dir DUMP_DIR]
+                                [--output_file OUTPUT_FILE] [--device DEVICE]
+                                [--layers LAYERS] [--rec_layer REC_LAYER]
+                                [--enc_layer ENC_LAYER]
+                                [--batch_size BATCH_SIZE]
+                                [--seq_list SEQ_LIST]
+                                [--min_seq_len MIN_SEQ_LEN]
+                                [--num_seqs NUM_SEQS]
+                                [--output_format OUTPUT_FORMAT]
+                                [--dropout DROPOUT] [--train_flag]
+                                [--reset_partition_epoch RESET_PARTITION_EPOCH]
+                                [--reset_seq_ordering RESET_SEQ_ORDERING]
+                                [--reset_epoch_wise_filter RESET_EPOCH_WISE_FILTER]
+                                [--hmm_fac_fo] [--tf_log_dir TF_LOG_DIR]
+                                config_file
+get-attention-weights.py: error: argument --tf_log_dir: expected one argument

@@ -1,0 +1,222 @@
+2019-08-05 16:13:51.310491: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-08-05 16:13:52.348688: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:03:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2019-08-05 16:13:52.348726: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:13:52.348736: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:13:52.348742: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:13:52.348747: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:13:52.350978: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:13:52.795789: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:13:52.795835: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:13:52.795846: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:13:52.796213: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/device:GPU:0 with 10405 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:03:00.0, compute capability: 6.1)
+2019-08-05 16:14:01.953155: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:14:01.953207: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:14:01.953216: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:14:01.953223: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:14:01.953406: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10405 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:03:00.0, compute capability: 6.1)
+[31;1mEXCEPTION[0m
+[34mTraceback (most recent call last):[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m414[0m, [34min [0m<module>
+[34m    line: [0mmain[34m([0msys[34m.[0margv[34m)[0m
+[34m    locals:[0m
+      main [34;1m= [0m[34m<local> [0m[34m<[0mfunction main at 0x2ac9a63a32f0[34m>[0m
+      sys [34;1m= [0m[34m<local> [0m[34m<[0mmodule [36m'sys'[0m [34m([0mbuilt[34m-[0m[34min[0m[34m)[0m[34m>[0m
+      sys[34;1m.[0margv [34;1m= [0m[34m<local> [0m[34m[[0m[36m'/work/smt2/makarov/returnn-hmm/tools/get-attention-weights.py'[0m[34m,[0m [36m'/u/bahar/workspace/wmt/2019/en-zh--2019-04-16/config-train/rnn-enc4-dropout3-hmm-k5.config'[0m[34m,[0m [36m'--epoch'[0m[34m,[0m [36m'164'[0m[34m,[0m [36m'--data'[0m[34m,[0m [36m'config:newstest2018'[0m[34m,[0m [36m'--dump_dir'[0m[34m,[0m [36m'./'[0m[34m,[0m [36m'--layers'[0m[34m,[0m [36m'att_weights'[0m[34m,[0m [36m'--rec_layer'[0m[34m,[0m [36m'output'[0m[34m,[0m [36m'--batch_size'[0m[34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 16[34m,[0m _[34m[[0m0[34m][0m[34m:[0m [34m{[0mlen [34m=[0m 61[34m}[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m230[0m, [34min [0mmain
+[34m    line: [0minit_net[34m([0margs[34m,[0m layers[34m)[0m
+[34m    locals:[0m
+      init_net [34;1m= [0m[34m<global> [0m[34m<[0mfunction init_net at 0x2ac9a63a3268[34m>[0m
+      args [34;1m= [0m[34m<local> [0mNamespace[34m([0mbatch_size[34m=[0m600[34m,[0m beam_size[34m=[0m12[34m,[0m config_file[34m=[0m[36m'/u/bahar/workspace/wmt/2019/en-zh--2019-04-16/config-train/rnn-enc4-dropout3-hmm-k5.config'[0m[34m,[0m data[34m=[0m[36m'config:newstest2018'[0m[34m,[0m device[34m=[0m[34mNone[0m[34m,[0m do_search[34m=[0m[34mFalse[0m[34m,[0m dropout[34m=[0m[34mNone[0m[34m,[0m dump_dir[34m=[0m[36m'./'[0m[34m,[0m enc_layer[34m=[0m[36m'encoder'[0m[34m,[0m encoder_sa[34m=[0m[34mFalse[0m[34m,[0m epoch[34m=[0m164[34m,[0m hmm_fac_fo[34m=[0mFal[34m.[0m[34m.[0m[34m.[0m
+      layers [34;1m= [0m[34m<local> [0m[34m[[0m[36m'att_weights'[0m[34m][0m[34m,[0m _[34m[[0m0[34m][0m[34m:[0m [34m{[0mlen [34m=[0m 11[34m}[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m139[0m, [34min [0minit_net
+[34m    line: [0mrnn[34m.[0mengine[34m.[0minit_network_from_config[34m([0mconfig[34m=[0mconfig[34m,[0m net_dict_post_proc[34m=[0mnet_dict_post_proc[34m)[0m
+[34m    locals:[0m
+      rnn [34;1m= [0m[34m<global> [0m[34m<[0mmodule [36m'rnn'[0m [34mfrom [0m[36m'/work/smt2/makarov/returnn-hmm/rnn.py'[0m[34m>[0m
+      rnn[34;1m.[0mengine [34;1m= [0m[34m<global> [0m[34m<[0mTFEngine[34m.[0mEngine object at 0x2ac8f72e3a90[34m>[0m
+      rnn[34;1m.[0mengine[34;1m.[0minit_network_from_config [34;1m= [0m[34m<global> [0m[34m<[0mbound method Engine[34m.[0minit_network_from_config of [34m<[0mTFEngine[34m.[0mEngine object at 0x2ac8f72e3a90[34m>[0m[34m>[0m
+      config [34;1m= [0m[34m<global> [0m[34m<[0mConfig[34m.[0mConfig object at 0x2ac9a63a7cc0[34m>[0m
+      net_dict_post_proc [34;1m= [0m[34m<local> [0m[34m<[0mfunction init_net[34m.[0m[34m<[0mlocals[34m>[0m[34m.[0mnet_dict_post_proc at 0x2ac9a63cb0d0[34m>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFEngine.py[0m[36m"[0m, [34mline [0m[35m936[0m, [34min [0minit_network_from_config
+[34m    line: [0mself[34m.[0m_init_network[34m([0mnet_desc[34m=[0mnet_dict[34m,[0m epoch[34m=[0mself[34m.[0mepoch[34m)[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFEngine[34m.[0mEngine object at 0x2ac8f72e3a90[34m>[0m
+      self[34;1m.[0m_init_network [34;1m= [0m[34m<local> [0m[34m<[0mbound method Engine[34m.[0m_init_network of [34m<[0mTFEngine[34m.[0mEngine object at 0x2ac8f72e3a90[34m>[0m[34m>[0m
+      net_desc [34;1m= [0m[34m<not found>[0m
+      net_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'lstm0_bw'[0m[34m:[0m [34m{[0m[36m'dropout'[0m[34m:[0m 0[34m.[0m3[34m,[0m [36m'direction'[0m[34m:[0m [34m-[0m1[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'source_embed'[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [36m'nativelstm2'[0m[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'class'[0m[34m:[0m [36m'rec'[0m[34m}[0m[34m,[0m [36m'output'[0m[34m:[0m [34m{[0m[36m'max_seq_len'[0m[34m:[0m [36m"max_len_from('base:encoder') * 3"[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[34m][0m[34m,[0m [36m'optimize_move_layers_out'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'unit'[0m[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'..., len = 14[0m
+      epoch [34;1m= [0m[34m<local> [0m164
+      self[34;1m.[0mepoch [34;1m= [0m[34m<local> [0m164
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFEngine.py[0m[36m"[0m, [34mline [0m[35m1060[0m, [34min [0m_init_network
+[34m    line: [0mself[34m.[0mnetwork[34m,[0m self[34m.[0mupdater [34m=[0m self[34m.[0mcreate_network[34m([0m
+            config[34m=[0mself[34m.[0mconfig[34m,[0m
+            rnd_seed[34m=[0mnet_random_seed[34m,[0m
+            train_flag[34m=[0mtrain_flag[34m,[0m eval_flag[34m=[0mself[34m.[0muse_eval_flag[34m,[0m search_flag[34m=[0mself[34m.[0muse_search_flag[34m,[0m
+            initial_learning_rate[34m=[0mgetattr[34m([0mself[34m,[0m [36m"initial_learning_rate"[0m[34m,[0m [34mNone[0m[34m)[0m[34m,[0m
+            net_dict[34m=[0mnet_desc[34m)[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFEngine[34m.[0mEngine object at 0x2ac8f72e3a90[34m>[0m
+      self[34;1m.[0mnetwork [34;1m= [0m[34m<local> [0m[34mNone[0m
+      self[34;1m.[0mupdater [34;1m= [0m[34m<local> [0m[34mNone[0m
+      self[34;1m.[0mcreate_network [34;1m= [0m[34m<local> [0m[34m<[0mbound method Engine[34m.[0mcreate_network of [34m<[0m[34mclass [0m[36m'TFEngine.Engine'[0m[34m>[0m[34m>[0m
+      config [34;1m= [0m[34m<not found>[0m
+      self[34;1m.[0mconfig [34;1m= [0m[34m<local> [0m[34m<[0mConfig[34m.[0mConfig object at 0x2ac9a63a7cc0[34m>[0m
+      rnd_seed [34;1m= [0m[34m<not found>[0m
+      net_random_seed [34;1m= [0m[34m<local> [0m164
+      train_flag [34;1m= [0m[34m<local> [0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m
+      eval_flag [34;1m= [0m[34m<not found>[0m
+      self[34;1m.[0muse_eval_flag [34;1m= [0m[34m<local> [0m[34mTrue[0m
+      search_flag [34;1m= [0m[34m<not found>[0m
+      self[34;1m.[0muse_search_flag [34;1m= [0m[34m<local> [0m[34mFalse[0m
+      initial_learning_rate [34;1m= [0m[34m<not found>[0m
+      getattr [34;1m= [0m[34m<builtin> [0m[34m<[0mbuilt[34m-[0m[34min [0mfunction getattr[34m>[0m
+      net_dict [34;1m= [0m[34m<not found>[0m
+      net_desc [34;1m= [0m[34m<local> [0m[34m{[0m[36m'lstm0_bw'[0m[34m:[0m [34m{[0m[36m'dropout'[0m[34m:[0m 0[34m.[0m3[34m,[0m [36m'direction'[0m[34m:[0m [34m-[0m1[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'source_embed'[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [36m'nativelstm2'[0m[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'class'[0m[34m:[0m [36m'rec'[0m[34m}[0m[34m,[0m [36m'output'[0m[34m:[0m [34m{[0m[36m'max_seq_len'[0m[34m:[0m [36m"max_len_from('base:encoder') * 3"[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[34m][0m[34m,[0m [36m'optimize_move_layers_out'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'unit'[0m[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'..., len = 14[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFEngine.py[0m[36m"[0m, [34mline [0m[35m1091[0m, [34min [0mcreate_network
+[34m    line: [0mnetwork[34m.[0mconstruct_from_dict[34m([0mnet_dict[34m)[0m
+[34m    locals:[0m
+      network [34;1m= [0m[34m<local> [0m[34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m
+      network[34;1m.[0mconstruct_from_dict [34;1m= [0m[34m<local> [0m[34m<[0mbound method TFNetwork[34m.[0mconstruct_from_dict of [34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m[34m>[0m
+      net_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'lstm0_bw'[0m[34m:[0m [34m{[0m[36m'dropout'[0m[34m:[0m 0[34m.[0m3[34m,[0m [36m'direction'[0m[34m:[0m [34m-[0m1[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'source_embed'[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [36m'nativelstm2'[0m[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'class'[0m[34m:[0m [36m'rec'[0m[34m}[0m[34m,[0m [36m'output'[0m[34m:[0m [34m{[0m[36m'max_seq_len'[0m[34m:[0m [36m"max_len_from('base:encoder') * 3"[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[34m][0m[34m,[0m [36m'optimize_move_layers_out'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'unit'[0m[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'..., len = 14[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m338[0m, [34min [0mconstruct_from_dict
+[34m    line: [0mself[34m.[0mconstruct_layer[34m([0mnet_dict[34m,[0m name[34m)[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m
+      self[34;1m.[0mconstruct_layer [34;1m= [0m[34m<local> [0m[34m<[0mbound method TFNetwork[34m.[0mconstruct_layer of [34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m[34m>[0m
+      net_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'lstm0_bw'[0m[34m:[0m [34m{[0m[36m'dropout'[0m[34m:[0m 0[34m.[0m3[34m,[0m [36m'direction'[0m[34m:[0m [34m-[0m1[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'source_embed'[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [36m'nativelstm2'[0m[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'class'[0m[34m:[0m [36m'rec'[0m[34m}[0m[34m,[0m [36m'output'[0m[34m:[0m [34m{[0m[36m'max_seq_len'[0m[34m:[0m [36m"max_len_from('base:encoder') * 3"[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[34m][0m[34m,[0m [36m'optimize_move_layers_out'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'unit'[0m[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'..., len = 14[0m
+      name [34;1m= [0m[34m<local> [0m[36m'decision'[0m[34m,[0m len [34m=[0m 8
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m415[0m, [34min [0mconstruct_layer
+[34m    line: [0mlayer_class[34m.[0mtransform_config_dict[34m([0mlayer_desc[34m,[0m network[34m=[0mself[34m,[0m get_layer[34m=[0mget_layer[34m)[0m
+[34m    locals:[0m
+      layer_class [34;1m= [0m[34m<local> [0m[34m<[0m[34mclass [0m[36m'TFNetworkRecLayer.DecideLayer'[0m[34m>[0m
+      layer_class[34;1m.[0mtransform_config_dict [34;1m= [0m[34m<local> [0m[34m<[0mbound method LayerBase[34m.[0mtransform_config_dict of [34m<[0m[34mclass [0m[36m'TFNetworkRecLayer.DecideLayer'[0m[34m>[0m[34m>[0m
+      layer_desc [34;1m= [0m[34m<local> [0m[34m{[0m[36m'loss_opts'[0m[34m:[0m [34m{[0m[36m'debug_print'[0m[34m:[0m [34mFalse[0m[34m}[0m[34m,[0m [36m'target'[0m[34m:[0m [36m'classes'[0m[34m,[0m [36m'loss'[0m[34m:[0m [36m'edit_distance'[0m[34m}[0m
+      network [34;1m= [0m[34m<not found>[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m
+      get_layer [34;1m= [0m[34m<local> [0m[34m<[0mfunction TFNetwork[34m.[0mconstruct_layer[34m.[0m[34m<[0mlocals[34m>[0m[34m.[0mget_layer at 0x2ac9a63356a8[34m>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetworkLayer.py[0m[36m"[0m, [34mline [0m[35m362[0m, [34min [0mtransform_config_dict
+[34m    line: [0m[34mfor [0msrc_name [34min [0msrc_names
+[34m    locals:[0m
+      src_name [34;1m= [0m[34m<not found>[0m
+      src_names [34;1m= [0m[34m<local> [0m[34m[[0m[36m'output'[0m[34m][0m[34m,[0m _[34m[[0m0[34m][0m[34m:[0m [34m{[0mlen [34m=[0m 6[34m}[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetworkLayer.py[0m[36m"[0m, [34mline [0m[35m363[0m, [34min [0m<listcomp>
+[34m    line: [0md[34m[[0m[36m"sources"[0m[34m][0m [34m=[0m [34m[[0m
+            get_layer[34m([0msrc_name[34m)[0m
+            [34mfor [0msrc_name [34min [0msrc_names
+            [34mif [0m[34mnot [0msrc_name [34m=[0m[34m=[0m [36m"none"[0m[34m][0m
+[34m    locals:[0m
+      d [34;1m= [0m[34m<not found>[0m
+      get_layer [34;1m= [0m[34m<local> [0m[34m<[0mfunction TFNetwork[34m.[0mconstruct_layer[34m.[0m[34m<[0mlocals[34m>[0m[34m.[0mget_layer at 0x2ac9a63356a8[34m>[0m
+      src_name [34;1m= [0m[34m<local> [0m[36m'output'[0m[34m,[0m len [34m=[0m 6
+      src_names [34;1m= [0m[34m<not found>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m388[0m, [34min [0mget_layer
+[34m    line: [0m[34mreturn [0mself[34m.[0mconstruct_layer[34m([0mnet_dict[34m=[0mnet_dict[34m,[0m name[34m=[0msrc_name[34m)[0m  [37m# set get_layer to wrap construct_layer[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m
+      self[34;1m.[0mconstruct_layer [34;1m= [0m[34m<local> [0m[34m<[0mbound method TFNetwork[34m.[0mconstruct_layer of [34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m[34m>[0m
+      net_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'lstm0_bw'[0m[34m:[0m [34m{[0m[36m'dropout'[0m[34m:[0m 0[34m.[0m3[34m,[0m [36m'direction'[0m[34m:[0m [34m-[0m1[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'source_embed'[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [36m'nativelstm2'[0m[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'class'[0m[34m:[0m [36m'rec'[0m[34m}[0m[34m,[0m [36m'output'[0m[34m:[0m [34m{[0m[36m'max_seq_len'[0m[34m:[0m [36m"max_len_from('base:encoder') * 3"[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[34m][0m[34m,[0m [36m'optimize_move_layers_out'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'unit'[0m[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'..., len = 14[0m
+      name [34;1m= [0m[34m<not found>[0m
+      src_name [34;1m= [0m[34m<local> [0m[36m'output'[0m[34m,[0m len [34m=[0m 6
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m418[0m, [34min [0mconstruct_layer
+[34m    line: [0m[34mreturn [0madd_layer[34m([0mname[34m=[0mname[34m,[0m layer_class[34m=[0mlayer_class[34m,[0m [34m*[0m[34m*[0mlayer_desc[34m)[0m
+[34m    locals:[0m
+      add_layer [34;1m= [0m[34m<local> [0m[34m<[0mbound method TFNetwork[34m.[0madd_layer of [34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m[34m>[0m
+      name [34;1m= [0m[34m<local> [0m[36m'output'[0m[34m,[0m len [34m=[0m 6
+      layer_class [34;1m= [0m[34m<local> [0m[34m<[0m[34mclass [0m[36m'TFNetworkRecLayer.RecLayer'[0m[34m>[0m
+      layer_desc [34;1m= [0m[34m<local> [0m[34m{[0m[36m'max_seq_len'[0m[34m:[0m [34m<[0mtf[34m.[0mTensor [36m'mul:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mint32[34m>[0m[34m,[0m [36m'sources'[0m[34m:[0m [34m[[0m[34m][0m[34m,[0m [36m'optimize_move_layers_out'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'unit'[0m[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'beam_size'[0m[34m:[0m 12[34m,[0m [36m'target'[0m[34m:[0m [36m'classes'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'output_prob'[0m[34m][0m[34m}[0m[34m,[0m [36m'end'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'compare'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'output'[0m[34m][0m[34m,[0m [36m'value'[0m[34m:[0m 0[34m}[0m[34m,[0m [36m'ener..., len = 6[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m507[0m, [34min [0madd_layer
+[34m    line: [0mlayer [34m=[0m self[34m.[0m_create_layer[34m([0mname[34m=[0mname[34m,[0m layer_class[34m=[0mlayer_class[34m,[0m [34m*[0m[34m*[0mlayer_desc[34m)[0m
+[34m    locals:[0m
+      layer [34;1m= [0m[34m<not found>[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m
+      self[34;1m.[0m_create_layer [34;1m= [0m[34m<local> [0m[34m<[0mbound method TFNetwork[34m.[0m_create_layer of [34m<[0mTFNetwork [36m'root'[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m[34m>[0m
+      name [34;1m= [0m[34m<local> [0m[36m'output'[0m[34m,[0m len [34m=[0m 6
+      layer_class [34;1m= [0m[34m<local> [0m[34m<[0m[34mclass [0m[36m'TFNetworkRecLayer.RecLayer'[0m[34m>[0m
+      layer_desc [34;1m= [0m[34m<local> [0m[34m{[0m[36m'max_seq_len'[0m[34m:[0m [34m<[0mtf[34m.[0mTensor [36m'mul:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mint32[34m>[0m[34m,[0m [36m'sources'[0m[34m:[0m [34m[[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'beam_size'[0m[34m:[0m 12[34m,[0m [36m'target'[0m[34m:[0m [36m'classes'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'output_prob'[0m[34m][0m[34m}[0m[34m,[0m [36m'end'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'compare'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'output'[0m[34m][0m[34m,[0m [36m'value'[0m[34m:[0m 0[34m}[0m[34m,[0m [36m'energy_in'[0m[34m:[0m [34m{[0m[36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'class'[0m[34m:[0m [36m'..., len = 6[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m464[0m, [34min [0m_create_layer
+[34m    line: [0mlayer [34m=[0m layer_class[34m([0m[34m*[0m[34m*[0mlayer_desc[34m)[0m
+[34m    locals:[0m
+      layer [34;1m= [0m[34m<not found>[0m
+      layer_class [34;1m= [0m[34m<local> [0m[34m<[0m[34mclass [0m[36m'TFNetworkRecLayer.RecLayer'[0m[34m>[0m
+      layer_desc [34;1m= [0m[34m<local> [0m[34m{[0m[36m'output'[0m[34m:[0m Data[34m([0mname[34m=[0m[36m'output_output'[0m[34m,[0m shape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m,[0m [36m'max_seq_len'[0m[34m:[0m [34m<[0mtf[34m.[0mTensor [36m'mul:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mint32[34m>[0m[34m,[0m [36m'name'[0m[34m:[0m [36m'output'[0m[34m,[0m [36m'sources'[0m[34m:[0m [34m[[0m[34m][0m[34m,[0m [36m'n_out'[0m[34m:[0m [34mNone[0m[34m,[0m [36m'unit'[0m[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'beam_size'[0m[34m:[0m 12[34m,[0m [36m'tar..., len = 9[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetworkRecLayer.py[0m[36m"[0m, [34mline [0m[35m178[0m, [34min [0m__init__
+[34m    line: [0my [34m=[0m self[34m.[0m_get_output_subnet_unit[34m([0mself[34m.[0mcell[34m)[0m
+[34m    locals:[0m
+      y [34;1m= [0m[34m<not found>[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mRecLayer [36m'output'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m
+      self[34;1m.[0m_get_output_subnet_unit [34;1m= [0m[34m<local> [0m[34m<[0mbound method RecLayer[34m.[0m_get_output_subnet_unit of [34m<[0mRecLayer [36m'output'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m[34m>[0m
+      self[34;1m.[0mcell [34;1m= [0m[34m<local> [0m[34m<[0mTFNetworkRecLayer[34m.[0m_SubnetworkRecCell object at 0x2acd7bb17780[34m>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetworkRecLayer.py[0m[36m"[0m, [34mline [0m[35m709[0m, [34min [0m_get_output_subnet_unit
+[34m    line: [0moutput[34m,[0m search_choices [34m=[0m cell[34m.[0mget_output[34m([0mrec_layer[34m=[0mself[34m)[0m
+[34m    locals:[0m
+      output [34;1m= [0m[34m<not found>[0m
+      search_choices [34;1m= [0m[34m<not found>[0m
+      cell [34;1m= [0m[34m<local> [0m[34m<[0mTFNetworkRecLayer[34m.[0m_SubnetworkRecCell object at 0x2acd7bb17780[34m>[0m
+      cell[34;1m.[0mget_output [34;1m= [0m[34m<local> [0m[34m<[0mbound method _SubnetworkRecCell[34m.[0mget_output of [34m<[0mTFNetworkRecLayer[34m.[0m_SubnetworkRecCell object at 0x2acd7bb17780[34m>[0m[34m>[0m
+      rec_layer [34;1m= [0m[34m<not found>[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mRecLayer [36m'output'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetworkRecLayer.py[0m[36m"[0m, [34mline [0m[35m1731[0m, [34min [0mget_output
+[34m    line: [0mself[34m.[0m_construct_output_layers_moved_out[34m([0m
+            loop_accumulated[34m=[0mself[34m.[0mfinal_acc_tas_dict[34m,[0m seq_len[34m=[0mseq_len[34m,[0m extra_output_layers[34m=[0mextra_output_layers[34m)[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFNetworkRecLayer[34m.[0m_SubnetworkRecCell object at 0x2acd7bb17780[34m>[0m
+      self[34;1m.[0m_construct_output_layers_moved_out [34;1m= [0m[34m<local> [0m[34m<[0mbound method _SubnetworkRecCell[34m.[0m_construct_output_layers_moved_out of [34m<[0mTFNetworkRecLayer[34m.[0m_SubnetworkRecCell object at 0x2acd7bb17780[34m>[0m[34m>[0m
+      loop_accumulated [34;1m= [0m[34m<not found>[0m
+      self[34;1m.[0mfinal_acc_tas_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'output_prev_s_state'[0m[34m:[0m [34m<[0mtf[34m.[0mTensorArray [36m'output/rec/subnet_base/acc_ta_output_prev_s_state'[0m[34m>[0m[34m,[0m [36m'output_att_weights'[0m[34m:[0m [34m<[0mtf[34m.[0mTensorArray [36m'output/rec/subnet_base/acc_ta_output_att_weights'[0m[34m>[0m[34m}[0m
+      seq_len [34;1m= [0m[34m<local> [0m[34m<[0mtf[34m.[0mTensor [36m'output/rec/subnet_base/check_seq_len_batch_size/check_input_dim/identity_with_dim_check:0'[0m shape[34m=[0m[34m([0m?[34m,[0m[34m)[0m dtype[34m=[0mint32[34m>[0m
+      extra_output_layers [34;1m= [0m[34m<local> [0m[34m{[0m[36m'output'[0m[34m,[0m [36m'att_weights'[0m[34m}[0m[34m,[0m len [34m=[0m 2
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetworkRecLayer.py[0m[36m"[0m, [34mline [0m[35m2205[0m, [34min [0m_construct_output_layers_moved_out
+[34m    line: [0mget_layer[34m([0mlayer_name[34m)[0m
+[34m    locals:[0m
+      get_layer [34;1m= [0m[34m<local> [0m[34m<[0mfunction _SubnetworkRecCell[34m.[0m_construct_output_layers_moved_out[34m.[0m[34m<[0mlocals[34m>[0m[34m.[0mget_layer at 0x2acd7bde5730[34m>[0m
+      layer_name [34;1m= [0m[34m<local> [0m[36m'output_prob'[0m[34m,[0m len [34m=[0m 11
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetworkRecLayer.py[0m[36m"[0m, [34mline [0m[35m2198[0m, [34min [0mget_layer
+[34m    line: [0m[34mreturn [0mself[34m.[0moutput_layers_net[34m.[0mconstruct_layer[34m([0mself[34m.[0mnet_dict[34m,[0m name[34m=[0mname[34m,[0m get_layer[34m=[0mget_layer[34m)[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFNetworkRecLayer[34m.[0m_SubnetworkRecCell object at 0x2acd7bb17780[34m>[0m
+      self[34;1m.[0moutput_layers_net [34;1m= [0m[34m<local> [0m[34m<[0mTFNetwork [36m'root/output:rec-subnet-output'[0m parent_layer[34m=[0m[34m<[0mRecLayer [36m'output'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m
+      self[34;1m.[0moutput_layers_net[34;1m.[0mconstruct_layer [34;1m= [0m[34m<local> [0m[34m<[0mbound method TFNetwork[34m.[0mconstruct_layer of [34m<[0mTFNetwork [36m'root/output:rec-subnet-output'[0m parent_layer[34m=[0m[34m<[0mRecLayer [36m'output'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m[34m>[0m
+      self[34;1m.[0mnet_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'output'[0m[34m:[0m [34m{[0m[36m'initial_output'[0m[34m:[0m 0[34m,[0m [36m'class'[0m[34m:[0m [36m'choice'[0m[34m,[0m [36m'beam_size'[0m[34m:[0m 12[34m,[0m [36m'target'[0m[34m:[0m [36m'classes'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'output_prob'[0m[34m][0m[34m}[0m[34m,[0m [36m'end'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'compare'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'output'[0m[34m][0m[34m,[0m [36m'value'[0m[34m:[0m 0[34m}[0m[34m,[0m [36m'energy_in'[0m[34m:[0m [34m{[0m[36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'class'[0m[34m:[0m [36m'combine'[0m[34m,[0m [36m'kind'[0m[34m:[0m [36m'add'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'base:enc_ctx'[0m[34m,[0m [36m'weight_feedback'[0m[34m,[0m [36m'prev_s_tran..., len = 17[0m
+      name [34;1m= [0m[34m<local> [0m[36m'output_prob'[0m[34m,[0m len [34m=[0m 11
+      get_layer [34;1m= [0m[34m<local> [0m[34m<[0mfunction _SubnetworkRecCell[34m.[0m_construct_output_layers_moved_out[34m.[0m[34m<[0mlocals[34m>[0m[34m.[0mget_layer at 0x2acd7bde5730[34m>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m418[0m, [34min [0mconstruct_layer
+[34m    line: [0m[34mreturn [0madd_layer[34m([0mname[34m=[0mname[34m,[0m layer_class[34m=[0mlayer_class[34m,[0m [34m*[0m[34m*[0mlayer_desc[34m)[0m
+[34m    locals:[0m
+      add_layer [34;1m= [0m[34m<local> [0m[34m<[0mbound method TFNetwork[34m.[0madd_layer of [34m<[0mTFNetwork [36m'root/output:rec-subnet-output'[0m parent_layer[34m=[0m[34m<[0mRecLayer [36m'output'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m[34m>[0m
+      name [34;1m= [0m[34m<local> [0m[36m'output_prob'[0m[34m,[0m len [34m=[0m 11
+      layer_class [34;1m= [0m[34m<local> [0m[34m<[0m[34mclass [0m[36m'TFNetworkHMMFactorization.HMMFactorization'[0m[34m>[0m
+      layer_desc [34;1m= [0m[34m<local> [0m[34m{[0m[36m'target'[0m[34m:[0m [36m'classes'[0m[34m,[0m [36m'n_out'[0m[34m:[0m 38568[34m,[0m [36m'loss'[0m[34m:[0m [34m<[0mTFNetworkLayer[34m.[0mCrossEntropyLoss object at 0x2acd7bde6828[34m>[0m[34m,[0m [36m'prev_outputs'[0m[34m:[0m [34m<[0mLinearLayer [36m'prev_outputs_transformed'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m 1000[34m)[0m[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m[34m,[0m [36m'top_k'[0m[34m:[0m 5[34m,[0m [36m'prev_state'[0m[34m:[0m [34m<[0mLinearLayer [36m'prev_state_transformed'[0m out_type[34m=[0mData[34m([0msha[34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 9
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m507[0m, [34min [0madd_layer
+[34m    line: [0mlayer [34m=[0m self[34m.[0m_create_layer[34m([0mname[34m=[0mname[34m,[0m layer_class[34m=[0mlayer_class[34m,[0m [34m*[0m[34m*[0mlayer_desc[34m)[0m
+[34m    locals:[0m
+      layer [34;1m= [0m[34m<not found>[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFNetwork [36m'root/output:rec-subnet-output'[0m parent_layer[34m=[0m[34m<[0mRecLayer [36m'output'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m
+      self[34;1m.[0m_create_layer [34;1m= [0m[34m<local> [0m[34m<[0mbound method TFNetwork[34m.[0m_create_layer of [34m<[0mTFNetwork [36m'root/output:rec-subnet-output'[0m parent_layer[34m=[0m[34m<[0mRecLayer [36m'output'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m[34m)[0m[34m,[0m dtype[34m=[0m[36m'int32'[0m[34m,[0m sparse[34m=[0m[34mTrue[0m[34m,[0m dim[34m=[0m38568[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m train[34m=[0m[34m<[0mtf[34m.[0mTensor [36m'globals/train_flag:0'[0m shape[34m=[0m[34m([0m[34m)[0m dtype[34m=[0mbool[34m>[0m[34m>[0m[34m>[0m
+      name [34;1m= [0m[34m<local> [0m[36m'output_prob'[0m[34m,[0m len [34m=[0m 11
+      layer_class [34;1m= [0m[34m<local> [0m[34m<[0m[34mclass [0m[36m'TFNetworkHMMFactorization.HMMFactorization'[0m[34m>[0m
+      layer_desc [34;1m= [0m[34m<local> [0m[34m{[0m[36m'prev_outputs'[0m[34m:[0m [34m<[0mLinearLayer [36m'prev_outputs_transformed'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m 1000[34m)[0m[34m,[0m batch_dim_axis[34m=[0m1[34m)[0m[34m>[0m[34m,[0m [36m'top_k'[0m[34m:[0m 5[34m,[0m [36m'sources'[0m[34m:[0m [34m[[0m[34m<[0mInternalLayer [36m'att_weights'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m [34mNone[0m[34m,[0m 1[34m)[0m[34m,[0m batch_dim_axis[34m=[0m2[34m)[0m[34m>[0m[34m][0m[34m,[0m [36m'target'[0m[34m:[0m [36m'classes'[0m[34m,[0m [36m'n_out'[0m[34m:[0m 38568[34m,[0m [36m'base_encoder_transformed'[0m[34m:[0m [34m<[0mLinearLay[34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 9
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFNetwork.py[0m[36m"[0m, [34mline [0m[35m466[0m, [34min [0m_create_layer
+[34m    line: [0mlayer[34m.[0moutput[34m.[0msanity_check[34m([0m[34m)[0m
+[34m    locals:[0m
+      layer [34;1m= [0m[34m<local> [0m[34m<[0mHMMFactorization [36m'output_prob'[0m out_type[34m=[0mData[34m([0mshape[34m=[0m[34m([0m[34mNone[0m[34m,[0m [34mNone[0m[34m,[0m 38568[34m)[0m[34m,[0m batch_dim_axis[34m=[0m2[34m)[0m[34m>[0m
+      layer[34;1m.[0moutput [34;1m= [0m[34m<local> [0mData[34m([0mname[34m=[0m[36m'output_prob_output'[0m[34m,[0m shape[34m=[0m[34m([0m[34mNone[0m[34m,[0m [34mNone[0m[34m,[0m 38568[34m)[0m[34m,[0m batch_dim_axis[34m=[0m2[34m)[0m
+      layer[34;1m.[0moutput[34;1m.[0msanity_check [34;1m= [0m[34m<local> [0m[34m<[0mbound method Data[34m.[0msanity_check of Data[34m([0mname[34m=[0m[36m'output_prob_output'[0m[34m,[0m shape[34m=[0m[34m([0m[34mNone[0m[34m,[0m [34mNone[0m[34m,[0m 38568[34m)[0m[34m,[0m batch_dim_axis[34m=[0m2[34m)[0m[34m>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFUtil.py[0m[36m"[0m, [34mline [0m[35m279[0m, [34min [0msanity_check
+[34m    line: [0mself[34m.[0mplaceholder[34m.[0mset_shape[34m([0mself[34m.[0mbatch_shape[34m)[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0mData[34m([0mname[34m=[0m[36m'output_prob_output'[0m[34m,[0m shape[34m=[0m[34m([0m[34mNone[0m[34m,[0m [34mNone[0m[34m,[0m 38568[34m)[0m[34m,[0m batch_dim_axis[34m=[0m2[34m)[0m
+      self[34;1m.[0mplaceholder [34;1m= [0m[34m<local> [0m[34m<[0mtf[34m.[0mTensor [36m'output/rec/output_prob/Squeeze_1:0'[0m shape[34m=[0m[34m([0m1[34m,[0m ?[34m,[0m 38568[34m)[0m dtype[34m=[0mfloat32[34m>[0m
+      self[34;1m.[0mplaceholder[34;1m.[0mset_shape [34;1m= [0m[34m<local> [0m[34m<[0mbound method Tensor[34m.[0mset_shape of [34m<[0mtf[34m.[0mTensor [36m'output/rec/output_prob/Squeeze_1:0'[0m shape[34m=[0m[34m([0m1[34m,[0m ?[34m,[0m 38568[34m)[0m dtype[34m=[0mfloat32[34m>[0m[34m>[0m
+      self[34;1m.[0mbatch_shape [34;1m= [0m[34m<local> [0m[34m([0m[34mNone[0m[34m,[0m [34mNone[0m[34m,[0m [34mNone[0m[34m,[0m 38568[34m)[0m
+  [34;1mFile [0m[36m"/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/python/framework/[0m[36;1mops.py[0m[36m"[0m, [34mline [0m[35m528[0m, [34min [0mset_shape
+[34m    line: [0m[34mraise [0mValueError[34m([0mstr[34m([0me[34m)[0m[34m)[0m
+[34m    locals:[0m
+      ValueError [34;1m= [0m[34m<builtin> [0m[34m<[0m[34mclass [0m[36m'ValueError'[0m[34m>[0m
+      str [34;1m= [0m[34m<builtin> [0m[34m<[0m[34mclass [0m[36m'str'[0m[34m>[0m
+      e [34;1m= [0m[34m<not found>[0m
+[31mValueError[0m: Shapes must be equal rank, but are 3 and 4
+Exception ignored in: <bound method BaseSession.__del__ of <tensorflow.python.client.session.Session object at 0x2ac9043ec2b0>>
+Traceback (most recent call last):
+  File "/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/python/client/session.py", line 686, in __del__
+TypeError: 'NoneType' object is not callable

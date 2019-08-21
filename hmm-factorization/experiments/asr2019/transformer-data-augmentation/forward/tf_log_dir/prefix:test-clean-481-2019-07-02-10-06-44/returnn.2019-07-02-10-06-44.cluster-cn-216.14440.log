@@ -1,0 +1,10 @@
+Returnn log file:
+Time: 2019-07-02 10:06:44
+Call: ['/u/makarov/returnn-parnia/tools/get-attention-weights.py', '/u/bahar/workspace/asr/librispeech/test-20190121/config-train/trafo.specaug.datarndperm_noscale.12l.ffdim4.pretrain3.hpc.config', '--epoch', '481', '--data', 'config:get_dataset("test-clean")', '--dump_dir', '/u/makarov/makarov/NMT/hmm-factorization/experiments/asr2019/transformer/forward-test-clean', '--layers', 'dec_02_att_weights', '--layers', 'dec_01_att_weights', '--layers', 'dec_03_att_weights', '--layers', 'dec_04_att_weights', '--layers', 'dec_05_att_weights', '--layers', 'dec_06_att_weights', '--layers', 'dec_07_att_weights', '--layers', 'dec_08_att_weights', '--layers', 'dec_09_att_weights', '--layers', 'dec_10_att_weights', '--layers', 'dec_11_att_weights', '--layers', 'dec_12_att_weights', '--rec_layer', 'output', '--batch_size', '600', '--tf_log_dir', '/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/transformer/forward/tf_log_dir', '--reset_seq_ordering', 'sorted_reverse']
+Path: /work/smt3/bahar/expriments/asr/librispeech/test/20190121-end2end-hmm/data-train/trafo.specaug.datarndperm_noscale.12l.ffdim4.pretrain3.hpc
+Hostname: cluster-cn-216
+PID: 14440
+Returnn: 20181022.053313--git-dfada43-dirty
+TensorFlow: 1.10.0 (v1.10.0-0-g656e7a2b34) (<site-package> in /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow)
+Config files: ['/u/bahar/workspace/asr/librispeech/test-20190121/config-train/trafo.specaug.datarndperm_noscale.12l.ffdim4.pretrain3.hpc.config']
+

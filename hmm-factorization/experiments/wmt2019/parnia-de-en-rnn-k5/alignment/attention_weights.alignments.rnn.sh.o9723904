@@ -1,0 +1,221 @@
++------- PROLOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ...........: 9723904
+| Started at .......: Wed Aug  7 10:29:59 CEST 2019
+| Execution host ...: cluster-cn-222
+| Cluster queue ....: 4-GPU-1080
+| Script ...........: /var/spool/sge/cluster-cn-222/job_scripts/9723904
+| > YEAR=$1
+| > CONFIG=$2
+| > EPOCH=$3
+| > BEAM_SIZE=$4
+| > OUTPUT_FOLDER=$5
+| > DIR_FOLDER=$6
+| > 
+| > shift
+| > shift
+| > shift
+|
++------- PROLOGUE SCRIPT -----------------------------------------------
+RETURNN get-attention-weights starting up.
+RETURNN starting up, version unknown(git exception: CalledProcessError(128, ('git', 'show', '-s', '--format=%ci', 'HEAD'))), date/time 2019-08-07-10-30-04 (UTC+0200), pid 26604, cwd /work/smt3/bahar/expriments/wmt/2018/de-en/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/data-train/rnn-enc4-dropout3-hmm-k5, Python /u/bahar/settings/python3-returnn-tf1.9/bin/python3
+RETURNN config: /u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/config-train/rnn-enc4-dropout3-hmm-k5.config
+RETURNN command line options: ()
+Hostname: cluster-cn-222
+TensorFlow: 1.10.0 (v1.10.0-0-g656e7a2b34) (<site-package> in /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow)
+Error while getting SGE num_proc: FileNotFoundError(2, "No such file or directory: 'qstat'")
+Setup TF inter and intra global thread pools, num_threads None, session opts {'log_device_placement': False, 'device_count': {'GPU': 0}}.
+CUDA_VISIBLE_DEVICES is set to '0'.
+Collecting TensorFlow device list...
+Local devices available to TensorFlow:
+  1/2: name: "/device:CPU:0"
+       device_type: "CPU"
+       memory_limit: 268435456
+       locality {
+       }
+       incarnation: 17157166269750315570
+  2/2: name: "/device:GPU:0"
+       device_type: "GPU"
+       memory_limit: 10927236711
+       locality {
+         bus_id: 1
+         links {
+         }
+       }
+       incarnation: 7980932460960458235
+       physical_device_desc: "device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:02:00.0, compute capability: 6.1"
+Using gpu device 0: GeForce GTX 1080 Ti
+Device not set explicitly, and we found a GPU, which we will use.
+Model file prefix: net-model/network
+NOTE: We will use 'default' seq ordering.
+<TranslationDataset 'dataset_id23142116432192' epoch=1>: waiting for data length info...
+Setup tf.Session with options {'log_device_placement': False, 'device_count': {'GPU': 1}} ...
+layer root/'data' output: Data(name='data', shape=(None,), dtype='int32', sparse=True, dim=45412)
+layer root/'source_embed' output: Data(name='source_embed_output', shape=(None, 512))
+debug_add_check_numerics_on_output: add for layer 'source_embed': <tf.Tensor 'source_embed/linear/embedding_lookup:0' shape=(?, ?, 512) dtype=float32>
+layer root/'lstm0_fw' output: Data(name='lstm0_fw_output', shape=(None, 1000), batch_dim_axis=1)
+OpCodeCompiler call: /usr/local/cuda-9.0/bin/nvcc -shared -O2 -std=c++11 -I /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/include -I /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/include/external/nsync/public -I /usr/local/cuda-9.0/include -L /usr/local/cuda-9.0/lib64 -x cu -v -DGOOGLE_CUDA=1 -Xcompiler -fPIC -Xcompiler -v -arch compute_61 -D_GLIBCXX_USE_CXX11_ABI=0 -g /var/tmp/9723904.1.4-GPU-1080/makarov/returnn_tf_cache/ops/NativeLstm2/807b76c5bb/NativeLstm2.cc -o /var/tmp/9723904.1.4-GPU-1080/makarov/returnn_tf_cache/ops/NativeLstm2/807b76c5bb/NativeLstm2.so -L/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/numpy/.libs -l:libopenblasp-r0-39a31c03.2.18.so -L/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow -ltensorflow_framework
+OpCodeCompiler call: /usr/local/cuda-9.0/bin/nvcc -shared -O2 -std=c++11 -I /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/include -I /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/include/external/nsync/public -I /usr/local/cuda-9.0/include -L /usr/local/cuda-9.0/lib64 -x cu -v -DGOOGLE_CUDA=1 -Xcompiler -fPIC -Xcompiler -v -arch compute_61 -D_GLIBCXX_USE_CXX11_ABI=0 -g /var/tmp/9723904.1.4-GPU-1080/makarov/returnn_tf_cache/ops/GradOfNativeLstm2/ef93791ddb/GradOfNativeLstm2.cc -o /var/tmp/9723904.1.4-GPU-1080/makarov/returnn_tf_cache/ops/GradOfNativeLstm2/ef93791ddb/GradOfNativeLstm2.so -L/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/numpy/.libs -l:libopenblasp-r0-39a31c03.2.18.so -L/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow -ltensorflow_framework
+debug_add_check_numerics_on_output: add for layer 'lstm0_fw': <tf.Tensor 'lstm0_fw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm0_bw' output: Data(name='lstm0_bw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm0_bw': <tf.Tensor 'lstm0_bw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm1_fw' output: Data(name='lstm1_fw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm1_fw': <tf.Tensor 'lstm1_fw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm1_bw' output: Data(name='lstm1_bw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm1_bw': <tf.Tensor 'lstm1_bw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm2_fw' output: Data(name='lstm2_fw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm2_fw': <tf.Tensor 'lstm2_fw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm2_bw' output: Data(name='lstm2_bw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm2_bw': <tf.Tensor 'lstm2_bw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm3_fw' output: Data(name='lstm3_fw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm3_fw': <tf.Tensor 'lstm3_fw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm3_bw' output: Data(name='lstm3_bw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm3_bw': <tf.Tensor 'lstm3_bw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'encoder' output: Data(name='encoder_output', shape=(None, 2000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'encoder': <tf.Tensor 'concat_lstm3_fw_lstm3_bw/concat_sources/concat:0' shape=(?, ?, 2000) dtype=float32>
+layer root/'inv_fertility' output: Data(name='inv_fertility_output', shape=(None, 1), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'inv_fertility': <tf.Tensor 'inv_fertility/activation/Sigmoid:0' shape=(?, ?, 1) dtype=float32>
+layer root/'enc_ctx' output: Data(name='enc_ctx_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'enc_ctx': <tf.Tensor 'enc_ctx/linear/add_bias:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'output' output: Data(name='output_output', shape=(None,), dtype='int32', sparse=True, dim=33525, batch_dim_axis=1)
+Rec layer sub net:
+  Input layers moved out of loop: (#: 2)
+    output
+    target_embed
+  Output layers moved out of loop: (#: 4)
+    output_prob
+    base_encoder
+    prev_outputs_transformed
+    prev_state_transformed
+  Layers in loop: (#: 10)
+    att_weights
+    energy
+    energy_tanh
+    energy_in
+    prev_s_transformed
+    prev_s_state
+    s
+    att
+    weight_feedback
+    accum_att_weights
+  Unused layers: (#: 1)
+    end
+layer root/output:rec-subnet-input/'output' output: Data(name='classes', shape=(None,), dtype='int32', sparse=True, dim=33525)
+layer root/output:rec-subnet-input/'target_embed' output: Data(name='target_embed_output', shape=(None, 512))
+debug_add_check_numerics_on_output: add for layer 'target_embed': <tf.Tensor 'output/rec/target_embed/linear/embedding_lookup:0' shape=(?, ?, 512) dtype=float32>
+layer root/output:rec-subnet/'weight_feedback' output: Data(name='weight_feedback_output', shape=(None, 1000), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'weight_feedback': <tf.Tensor 'output/rec/weight_feedback/linear/dot/Reshape_1:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet/'prev_s_state' output: Data(name='prev_s_state_output', shape=(2000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'prev_s_state': <tf.Tensor 'output/rec/prev_s_state/concat:0' shape=(?, 2000) dtype=float32>
+layer root/output:rec-subnet/'prev_s_transformed' output: Data(name='prev_s_transformed_output', shape=(1000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'prev_s_transformed': <tf.Tensor 'output/rec/prev_s_transformed/linear/dot/MatMul:0' shape=(?, 1000) dtype=float32>
+layer root/output:rec-subnet/'energy_in' output: Data(name='energy_in_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'energy_in': <tf.Tensor 'output/rec/energy_in/Add_1:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet/'energy_tanh' output: Data(name='energy_tanh_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'energy_tanh': <tf.Tensor 'output/rec/energy_tanh/activation/Tanh:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet/'energy' output: Data(name='energy_output', shape=(None, 1), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'energy': <tf.Tensor 'output/rec/energy/linear/dot/Reshape_1:0' shape=(?, ?, 1) dtype=float32>
+layer root/output:rec-subnet/'att_weights' output: Data(name='att_weights_output', shape=(None, 1), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'att_weights': <tf.Tensor 'output/rec/att_weights/tr_time_recover/transpose:0' shape=(?, ?, 1) dtype=float32>
+layer root/output:rec-subnet/'accum_att_weights' output: Data(name='accum_att_weights_output', shape=(None, 1), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'accum_att_weights': <tf.Tensor 'output/rec/accum_att_weights/add:0' shape=(?, ?, 1) dtype=float32>
+layer root/output:rec-subnet/'target_embed' output: Data(name='target_embed_output', shape=(512,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'target_embed': <tf.Tensor 'output/rec/target_embed_moved_input/TensorArrayReadV3:0' shape=(?, 512) dtype=float32>
+layer root/output:rec-subnet/'att' output: Data(name='att_output', shape=(2000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'att': <tf.Tensor 'output/rec/att/Reshape_1:0' shape=(?, 2000) dtype=float32>
+layer root/output:rec-subnet/'s' output: Data(name='s_output', shape=(1000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 's': <tf.Tensor 'output/rec/s/rec/lstm_cell/LSTMBlockCell:6' shape=(?, 1000) dtype=float32>
+layer root/output:rec-subnet-output/'att_weights' output: Data(name='att_weights_output', shape=(None, None, 1), batch_dim_axis=2)
+debug_add_check_numerics_on_output: add for layer 'att_weights': <tf.Tensor 'output/rec/att_weights/TensorArrayStack/TensorArrayGatherV3:0' shape=(?, ?, ?, 1) dtype=float32>
+layer root/output:rec-subnet-output/'base_encoder' output: Data(name='base_encoder_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'base_encoder': <tf.Tensor 'output/rec/base_encoder/linear/dot/Reshape_1:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet-output/'prev_s_state' output: Data(name='prev_s_state_output', shape=(None, 2000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'prev_s_state': <tf.Tensor 'output/rec/prev_s_state/TensorArrayStack/TensorArrayGatherV3:0' shape=(?, ?, 2000) dtype=float32>
+layer root/output:rec-subnet-output/'prev_state_transformed' output: Data(name='prev_state_transformed_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'prev_state_transformed': <tf.Tensor 'output/rec/prev_state_transformed/linear/dot/Reshape_1:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet-output/'prev:target_embed' output: Data(name='target_embed_output', shape=(None, 512), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'prev:target_embed': <tf.Tensor 'output/rec/prev_target_embed/strided_slice:0' shape=(?, ?, 512) dtype=float32>
+layer root/output:rec-subnet-output/'prev_outputs_transformed' output: Data(name='prev_outputs_transformed_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'prev_outputs_transformed': <tf.Tensor 'output/rec/prev_outputs_transformed/linear/dot/Reshape_1:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet-output/'output_prob' output: Data(name='att_weights_output', shape=(None, 33525), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'output_prob': <tf.Tensor 'output/rec/output_prob/Squeeze_1:0' shape=(?, ?, 33525) dtype=float32>
+layer root/'decision' output: Data(name='output_output', shape=(None,), dtype='int32', sparse=True, dim=33525, batch_dim_axis=1)
+Warning: using numerical unstable sparse Cross-Entropy loss calculation
+debug_add_check_numerics_on_output: add for layer loss 'output_prob': <tf.Tensor 'output/rec/output_prob/output_prob_identity_with_check_numerics_output/Identity:0' shape=(?, ?, 33525) dtype=float32>
+Network layer topology:
+  extern data: data: Data(shape=(None,), dtype='int32', sparse=True, dim=45412), classes: Data(shape=(None,), dtype='int32', sparse=True, dim=33525, available_for_inference=False)
+  used data keys: ['classes', 'data']
+  layer source 'data' #: 45412
+  layer decide 'decision' #: 33525
+  layer linear 'enc_ctx' #: 1000
+  layer copy 'encoder' #: 2000
+  layer linear 'inv_fertility' #: 1
+  layer rec 'lstm0_bw' #: 1000
+  layer rec 'lstm0_fw' #: 1000
+  layer rec 'lstm1_bw' #: 1000
+  layer rec 'lstm1_fw' #: 1000
+  layer rec 'lstm2_bw' #: 1000
+  layer rec 'lstm2_fw' #: 1000
+  layer rec 'lstm3_bw' #: 1000
+  layer rec 'lstm3_fw' #: 1000
+  layer rec 'output' #: 33525
+  layer linear 'source_embed' #: 512
+net params #: 179637744
+net trainable params: [<tf.Variable 'enc_ctx/W:0' shape=(2000, 1000) dtype=float32_ref>, <tf.Variable 'enc_ctx/b:0' shape=(1000,) dtype=float32_ref>, <tf.Variable 'inv_fertility/W:0' shape=(2000, 1) dtype=float32_ref>, <tf.Variable 'lstm0_bw/rec/W:0' shape=(512, 4000) dtype=float32_ref>, <tf.Variable 'lstm0_bw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm0_bw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm0_fw/rec/W:0' shape=(512, 4000) dtype=float32_ref>, <tf.Variable 'lstm0_fw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm0_fw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm1_bw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm1_bw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm1_bw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm1_fw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm1_fw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm1_fw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm2_bw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm2_bw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm2_bw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm2_fw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm2_fw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm2_fw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm3_bw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm3_bw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm3_bw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm3_fw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm3_fw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm3_fw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'output/rec/base_encoder/W:0' shape=(1000, 1000) dtype=float32_ref>, <tf.Variable 'output/rec/energy/W:0' shape=(1000, 1) dtype=float32_ref>, <tf.Variable 'output/rec/output_prob/dense/kernel:0' shape=(1000, 33525) dtype=float32_ref>, <tf.Variable 'output/rec/prev_outputs_transformed/W:0' shape=(512, 1000) dtype=float32_ref>, <tf.Variable 'output/rec/prev_s_transformed/W:0' shape=(2000, 1000) dtype=float32_ref>, <tf.Variable 'output/rec/prev_state_transformed/W:0' shape=(2000, 1000) dtype=float32_ref>, <tf.Variable 'output/rec/s/rec/lstm_cell/bias:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'output/rec/s/rec/lstm_cell/kernel:0' shape=(3512, 4000) dtype=float32_ref>, <tf.Variable 'output/rec/target_embed/W:0' shape=(33525, 512) dtype=float32_ref>, <tf.Variable 'output/rec/weight_feedback/W:0' shape=(1, 1000) dtype=float32_ref>, <tf.Variable 'source_embed/W:0' shape=(45412, 512) dtype=float32_ref>]
+loading weights from net-model/network.138
+TF: log_dir: /work/smt2/makarov/NMT/hmm-factorization/experiments/wmt2019/parnia-de-en-rnn-k5/alignment/tf_log_dir//dataset_id23142116432192-138-2019-08-07-08-30-01
+Note: There are still these uninitialized variables: ['learning_rate:0']
+att-weights epoch 138, step 0, mem_usage:GPU:0 1.3GB, 1.464 sec/step, elapsed 0:00:01, exp. remaining 0:00:04, complete 28.37%
+att-weights epoch 138, step 1, mem_usage:GPU:0 1.8GB, 1.035 sec/step, elapsed 0:00:03, exp. remaining 0:00:06, complete 31.75%
+att-weights epoch 138, step 2, mem_usage:GPU:0 1.8GB, 1.187 sec/step, elapsed 0:00:04, exp. remaining 0:00:08, complete 34.33%
+att-weights epoch 138, step 3, mem_usage:GPU:0 1.8GB, 1.584 sec/step, elapsed 0:00:06, exp. remaining 0:00:10, complete 36.90%
+att-weights epoch 138, step 4, mem_usage:GPU:0 1.8GB, 1.352 sec/step, elapsed 0:00:07, exp. remaining 0:00:11, complete 39.88%
+att-weights epoch 138, step 5, mem_usage:GPU:0 1.8GB, 1.112 sec/step, elapsed 0:00:08, exp. remaining 0:00:11, complete 42.86%
+att-weights epoch 138, step 6, mem_usage:GPU:0 1.8GB, 22.455 sec/step, elapsed 0:00:30, exp. remaining 0:00:36, complete 46.03%
+att-weights epoch 138, step 7, mem_usage:GPU:0 1.8GB, 0.818 sec/step, elapsed 0:00:31, exp. remaining 0:00:33, complete 49.01%
+att-weights epoch 138, step 8, mem_usage:GPU:0 1.8GB, 0.969 sec/step, elapsed 0:00:32, exp. remaining 0:00:30, complete 51.79%
+att-weights epoch 138, step 9, mem_usage:GPU:0 1.8GB, 13.442 sec/step, elapsed 0:00:46, exp. remaining 0:00:37, complete 54.96%
+att-weights epoch 138, step 10, mem_usage:GPU:0 1.8GB, 1.975 sec/step, elapsed 0:00:48, exp. remaining 0:00:35, complete 57.74%
+att-weights epoch 138, step 11, mem_usage:GPU:0 1.8GB, 1.579 sec/step, elapsed 0:00:49, exp. remaining 0:00:32, complete 60.71%
+att-weights epoch 138, step 12, mem_usage:GPU:0 1.8GB, 1.192 sec/step, elapsed 0:00:51, exp. remaining 0:00:28, complete 64.29%
+att-weights epoch 138, step 13, mem_usage:GPU:0 1.8GB, 17.447 sec/step, elapsed 0:01:08, exp. remaining 0:00:33, complete 67.06%
+att-weights epoch 138, step 14, mem_usage:GPU:0 1.8GB, 1.649 sec/step, elapsed 0:01:10, exp. remaining 0:00:30, complete 69.64%
+att-weights epoch 138, step 15, mem_usage:GPU:0 1.8GB, 1.282 sec/step, elapsed 0:01:11, exp. remaining 0:00:27, complete 72.42%
+att-weights epoch 138, step 16, mem_usage:GPU:0 1.8GB, 1.333 sec/step, elapsed 0:01:12, exp. remaining 0:00:23, complete 75.40%
+att-weights epoch 138, step 17, mem_usage:GPU:0 1.8GB, 1.475 sec/step, elapsed 0:01:14, exp. remaining 0:00:20, complete 78.37%
+att-weights epoch 138, step 18, mem_usage:GPU:0 1.8GB, 1.270 sec/step, elapsed 0:01:15, exp. remaining 0:00:17, complete 81.55%
+att-weights epoch 138, step 19, mem_usage:GPU:0 1.8GB, 1.063 sec/step, elapsed 0:01:16, exp. remaining 0:00:14, complete 84.52%
+att-weights epoch 138, step 20, mem_usage:GPU:0 1.8GB, 1.133 sec/step, elapsed 0:01:17, exp. remaining 0:00:11, complete 87.50%
+att-weights epoch 138, step 21, mem_usage:GPU:0 1.8GB, 2.170 sec/step, elapsed 0:01:19, exp. remaining 0:00:08, complete 90.28%
+att-weights epoch 138, step 22, mem_usage:GPU:0 1.8GB, 1.101 sec/step, elapsed 0:01:21, exp. remaining 0:00:06, complete 92.86%
+att-weights epoch 138, step 23, mem_usage:GPU:0 1.8GB, 3.493 sec/step, elapsed 0:01:24, exp. remaining 0:00:04, complete 95.44%
+att-weights epoch 138, step 24, mem_usage:GPU:0 1.8GB, 0.814 sec/step, elapsed 0:01:25, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 25, mem_usage:GPU:0 1.8GB, 2.094 sec/step, elapsed 0:01:27, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 26, mem_usage:GPU:0 1.8GB, 0.994 sec/step, elapsed 0:01:28, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 27, mem_usage:GPU:0 1.9GB, 1.231 sec/step, elapsed 0:01:29, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 28, mem_usage:GPU:0 1.9GB, 1.005 sec/step, elapsed 0:01:30, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 29, mem_usage:GPU:0 1.9GB, 0.899 sec/step, elapsed 0:01:31, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 30, mem_usage:GPU:0 1.9GB, 0.945 sec/step, elapsed 0:01:32, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 31, mem_usage:GPU:0 1.9GB, 0.721 sec/step, elapsed 0:01:33, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 32, mem_usage:GPU:0 1.9GB, 0.766 sec/step, elapsed 0:01:34, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 33, mem_usage:GPU:0 1.9GB, 1.120 sec/step, elapsed 0:01:35, exp. remaining 0:00:01, complete 98.41%
+att-weights epoch 138, step 34, mem_usage:GPU:0 1.9GB, 0.870 sec/step, elapsed 0:01:36, exp. remaining 0:00:01, complete 98.41%
+Stats:
+  mem_usage:GPU:0: Stats(mean=1.8GB, std_dev=86.5MB, min=1.3GB, max=1.9GB, num_seqs=35, avg_data_len=1)
+att-weights epoch 138, finished after 35 steps, 0:01:36 elapsed (6.1% computing time)
+Layer 'att_weights' Stats:
+  504 seqs, 747909 total frames, 1483.946429 average frames
+  Mean: 0.025579315135684556
+  Std dev: 0.1437955424396741
+  Min/max: 0.0 / 0.99999976
+Quitting
++------- EPILOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ..............: 9723904
+| Stopped at ..........: Wed Aug  7 10:32:50 CEST 2019
+| Resources requested .: h_rss=5G,h_vmem=1536G,pxe=ubuntu_16.04,h_rt=3600,h_fsize=20G,s_core=0,num_proc=5,gpu=1,scratch_free=5G
+| Resources used ......: cpu=00:00:47, mem=33.88328 GB s, io=1.66598 GB, vmem=2.384G, maxvmem=2.384G, last_file_cache=1.611G, last_rss=3M, max-cache=2.020G
+| Memory used .........: 3.631G / 5.000G (72.6%)
+| Total time used .....: 0:02:52
+|
++------- EPILOGUE SCRIPT -----------------------------------------------

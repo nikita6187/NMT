@@ -1,0 +1,19 @@
+2019-05-23 16:07:36.334165: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-05-23 16:07:37.098262: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Found device 0 with properties: 
+name: GeForce GTX 980 major: 5 minor: 2 memoryClockRate(GHz): 1.266
+pciBusID: 0000:82:00.0
+totalMemory: 3.95GiB freeMemory: 3.87GiB
+2019-05-23 16:07:37.098335: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-05-23 16:07:37.098354: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-05-23 16:07:37.098364: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-05-23 16:07:37.098374: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-05-23 16:07:37.100711: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-05-23 16:07:37.473438: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-05-23 16:07:37.473488: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-05-23 16:07:37.473495: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-05-23 16:07:37.473714: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/device:GPU:0 with 3593 MB memory) -> physical GPU (device: 0, name: GeForce GTX 980, pci bus id: 0000:82:00.0, compute capability: 5.2)
+2019-05-23 16:07:39.201243: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-05-23 16:07:39.201316: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-05-23 16:07:39.201327: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-05-23 16:07:39.201334: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-05-23 16:07:39.201547: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 3593 MB memory) -> physical GPU (device: 0, name: GeForce GTX 980, pci bus id: 0000:82:00.0, compute capability: 5.2)

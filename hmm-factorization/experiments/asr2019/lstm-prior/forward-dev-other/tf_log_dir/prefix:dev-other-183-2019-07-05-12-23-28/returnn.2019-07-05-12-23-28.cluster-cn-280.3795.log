@@ -1,0 +1,10 @@
+Returnn log file:
+Time: 2019-07-05 12:23:28
+Call: ['/u/makarov/returnn-parnia-2/tools/get-attention-weights.py', '/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm-prior/exp3.ctc.ogg-priorAtt-lr0005-k10-specAug.config', '--epoch', '183', '--data', 'config:get_dataset("dev-other")', '--dump_dir', '/u/makarov/makarov/NMT/hmm-factorization/experiments/asr2019/lstm-prior/forward-dev-other', '--layers', 'att_weights', '--rec_layer', 'output', '--batch_size', '4000', '--tf_log_dir', '/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm-prior/forward-dev-other/tf_log_dir', '--reset_seq_ordering', 'sorted_reverse']
+Path: /work/smt3/bahar/expriments/asr/librispeech/test/20190121-end2end-hmm/data-train/exp3.ctc.ogg-priorAtt-lr0005-k10-specAug
+Hostname: cluster-cn-280
+PID: 3795
+Returnn: unknown(git exception: CalledProcessError(128, ('git', 'show', '-s', '--format=%ci', 'HEAD')))
+TensorFlow: 1.10.0 (v1.10.0-0-g656e7a2b34) (<site-package> in /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow)
+Config files: ['/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm-prior/exp3.ctc.ogg-priorAtt-lr0005-k10-specAug.config']
+

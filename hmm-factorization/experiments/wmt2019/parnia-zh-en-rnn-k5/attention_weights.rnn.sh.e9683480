@@ -1,0 +1,21 @@
+fatal: Not a git repository (or any parent up to mount point /u/makarov)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2019-08-05 16:46:13.494371: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-08-05 16:46:14.562919: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:82:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2019-08-05 16:46:14.562970: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:46:14.562986: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:46:14.562994: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:46:14.563001: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:46:14.566449: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:46:14.989893: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:46:14.989945: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:46:14.989953: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:46:14.990346: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/device:GPU:0 with 10405 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:82:00.0, compute capability: 6.1)
+2019-08-05 16:46:21.063049: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:46:21.063228: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:46:21.063254: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:46:21.063264: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:46:21.063479: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10405 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:82:00.0, compute capability: 6.1)

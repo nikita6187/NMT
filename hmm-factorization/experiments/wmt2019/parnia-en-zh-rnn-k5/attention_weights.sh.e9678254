@@ -1,0 +1,60 @@
+2019-08-05 16:09:36.836250: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-08-05 16:09:37.946746: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:81:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2019-08-05 16:09:37.946793: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:09:37.946807: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:09:37.946814: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:09:37.946820: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:09:37.949845: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:09:43.728557: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:09:43.728740: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:09:43.728753: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:09:43.729187: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/device:GPU:0 with 10405 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:81:00.0, compute capability: 6.1)
+[31;1mEXCEPTION[0m
+[34mTraceback (most recent call last):[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m414[0m, [34min [0m<module>
+[34m    line: [0mmain[34m([0msys[34m.[0margv[34m)[0m
+[34m    locals:[0m
+      main [34;1m= [0m[34m<local> [0m[34m<[0mfunction main at 0x2b6308f632f0[34m>[0m
+      sys [34;1m= [0m[34m<local> [0m[34m<[0mmodule [36m'sys'[0m [34m([0mbuilt[34m-[0m[34min[0m[34m)[0m[34m>[0m
+      sys[34;1m.[0margv [34;1m= [0m[34m<local> [0m[34m[[0m[36m'/work/smt2/makarov/returnn-hmm/tools/get-attention-weights.py'[0m[34m,[0m [36m'/u/bahar/workspace/wmt/2019/en-zh--2019-04-16/config-train/rnn-enc4-dropout3-hmm-k5.config'[0m[34m,[0m [36m'--epoch'[0m[34m,[0m [36m'164'[0m[34m,[0m [36m'--data'[0m[34m,[0m [36m'config:newstest2018'[0m[34m,[0m [36m'--dump_dir'[0m[34m,[0m [36m'./'[0m[34m,[0m [36m'--layers'[0m[34m,[0m [36m'dec_02_att_weights'[0m[34m,[0m [36m'--layers'[0m[34m,[0m [36m'dec_01_att_weights'[0m[34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 26[34m,[0m _[34m[[0m0[34m][0m[34m:[0m [34m{[0mlen [34m=[0m 61[34m}[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m230[0m, [34min [0mmain
+[34m    line: [0minit_net[34m([0margs[34m,[0m layers[34m)[0m
+[34m    locals:[0m
+      init_net [34;1m= [0m[34m<global> [0m[34m<[0mfunction init_net at 0x2b6308f63268[34m>[0m
+      args [34;1m= [0m[34m<local> [0mNamespace[34m([0mbatch_size[34m=[0m600[34m,[0m beam_size[34m=[0m12[34m,[0m config_file[34m=[0m[36m'/u/bahar/workspace/wmt/2019/en-zh--2019-04-16/config-train/rnn-enc4-dropout3-hmm-k5.config'[0m[34m,[0m data[34m=[0m[36m'config:newstest2018'[0m[34m,[0m device[34m=[0m[34mNone[0m[34m,[0m do_search[34m=[0m[34mFalse[0m[34m,[0m dropout[34m=[0m[34mNone[0m[34m,[0m dump_dir[34m=[0m[36m'./'[0m[34m,[0m enc_layer[34m=[0m[36m'encoder'[0m[34m,[0m encoder_sa[34m=[0m[34mFalse[0m[34m,[0m epoch[34m=[0m164[34m,[0m hmm_fac_fo[34m=[0mFal[34m.[0m[34m.[0m[34m.[0m
+      layers [34;1m= [0m[34m<local> [0m[34m[[0m[36m'dec_02_att_weights'[0m[34m,[0m [36m'dec_01_att_weights'[0m[34m,[0m [36m'dec_03_att_weights'[0m[34m,[0m [36m'dec_04_att_weights'[0m[34m,[0m [36m'dec_05_att_weights'[0m[34m,[0m [36m'dec_06_att_weights'[0m[34m][0m[34m,[0m len [34m=[0m 6[34m,[0m _[34m[[0m0[34m][0m[34m:[0m [34m{[0mlen [34m=[0m 18[34m}[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m139[0m, [34min [0minit_net
+[34m    line: [0mrnn[34m.[0mengine[34m.[0minit_network_from_config[34m([0mconfig[34m=[0mconfig[34m,[0m net_dict_post_proc[34m=[0mnet_dict_post_proc[34m)[0m
+[34m    locals:[0m
+      rnn [34;1m= [0m[34m<global> [0m[34m<[0mmodule [36m'rnn'[0m [34mfrom [0m[36m'/work/smt2/makarov/returnn-hmm/rnn.py'[0m[34m>[0m
+      rnn[34;1m.[0mengine [34;1m= [0m[34m<global> [0m[34m<[0mTFEngine[34m.[0mEngine object at 0x2b6259ebcb38[34m>[0m
+      rnn[34;1m.[0mengine[34;1m.[0minit_network_from_config [34;1m= [0m[34m<global> [0m[34m<[0mbound method Engine[34m.[0minit_network_from_config of [34m<[0mTFEngine[34m.[0mEngine object at 0x2b6259ebcb38[34m>[0m[34m>[0m
+      config [34;1m= [0m[34m<global> [0m[34m<[0mConfig[34m.[0mConfig object at 0x2b6308f5df98[34m>[0m
+      net_dict_post_proc [34;1m= [0m[34m<local> [0m[34m<[0mfunction init_net[34m.[0m[34m<[0mlocals[34m>[0m[34m.[0mnet_dict_post_proc at 0x2b6308ef66a8[34m>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/[0m[36;1mTFEngine.py[0m[36m"[0m, [34mline [0m[35m934[0m, [34min [0minit_network_from_config
+[34m    line: [0mnet_dict [34m=[0m net_dict_post_proc[34m([0mnet_dict[34m)[0m
+[34m    locals:[0m
+      net_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'encoder'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'copy'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'lstm3_fw'[0m[34m,[0m [36m'lstm3_bw'[0m[34m][0m[34m}[0m[34m,[0m [36m'lstm0_fw'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'rec'[0m[34m,[0m [36m'dropout'[0m[34m:[0m 0[34m.[0m3[34m,[0m [36m'direction'[0m[34m:[0m 1[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'source_embed'[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [36m'nativelstm2'[0m[34m}[0m[34m,[0m [36m'enc_ctx'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'linear'[0m[34m,[0m [36m'activation'[0m[34m:[0m [34mNone[0m[34m,[0m [36m'with_bias'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'encoder'[0m[34m][0m[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m}[0m[34m,[0m[34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 14
+      net_dict_post_proc [34;1m= [0m[34m<local> [0m[34m<[0mfunction init_net[34m.[0m[34m<[0mlocals[34m>[0m[34m.[0mnet_dict_post_proc at 0x2b6308ef66a8[34m>[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m135[0m, [34min [0mnet_dict_post_proc
+[34m    line: [0m[34mreturn [0minject_retrieval_code[34m([0mnet_dict[34m,[0m rec_layer_name[34m=[0margs[34m.[0mrec_layer[34m,[0m layers[34m=[0mlayers[34m,[0m dropout[34m=[0margs[34m.[0mdropout[34m,[0m
+                                       args[34m=[0margs[34m)[0m
+[34m    locals:[0m
+      inject_retrieval_code [34;1m= [0m[34m<global> [0m[34m<[0mfunction inject_retrieval_code at 0x2b6259e3b048[34m>[0m
+      net_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'encoder'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'copy'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'lstm3_fw'[0m[34m,[0m [36m'lstm3_bw'[0m[34m][0m[34m}[0m[34m,[0m [36m'lstm0_fw'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'rec'[0m[34m,[0m [36m'dropout'[0m[34m:[0m 0[34m.[0m3[34m,[0m [36m'direction'[0m[34m:[0m 1[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'source_embed'[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [36m'nativelstm2'[0m[34m}[0m[34m,[0m [36m'enc_ctx'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'linear'[0m[34m,[0m [36m'activation'[0m[34m:[0m [34mNone[0m[34m,[0m [36m'with_bias'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'encoder'[0m[34m][0m[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m}[0m[34m,[0m[34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 14
+      rec_layer_name [34;1m= [0m[34m<not found>[0m
+      args [34;1m= [0m[34m<local> [0mNamespace[34m([0mbatch_size[34m=[0m600[34m,[0m beam_size[34m=[0m12[34m,[0m config_file[34m=[0m[36m'/u/bahar/workspace/wmt/2019/en-zh--2019-04-16/config-train/rnn-enc4-dropout3-hmm-k5.config'[0m[34m,[0m data[34m=[0m[36m'config:newstest2018'[0m[34m,[0m device[34m=[0m[34mNone[0m[34m,[0m do_search[34m=[0m[34mFalse[0m[34m,[0m dropout[34m=[0m[34mNone[0m[34m,[0m dump_dir[34m=[0m[36m'./'[0m[34m,[0m enc_layer[34m=[0m[36m'encoder'[0m[34m,[0m encoder_sa[34m=[0m[34mFalse[0m[34m,[0m epoch[34m=[0m164[34m,[0m hmm_fac_fo[34m=[0mFal[34m.[0m[34m.[0m[34m.[0m
+      args[34;1m.[0mrec_layer [34;1m= [0m[34m<local> [0m[36m'output'[0m[34m,[0m len [34m=[0m 6
+      layers [34;1m= [0m[34m<local> [0m[34m[[0m[36m'dec_02_att_weights'[0m[34m,[0m [36m'dec_01_att_weights'[0m[34m,[0m [36m'dec_03_att_weights'[0m[34m,[0m [36m'dec_04_att_weights'[0m[34m,[0m [36m'dec_05_att_weights'[0m[34m,[0m [36m'dec_06_att_weights'[0m[34m][0m[34m,[0m len [34m=[0m 6[34m,[0m _[34m[[0m0[34m][0m[34m:[0m [34m{[0mlen [34m=[0m 18[34m}[0m
+      dropout [34;1m= [0m[34m<not found>[0m
+      args[34;1m.[0mdropout [34;1m= [0m[34m<local> [0m[34mNone[0m
+  [34;1mFile [0m[36m"/work/smt2/makarov/returnn-hmm/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m66[0m, [34min [0minject_retrieval_code
+[34m    line: [0m[34massert [0ml [34min [0mnet_dict[34m[[0mrec_layer_name[34m][0m[34m[[0m[36m'unit'[0m[34m][0m[34m,[0m [36m"layer %r not found"[0m [34m%[0m l
+[34m    locals:[0m
+      l [34;1m= [0m[34m<local> [0m[36m'dec_02_att_weights'[0m[34m,[0m len [34m=[0m 18
+      net_dict [34;1m= [0m[34m<local> [0m[34m{[0m[36m'encoder'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'copy'[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'lstm3_fw'[0m[34m,[0m [36m'lstm3_bw'[0m[34m][0m[34m}[0m[34m,[0m [36m'lstm0_fw'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'rec'[0m[34m,[0m [36m'dropout'[0m[34m:[0m 0[34m.[0m3[34m,[0m [36m'direction'[0m[34m:[0m 1[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'source_embed'[0m[34m][0m[34m,[0m [36m'unit'[0m[34m:[0m [36m'nativelstm2'[0m[34m}[0m[34m,[0m [36m'enc_ctx'[0m[34m:[0m [34m{[0m[36m'class'[0m[34m:[0m [36m'linear'[0m[34m,[0m [36m'activation'[0m[34m:[0m [34mNone[0m[34m,[0m [36m'with_bias'[0m[34m:[0m [34mTrue[0m[34m,[0m [36m'from'[0m[34m:[0m [34m[[0m[36m'encoder'[0m[34m][0m[34m,[0m [36m'n_out'[0m[34m:[0m 1000[34m}[0m[34m,[0m[34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 14
+      rec_layer_name [34;1m= [0m[34m<local> [0m[36m'output'[0m[34m,[0m len [34m=[0m 6
+[31mAssertionError[0m: layer 'dec_02_att_weights' not found

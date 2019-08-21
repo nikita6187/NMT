@@ -1,0 +1,62 @@
++------- PROLOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ...........: 9678254
+| Started at .......: Mon Aug  5 16:09:27 CEST 2019
+| Execution host ...: cluster-cn-259
+| Cluster queue ....: 4-GPU-1080
+| Script ...........: /var/spool/sge/cluster-cn-259/job_scripts/9678254
+| > YEAR=$1
+| > CONFIG=$2
+| > EPOCH=$3
+| > BEAM_SIZE=$4
+| > OUTPUT_FOLDER=$5
+| > DIR_FOLDER=$6
+| > 
+| > shift
+| > shift
+| > shift
+|
++------- PROLOGUE SCRIPT -----------------------------------------------
+RETURNN get-attention-weights starting up.
+RETURNN starting up, version 20190722.155524--git-3241981-dirty, date/time 2019-08-05-16-09-36 (UTC+0200), pid 16706, cwd /work/smt3/bahar/expriments/wmt/2019/en-zh/returnn--2019-04-16/data-train/rnn-enc4-dropout3-hmm-k5, Python /u/bahar/settings/python3-returnn-tf1.9/bin/python3
+RETURNN config: /u/bahar/workspace/wmt/2019/en-zh--2019-04-16/config-train/rnn-enc4-dropout3-hmm-k5.config
+RETURNN command line options: ()
+Hostname: cluster-cn-259
+TensorFlow: 1.10.0 (v1.10.0-0-g656e7a2b34) (<site-package> in /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow)
+Error while getting SGE num_proc: FileNotFoundError(2, "No such file or directory: 'qstat'")
+Setup TF inter and intra global thread pools, num_threads None, session opts {'device_count': {'GPU': 0}, 'log_device_placement': False}.
+CUDA_VISIBLE_DEVICES is set to '2'.
+Collecting TensorFlow device list...
+Local devices available to TensorFlow:
+  1/2: name: "/device:CPU:0"
+       device_type: "CPU"
+       memory_limit: 268435456
+       locality {
+       }
+       incarnation: 14011606976580371115
+  2/2: name: "/device:GPU:0"
+       device_type: "GPU"
+       memory_limit: 10911236096
+       locality {
+         bus_id: 2
+         numa_node: 1
+         links {
+         }
+       }
+       incarnation: 7404547504707536332
+       physical_device_desc: "device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:81:00.0, compute capability: 6.1"
+Using gpu device 2: GeForce GTX 1080 Ti
+Device not set explicitly, and we found a GPU, which we will use.
+Model file prefix: net-model/network
+NOTE: We will use 'default' seq ordering.
+<TranslationDataset 'dataset_id47704352714880' epoch=1>: waiting for data length info...
++------- EPILOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ..............: 9678254
+| Stopped at ..........: Mon Aug  5 16:09:56 CEST 2019
+| Resources requested .: h_rss=10G,h_vmem=1536G,h_fsize=20G,pxe=ubuntu_16.04,s_core=0,h_rt=3600,num_proc=5,scratch_free=5G,gpu=1
+| Resources used ......: cpu=00:00:12, mem=7.34286 GB s, io=0.02936 GB, vmem=1.025G, maxvmem=1.025G, last_file_cache=830M, last_rss=3M, max-cache=751M
+| Memory used .........: 1.544G / 10.000G (15.4%)
+| Total time used .....: 0:00:29
+|
++------- EPILOGUE SCRIPT -----------------------------------------------

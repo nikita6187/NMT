@@ -1,0 +1,10 @@
+Returnn log file:
+Time: 2019-07-05 10:17:29
+Call: ['/u/makarov/returnn-vanilla/tools/get-attention-weights.py', '/u/bahar/workspace/asr/librispeech/test-20190121/config-train/base2.smlp2.specaug.datarndperm_noscale.bs18k.curric3.retrain1.config', '--epoch', '250', '--data', 'config:get_dataset("dev-other")', '--dump_dir', '/u/makarov/makarov/NMT/hmm-factorization/experiments/asr2019/lstm/forward-dev-other', '--layers', 'att_weights', '--rec_layer', 'output', '--batch_size', '4000', '--tf_log_dir', '/work/smt2/makarov/NMT/hmm-factorization/experiments/asr2019/lstm/forward-dev-other/tf_log_dir', '--reset_seq_ordering', 'sorted_reverse']
+Path: /work/smt3/bahar/expriments/asr/librispeech/test/20190121-end2end-hmm/data-train/base2.smlp2.specaug.datarndperm_noscale.bs18k.curric3.retrain1
+Hostname: cluster-cn-234
+PID: 1769
+Returnn: 20190704.120126--git-9d1cf12-dirty
+TensorFlow: 1.10.0 (v1.10.0-0-g656e7a2b34) (<site-package> in /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow)
+Config files: ['/u/bahar/workspace/asr/librispeech/test-20190121/config-train/base2.smlp2.specaug.datarndperm_noscale.bs18k.curric3.retrain1.config']
+

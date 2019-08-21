@@ -1,0 +1,60 @@
+fatal: Not a git repository (or any parent up to mount point /u/makarov)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2019-08-05 16:29:14.195707: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-08-05 16:29:15.014476: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:03:00.0
+totalMemory: 10.92GiB freeMemory: 10.77GiB
+2019-08-05 16:29:15.014520: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:29:15.014534: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:29:15.014542: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:29:15.014549: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:29:15.017466: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:29:21.055578: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:29:21.055845: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:29:21.055858: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:29:21.057277: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/device:GPU:0 with 10421 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:03:00.0, compute capability: 6.1)
+2019-08-05 16:29:23.606659: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1484] Adding visible gpu devices: 0
+2019-08-05 16:29:23.606747: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-08-05 16:29:23.606763: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971]      0 
+2019-08-05 16:29:23.606774: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] 0:   N 
+2019-08-05 16:29:23.608812: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1097] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10421 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:03:00.0, compute capability: 6.1)
+[31;1mEXCEPTION[0m
+[34mTraceback (most recent call last):[0m
+  [34;1mFile [0m[36m"/u/makarov/returnn-parnia-2/[0m[36;1mTFEngine.py[0m[36m"[0m, [34mline [0m[35m612[0m, [34min [0mrun
+[34m    line: [0mself[34m.[0m_maybe_handle_extra_fetches[34m([0mfetches_results[34m)[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFEngine[34m.[0mRunner object at 0x14b7f4c8e588[34m>[0m
+      self[34;1m.[0m_maybe_handle_extra_fetches [34;1m= [0m[34m<local> [0m[34m<[0mbound method Runner[34m.[0m_maybe_handle_extra_fetches of [34m<[0mTFEngine[34m.[0mRunner object at 0x14b7f4c8e588[34m>[0m[34m>[0m
+      fetches_results [34;1m= [0m[34m<local> [0m[34m{[0m[36m'extra:target_classes'[0m[34m:[0m array[34m([0m[34m[[0m[34m[[0m22483[34m,[0m     3[34m,[0m  2458[34m,[0m  2443[34m,[0m  5982[34m,[0m    17[34m,[0m  1445[34m,[0m    58[34m,[0m  5248[34m,[0m
+                                         2930[34m,[0m  6576[34m,[0m    15[34m,[0m   927[34m,[0m  3651[34m,[0m 11062[34m,[0m     3[34m,[0m  4950[34m,[0m 16158[34m,[0m
+                                           36[34m,[0m   378[34m,[0m  2423[34m,[0m  5982[34m,[0m  1810[34m,[0m  1935[34m,[0m   912[34m,[0m  4256[34m,[0m  2646[34m,[0m
+                                            5[34m,[0m 13443[34m,[0m   228[34m,[0m     4[34m,[0m     0[34m,[0m     0[34m,[0m     0[34m,[0m   [34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 14
+  [34;1mFile [0m[36m"/u/makarov/returnn-parnia-2/[0m[36;1mTFEngine.py[0m[36m"[0m, [34mline [0m[35m398[0m, [34min [0m_maybe_handle_extra_fetches
+[34m    line: [0mself[34m.[0mextra_fetches_callback[34m([0m[34m*[0m[34m*[0md[34m)[0m
+[34m    locals:[0m
+      self [34;1m= [0m[34m<local> [0m[34m<[0mTFEngine[34m.[0mRunner object at 0x14b7f4c8e588[34m>[0m
+      self[34;1m.[0mextra_fetches_callback [34;1m= [0m[34m<local> [0m[34m<[0mfunction main[34m.[0m[34m<[0mlocals[34m>[0m[34m.[0mfetch_callback at 0x14b8ba657950[34m>[0m
+      d [34;1m= [0m[34m<local> [0m[34m{[0m[36m'output'[0m[34m:[0m array[34m([0m[34m[[0m[34m[[0m22483[34m,[0m     3[34m,[0m  2458[34m,[0m  2443[34m,[0m  5982[34m,[0m    17[34m,[0m  1445[34m,[0m    58[34m,[0m  5248[34m,[0m
+                           2930[34m,[0m  6576[34m,[0m    15[34m,[0m   927[34m,[0m  3651[34m,[0m 11062[34m,[0m     3[34m,[0m  4950[34m,[0m 16158[34m,[0m
+                             36[34m,[0m   378[34m,[0m  2423[34m,[0m  5982[34m,[0m  1810[34m,[0m  1935[34m,[0m   912[34m,[0m  4256[34m,[0m  2646[34m,[0m
+                              5[34m,[0m 13443[34m,[0m   228[34m,[0m     4[34m,[0m     0[34m,[0m     0[34m,[0m     0[34m,[0m     0[34m,[0m     0[34m,[0m
+                    [34m.[0m[34m.[0m[34m.[0m[34m,[0m len [34m=[0m 8
+  [34;1mFile [0m[36m"/u/makarov/returnn-parnia-2/tools/[0m[36;1mget-attention-weights.py[0m[36m"[0m, [34mline [0m[35m356[0m, [34min [0mfetch_callback
+[34m    line: [0mnp[34m.[0msave[34m([0mfname[34m,[0m data[34m)[0m
+[34m    locals:[0m
+      np [34;1m= [0m[34m<global> [0m[34m<[0mmodule [36m'numpy'[0m [34mfrom [0m[36m'/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/numpy/__init__.py'[0m[34m>[0m
+      np[34;1m.[0msave [34;1m= [0m[34m<global> [0m[34m<[0mfunction save at 0x14b921c7eb70[34m>[0m
+      fname [34;1m= [0m[34m<local> [0m[36m'.//rnn-enc4-dropout3-hmm-k5_ep164_data_0_7.npy'[0m[34m,[0m len [34m=[0m 46
+      data [34;1m= [0m[34m<local> [0m[34m{[0m0[34m:[0m [34m{[0m[36m'output'[0m[34m:[0m array[34m([0m[34m[[0m22483[34m,[0m     3[34m,[0m  2458[34m,[0m  2443[34m,[0m  5982[34m,[0m    17[34m,[0m  1445[34m,[0m    58[34m,[0m  5248[34m,[0m
+                             2930[34m,[0m  6576[34m,[0m    15[34m,[0m   927[34m,[0m  3651[34m,[0m 11062[34m,[0m     3[34m,[0m  4950[34m,[0m 16158[34m,[0m
+                               36[34m,[0m   378[34m,[0m  2423[34m,[0m  5982[34m,[0m  1810[34m,[0m  1935[34m,[0m   912[34m,[0m  4256[34m,[0m  2646[34m,[0m
+                                5[34m,[0m 13443[34m,[0m   228[34m,[0m     4[34m,[0m     0[34m,[0m     0[34m,[0m     0[34m,[0m     0[34m,[0m     0[34m,[0m
+                       [34m.[0m[34m.[0m[34m.[0m[34m,[0m _[34m[[0m0[34m][0m[34m:[0m [34m{[0mlen [34m=[0m 7[34m}[0m
+  [34;1mFile [0m[36m"/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/numpy/lib/[0m[36;1mnpyio.py[0m[36m"[0m, [34mline [0m[35m492[0m, [34min [0msave
+[34m    line: [0mfid [34m=[0m open[34m([0mfile[34m,[0m [36m"wb"[0m[34m)[0m
+[34m    locals:[0m
+      fid [34;1m= [0m[34m<not found>[0m
+      open [34;1m= [0m[34m<builtin> [0m[34m<[0mbuilt[34m-[0m[34min [0mfunction open[34m>[0m
+      file [34;1m= [0m[34m<local> [0m[36m'.//rnn-enc4-dropout3-hmm-k5_ep164_data_0_7.npy'[0m[34m,[0m len [34m=[0m 46
+[31mPermissionError[0m: [Errno 13] Permission denied: './/rnn-enc4-dropout3-hmm-k5_ep164_data_0_7.npy'

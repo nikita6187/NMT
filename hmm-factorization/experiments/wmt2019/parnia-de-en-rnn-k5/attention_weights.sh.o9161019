@@ -1,0 +1,435 @@
++------- PROLOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ...........: 9161019
+| Started at .......: Thu May 23 16:16:13 CEST 2019
+| Execution host ...: cluster-cn-223
+| Cluster queue ....: 4-GPU-980
+| Script ...........: /var/spool/sge/cluster-cn-223/job_scripts/9161019
+| > YEAR=$1
+| > CONFIG=$2
+| > EPOCH=$3
+| > BEAM_SIZE=$4
+| > OUTPUT_FOLDER=$5
+| > DIR_FOLDER=$6
+| > 
+| > shift
+| > shift
+| > shift
+|
++------- PROLOGUE SCRIPT -----------------------------------------------
+RETURNN get-attention-weights starting up.
+RETURNN starting up, version 20190521.093826--git-1e2123a-dirty, date/time 2019-05-23-16-16-15 (UTC+0200), pid 20610, cwd /work/smt3/bahar/expriments/wmt/2018/de-en/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/data-train/rnn-enc4-dropout3-hmm-k5, Python /u/bahar/settings/python3-returnn-tf1.9/bin/python3
+RETURNN config: /u/bahar/workspace/wmt/2018/de-en-6M--2019-01-16/de-en-hmm--2018-01-16/config-train/rnn-enc4-dropout3-hmm-k5.config
+RETURNN command line options: ()
+Hostname: cluster-cn-223
+TensorFlow: 1.10.0 (v1.10.0-0-g656e7a2b34) (<site-package> in /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow)
+Error while getting SGE num_proc: FileNotFoundError(2, "No such file or directory: 'qstat'")
+Setup TF inter and intra global thread pools, num_threads None, session opts {'log_device_placement': False, 'device_count': {'GPU': 0}}.
+CUDA_VISIBLE_DEVICES is set to '2'.
+Collecting TensorFlow device list...
+Local devices available to TensorFlow:
+  1/2: name: "/device:CPU:0"
+       device_type: "CPU"
+       memory_limit: 268435456
+       locality {
+       }
+       incarnation: 8848954078051816461
+  2/2: name: "/device:GPU:0"
+       device_type: "GPU"
+       memory_limit: 3767795712
+       locality {
+         bus_id: 2
+         numa_node: 1
+         links {
+         }
+       }
+       incarnation: 288021659767584184
+       physical_device_desc: "device: 0, name: GeForce GTX 980, pci bus id: 0000:82:00.0, compute capability: 5.2"
+Using gpu device 2: GeForce GTX 980
+Device not set explicitly, and we found a GPU, which we will use.
+Model file prefix: net-model/network
+NOTE: We are resetting partition epoch to 1.
+NOTE: We will use 'default' seq ordering.
+<TranslationDataset 'dataset_id47438960985872' epoch=1>: waiting for data length info...
+Setup tf.Session with options {'log_device_placement': False, 'device_count': {'GPU': 1}} ...
+layer root/'data' output: Data(name='data', shape=(None,), dtype='int32', sparse=True, dim=45412)
+layer root/'source_embed' output: Data(name='source_embed_output', shape=(None, 512))
+debug_add_check_numerics_on_output: add for layer 'source_embed': <tf.Tensor 'source_embed/linear/embedding_lookup:0' shape=(?, ?, 512) dtype=float32>
+layer root/'lstm0_fw' output: Data(name='lstm0_fw_output', shape=(None, 1000), batch_dim_axis=1)
+OpCodeCompiler call: /usr/local/cuda-9.0/bin/nvcc -shared -O2 -std=c++11 -I /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/include -I /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/include/external/nsync/public -I /usr/local/cuda-9.0/include -L /usr/local/cuda-9.0/lib64 -x cu -v -DGOOGLE_CUDA=1 -Xcompiler -fPIC -Xcompiler -v -arch compute_52 -D_GLIBCXX_USE_CXX11_ABI=0 -g /var/tmp/9161019.1.4-GPU-980/makarov/returnn_tf_cache/ops/NativeLstm2/a21e812fb4/NativeLstm2.cc -o /var/tmp/9161019.1.4-GPU-980/makarov/returnn_tf_cache/ops/NativeLstm2/a21e812fb4/NativeLstm2.so -L/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/numpy/.libs -l:libopenblasp-r0-39a31c03.2.18.so -L/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow -ltensorflow_framework
+OpCodeCompiler call: /usr/local/cuda-9.0/bin/nvcc -shared -O2 -std=c++11 -I /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/include -I /u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow/include/external/nsync/public -I /usr/local/cuda-9.0/include -L /usr/local/cuda-9.0/lib64 -x cu -v -DGOOGLE_CUDA=1 -Xcompiler -fPIC -Xcompiler -v -arch compute_52 -D_GLIBCXX_USE_CXX11_ABI=0 -g /var/tmp/9161019.1.4-GPU-980/makarov/returnn_tf_cache/ops/GradOfNativeLstm2/4302c1a627/GradOfNativeLstm2.cc -o /var/tmp/9161019.1.4-GPU-980/makarov/returnn_tf_cache/ops/GradOfNativeLstm2/4302c1a627/GradOfNativeLstm2.so -L/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/numpy/.libs -l:libopenblasp-r0-39a31c03.2.18.so -L/u/bahar/settings/python3-returnn-tf1.9/lib/python3.5/site-packages/tensorflow -ltensorflow_framework
+debug_add_check_numerics_on_output: add for layer 'lstm0_fw': <tf.Tensor 'lstm0_fw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm0_bw' output: Data(name='lstm0_bw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm0_bw': <tf.Tensor 'lstm0_bw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm1_fw' output: Data(name='lstm1_fw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm1_fw': <tf.Tensor 'lstm1_fw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm1_bw' output: Data(name='lstm1_bw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm1_bw': <tf.Tensor 'lstm1_bw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm2_fw' output: Data(name='lstm2_fw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm2_fw': <tf.Tensor 'lstm2_fw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm2_bw' output: Data(name='lstm2_bw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm2_bw': <tf.Tensor 'lstm2_bw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm3_fw' output: Data(name='lstm3_fw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm3_fw': <tf.Tensor 'lstm3_fw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'lstm3_bw' output: Data(name='lstm3_bw_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'lstm3_bw': <tf.Tensor 'lstm3_bw/rec/NativeLstm2:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'encoder' output: Data(name='encoder_output', shape=(None, 2000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'encoder': <tf.Tensor 'concat_lstm3_fw_lstm3_bw/concat_sources/concat:0' shape=(?, ?, 2000) dtype=float32>
+layer root/'enc_ctx' output: Data(name='enc_ctx_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'enc_ctx': <tf.Tensor 'enc_ctx/linear/add_bias:0' shape=(?, ?, 1000) dtype=float32>
+layer root/'inv_fertility' output: Data(name='inv_fertility_output', shape=(None, 1), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'inv_fertility': <tf.Tensor 'inv_fertility/activation/Sigmoid:0' shape=(?, ?, 1) dtype=float32>
+layer root/'output' output: Data(name='output_output', shape=(None,), dtype='int32', sparse=True, dim=33525, batch_dim_axis=1)
+layer root/output:rec-subnet/'weight_feedback' output: Data(name='weight_feedback_output', shape=(None, 1000), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'weight_feedback': <tf.Tensor 'output/rec/weight_feedback/linear/dot/Reshape_1:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet/'prev_s_state' output: Data(name='prev_s_state_output', shape=(2000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'prev_s_state': <tf.Tensor 'output/rec/prev_s_state/concat:0' shape=(?, 2000) dtype=float32>
+layer root/output:rec-subnet/'prev_s_transformed' output: Data(name='prev_s_transformed_output', shape=(1000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'prev_s_transformed': <tf.Tensor 'output/rec/prev_s_transformed/linear/dot/MatMul:0' shape=(?, 1000) dtype=float32>
+layer root/output:rec-subnet/'energy_in' output: Data(name='energy_in_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'energy_in': <tf.Tensor 'output/rec/energy_in/Add_1:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet/'energy_tanh' output: Data(name='energy_tanh_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'energy_tanh': <tf.Tensor 'output/rec/energy_tanh/activation/Tanh:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet/'energy' output: Data(name='energy_output', shape=(None, 1), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'energy': <tf.Tensor 'output/rec/energy/linear/dot/Reshape_1:0' shape=(?, ?, 1) dtype=float32>
+layer root/output:rec-subnet/'att_weights' output: Data(name='att_weights_output', shape=(None, 1), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'att_weights': <tf.Tensor 'output/rec/att_weights/tr_time_recover/transpose:0' shape=(?, ?, 1) dtype=float32>
+layer root/output:rec-subnet/'output' output: Data(name='classes', shape=(), dtype='int32', sparse=True, dim=33525, time_dim_axis=None)
+layer root/output:rec-subnet/'prev_state_transformed' output: Data(name='prev_state_transformed_output', shape=(1000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'prev_state_transformed': <tf.Tensor 'output/rec/prev_state_transformed/linear/dot/MatMul:0' shape=(?, 1000) dtype=float32>
+layer root/output:rec-subnet/'base_encoder' output: Data(name='base_encoder_output', shape=(None, 1000), batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer 'base_encoder': <tf.Tensor 'output/rec/base_encoder/linear/dot/Reshape_1:0' shape=(?, ?, 1000) dtype=float32>
+layer root/output:rec-subnet/'prev_outputs_transformed' output: Data(name='prev_outputs_transformed_output', shape=(1000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'prev_outputs_transformed': <tf.Tensor 'output/rec/prev_outputs_transformed/linear/dot/MatMul:0' shape=(?, 1000) dtype=float32>
+layer root/output:rec-subnet/'output_prob' output: Data(name='output_prob_output', shape=(33525,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'output_prob': <tf.Tensor 'output/rec/output_prob/Squeeze_1:0' shape=(?, 33525) dtype=float32>
+layer root/output:rec-subnet/'accum_att_weights' output: Data(name='accum_att_weights_output', shape=(None, 1), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'accum_att_weights': <tf.Tensor 'output/rec/accum_att_weights/add:0' shape=(?, ?, 1) dtype=float32>
+layer root/output:rec-subnet/'target_embed' output: Data(name='target_embed_output', shape=(512,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'target_embed': <tf.Tensor 'output/rec/target_embed/linear/embedding_lookup:0' shape=(?, 512) dtype=float32>
+layer root/output:rec-subnet/'att' output: Data(name='att_output', shape=(2000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 'att': <tf.Tensor 'output/rec/att/Reshape_1:0' shape=(?, 2000) dtype=float32>
+layer root/output:rec-subnet/'s' output: Data(name='s_output', shape=(1000,), time_dim_axis=None)
+debug_add_check_numerics_on_output: add for layer 's': <tf.Tensor 'output/rec/s/rec/lstm_cell/LSTMBlockCell:6' shape=(?, 1000) dtype=float32>
+Warning: using numerical unstable sparse Cross-Entropy loss calculation
+debug_add_check_numerics_on_output: add for layer loss 'output_prob': <tf.Tensor 'output/rec/output_prob/output_prob_identity_with_check_numerics_output/Identity:0' shape=(?, 33525) dtype=float32>
+layer root/output:rec-subnet-output/'output' output: Data(name='classes', shape=(None,), dtype='int32', sparse=True, dim=33525, batch_dim_axis=1)
+layer root/output:rec-subnet-output/'att_weights' output: Data(name='att_weights_output', shape=(None, None, 1), batch_dim_axis=2)
+debug_add_check_numerics_on_output: add for layer 'att_weights': <tf.Tensor 'output/rec/att_weights/TensorArrayStack/TensorArrayGatherV3:0' shape=(?, ?, ?, 1) dtype=float32>
+layer root/'decision' output: Data(name='output_output', shape=(None,), dtype='int32', sparse=True, dim=33525, batch_dim_axis=1)
+debug_add_check_numerics_on_output: add for layer loss 'output_prob': <tf.Tensor 'output/rec/output_prob/output_prob_identity_with_check_numerics_output/Identity:0' shape=(?, 33525) dtype=float32>
+Network layer topology:
+  extern data: classes: Data(shape=(None,), dtype='int32', sparse=True, dim=33525, available_for_inference=False), data: Data(shape=(None,), dtype='int32', sparse=True, dim=45412)
+  used data keys: ['classes', 'data']
+  layer source 'data' #: 45412
+  layer decide 'decision' #: 33525
+  layer linear 'enc_ctx' #: 1000
+  layer copy 'encoder' #: 2000
+  layer linear 'inv_fertility' #: 1
+  layer rec 'lstm0_bw' #: 1000
+  layer rec 'lstm0_fw' #: 1000
+  layer rec 'lstm1_bw' #: 1000
+  layer rec 'lstm1_fw' #: 1000
+  layer rec 'lstm2_bw' #: 1000
+  layer rec 'lstm2_fw' #: 1000
+  layer rec 'lstm3_bw' #: 1000
+  layer rec 'lstm3_fw' #: 1000
+  layer rec 'output' #: 33525
+  layer linear 'source_embed' #: 512
+net params #: 179637744
+net trainable params: [<tf.Variable 'enc_ctx/W:0' shape=(2000, 1000) dtype=float32_ref>, <tf.Variable 'enc_ctx/b:0' shape=(1000,) dtype=float32_ref>, <tf.Variable 'inv_fertility/W:0' shape=(2000, 1) dtype=float32_ref>, <tf.Variable 'lstm0_bw/rec/W:0' shape=(512, 4000) dtype=float32_ref>, <tf.Variable 'lstm0_bw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm0_bw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm0_fw/rec/W:0' shape=(512, 4000) dtype=float32_ref>, <tf.Variable 'lstm0_fw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm0_fw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm1_bw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm1_bw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm1_bw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm1_fw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm1_fw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm1_fw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm2_bw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm2_bw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm2_bw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm2_fw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm2_fw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm2_fw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm3_bw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm3_bw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm3_bw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'lstm3_fw/rec/W:0' shape=(2000, 4000) dtype=float32_ref>, <tf.Variable 'lstm3_fw/rec/W_re:0' shape=(1000, 4000) dtype=float32_ref>, <tf.Variable 'lstm3_fw/rec/b:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'output/rec/base_encoder/W:0' shape=(1000, 1000) dtype=float32_ref>, <tf.Variable 'output/rec/energy/W:0' shape=(1000, 1) dtype=float32_ref>, <tf.Variable 'output/rec/output_prob/dense/kernel:0' shape=(1000, 33525) dtype=float32_ref>, <tf.Variable 'output/rec/prev_outputs_transformed/W:0' shape=(512, 1000) dtype=float32_ref>, <tf.Variable 'output/rec/prev_s_transformed/W:0' shape=(2000, 1000) dtype=float32_ref>, <tf.Variable 'output/rec/prev_state_transformed/W:0' shape=(2000, 1000) dtype=float32_ref>, <tf.Variable 'output/rec/s/rec/lstm_cell/bias:0' shape=(4000,) dtype=float32_ref>, <tf.Variable 'output/rec/s/rec/lstm_cell/kernel:0' shape=(3512, 4000) dtype=float32_ref>, <tf.Variable 'output/rec/target_embed/W:0' shape=(33525, 512) dtype=float32_ref>, <tf.Variable 'output/rec/weight_feedback/W:0' shape=(1, 1000) dtype=float32_ref>, <tf.Variable 'source_embed/W:0' shape=(45412, 512) dtype=float32_ref>]
+loading weights from net-model/network.138
+TF: log_dir: /work/smt2/makarov/NMT/hmm-factorization/experiments/wmt2019/parnia-de-en-rnn-k5/tf_log_dir//dataset_id47438960985872-138-2019-05-23-14-16-13
+Note: There are still these uninitialized variables: ['learning_rate:0']
+att-weights epoch 138, step 0, mem_usage:GPU:0 1.3GB, 1.562 sec/step, elapsed 0:00:02, exp. remaining 0:01:02, complete 3.60%
+att-weights epoch 138, step 1, mem_usage:GPU:0 1.3GB, 0.973 sec/step, elapsed 0:00:03, exp. remaining 0:01:29, complete 3.84%
+att-weights epoch 138, step 2, mem_usage:GPU:0 1.3GB, 1.139 sec/step, elapsed 0:00:04, exp. remaining 0:01:49, complete 4.14%
+att-weights epoch 138, step 3, mem_usage:GPU:0 1.3GB, 1.048 sec/step, elapsed 0:00:05, exp. remaining 0:02:01, complete 4.57%
+att-weights epoch 138, step 4, mem_usage:GPU:0 1.3GB, 1.000 sec/step, elapsed 0:00:06, exp. remaining 0:02:12, complete 4.94%
+att-weights epoch 138, step 5, mem_usage:GPU:0 1.3GB, 1.161 sec/step, elapsed 0:00:08, exp. remaining 0:02:27, complete 5.20%
+att-weights epoch 138, step 6, mem_usage:GPU:0 1.3GB, 2.353 sec/step, elapsed 0:00:10, exp. remaining 0:02:55, complete 5.67%
+att-weights epoch 138, step 7, mem_usage:GPU:0 1.3GB, 2.148 sec/step, elapsed 0:00:12, exp. remaining 0:03:16, complete 6.07%
+att-weights epoch 138, step 8, mem_usage:GPU:0 1.3GB, 0.879 sec/step, elapsed 0:00:13, exp. remaining 0:03:15, complete 6.50%
+att-weights epoch 138, step 9, mem_usage:GPU:0 1.3GB, 0.874 sec/step, elapsed 0:00:14, exp. remaining 0:03:15, complete 6.90%
+att-weights epoch 138, step 10, mem_usage:GPU:0 1.3GB, 1.043 sec/step, elapsed 0:00:15, exp. remaining 0:03:20, complete 7.20%
+att-weights epoch 138, step 11, mem_usage:GPU:0 1.3GB, 1.088 sec/step, elapsed 0:00:16, exp. remaining 0:03:23, complete 7.61%
+att-weights epoch 138, step 12, mem_usage:GPU:0 1.3GB, 0.859 sec/step, elapsed 0:00:17, exp. remaining 0:03:22, complete 8.01%
+att-weights epoch 138, step 13, mem_usage:GPU:0 1.3GB, 1.067 sec/step, elapsed 0:00:18, exp. remaining 0:03:24, complete 8.37%
+att-weights epoch 138, step 14, mem_usage:GPU:0 1.3GB, 1.008 sec/step, elapsed 0:00:19, exp. remaining 0:03:26, complete 8.71%
+att-weights epoch 138, step 15, mem_usage:GPU:0 1.3GB, 1.038 sec/step, elapsed 0:00:20, exp. remaining 0:03:27, complete 9.07%
+att-weights epoch 138, step 16, mem_usage:GPU:0 1.3GB, 0.875 sec/step, elapsed 0:00:21, exp. remaining 0:03:29, complete 9.34%
+att-weights epoch 138, step 17, mem_usage:GPU:0 1.3GB, 1.136 sec/step, elapsed 0:00:22, exp. remaining 0:03:33, complete 9.61%
+att-weights epoch 138, step 18, mem_usage:GPU:0 1.3GB, 0.972 sec/step, elapsed 0:00:23, exp. remaining 0:03:32, complete 10.04%
+att-weights epoch 138, step 19, mem_usage:GPU:0 1.3GB, 0.971 sec/step, elapsed 0:00:24, exp. remaining 0:03:32, complete 10.37%
+att-weights epoch 138, step 20, mem_usage:GPU:0 1.3GB, 0.915 sec/step, elapsed 0:00:25, exp. remaining 0:03:30, complete 10.81%
+att-weights epoch 138, step 21, mem_usage:GPU:0 1.3GB, 1.470 sec/step, elapsed 0:00:27, exp. remaining 0:03:36, complete 11.11%
+att-weights epoch 138, step 22, mem_usage:GPU:0 1.3GB, 1.079 sec/step, elapsed 0:00:28, exp. remaining 0:03:37, complete 11.44%
+att-weights epoch 138, step 23, mem_usage:GPU:0 1.3GB, 1.015 sec/step, elapsed 0:00:29, exp. remaining 0:03:38, complete 11.77%
+att-weights epoch 138, step 24, mem_usage:GPU:0 1.3GB, 1.148 sec/step, elapsed 0:00:30, exp. remaining 0:03:37, complete 12.21%
+att-weights epoch 138, step 25, mem_usage:GPU:0 1.3GB, 0.697 sec/step, elapsed 0:00:30, exp. remaining 0:03:37, complete 12.47%
+att-weights epoch 138, step 26, mem_usage:GPU:0 1.3GB, 1.012 sec/step, elapsed 0:00:31, exp. remaining 0:03:39, complete 12.74%
+att-weights epoch 138, step 27, mem_usage:GPU:0 1.3GB, 0.993 sec/step, elapsed 0:00:32, exp. remaining 0:03:37, complete 13.14%
+att-weights epoch 138, step 28, mem_usage:GPU:0 1.3GB, 1.032 sec/step, elapsed 0:00:34, exp. remaining 0:03:37, complete 13.51%
+att-weights epoch 138, step 29, mem_usage:GPU:0 1.3GB, 1.805 sec/step, elapsed 0:00:35, exp. remaining 0:03:43, complete 13.81%
+att-weights epoch 138, step 30, mem_usage:GPU:0 1.3GB, 1.141 sec/step, elapsed 0:00:36, exp. remaining 0:03:44, complete 14.11%
+att-weights epoch 138, step 31, mem_usage:GPU:0 1.3GB, 1.217 sec/step, elapsed 0:00:38, exp. remaining 0:03:47, complete 14.38%
+att-weights epoch 138, step 32, mem_usage:GPU:0 1.3GB, 4.626 sec/step, elapsed 0:00:42, exp. remaining 0:04:08, complete 14.71%
+att-weights epoch 138, step 33, mem_usage:GPU:0 1.3GB, 1.050 sec/step, elapsed 0:00:43, exp. remaining 0:04:08, complete 15.01%
+att-weights epoch 138, step 34, mem_usage:GPU:0 1.3GB, 0.920 sec/step, elapsed 0:00:44, exp. remaining 0:04:07, complete 15.31%
+att-weights epoch 138, step 35, mem_usage:GPU:0 1.3GB, 1.012 sec/step, elapsed 0:00:45, exp. remaining 0:04:07, complete 15.61%
+att-weights epoch 138, step 36, mem_usage:GPU:0 1.3GB, 0.901 sec/step, elapsed 0:00:46, exp. remaining 0:04:07, complete 15.88%
+att-weights epoch 138, step 37, mem_usage:GPU:0 1.3GB, 1.081 sec/step, elapsed 0:00:47, exp. remaining 0:04:03, complete 16.41%
+att-weights epoch 138, step 38, mem_usage:GPU:0 1.3GB, 1.073 sec/step, elapsed 0:00:48, exp. remaining 0:04:00, complete 16.88%
+att-weights epoch 138, step 39, mem_usage:GPU:0 1.3GB, 0.712 sec/step, elapsed 0:00:49, exp. remaining 0:03:58, complete 17.21%
+att-weights epoch 138, step 40, mem_usage:GPU:0 1.3GB, 1.115 sec/step, elapsed 0:00:50, exp. remaining 0:03:57, complete 17.58%
+att-weights epoch 138, step 41, mem_usage:GPU:0 1.3GB, 1.038 sec/step, elapsed 0:00:51, exp. remaining 0:03:55, complete 17.98%
+att-weights epoch 138, step 42, mem_usage:GPU:0 1.3GB, 0.812 sec/step, elapsed 0:00:52, exp. remaining 0:03:52, complete 18.41%
+att-weights epoch 138, step 43, mem_usage:GPU:0 1.3GB, 0.975 sec/step, elapsed 0:00:53, exp. remaining 0:03:49, complete 18.91%
+att-weights epoch 138, step 44, mem_usage:GPU:0 1.3GB, 1.083 sec/step, elapsed 0:00:54, exp. remaining 0:03:50, complete 19.15%
+att-weights epoch 138, step 45, mem_usage:GPU:0 1.3GB, 1.067 sec/step, elapsed 0:00:55, exp. remaining 0:03:50, complete 19.48%
+att-weights epoch 138, step 46, mem_usage:GPU:0 1.3GB, 1.518 sec/step, elapsed 0:00:57, exp. remaining 0:03:49, complete 19.91%
+att-weights epoch 138, step 47, mem_usage:GPU:0 1.3GB, 1.248 sec/step, elapsed 0:00:58, exp. remaining 0:03:49, complete 20.31%
+att-weights epoch 138, step 48, mem_usage:GPU:0 1.3GB, 1.276 sec/step, elapsed 0:00:59, exp. remaining 0:03:48, complete 20.68%
+att-weights epoch 138, step 49, mem_usage:GPU:0 1.3GB, 1.313 sec/step, elapsed 0:01:01, exp. remaining 0:03:46, complete 21.21%
+att-weights epoch 138, step 50, mem_usage:GPU:0 1.3GB, 1.190 sec/step, elapsed 0:01:02, exp. remaining 0:03:45, complete 21.65%
+att-weights epoch 138, step 51, mem_usage:GPU:0 1.3GB, 1.189 sec/step, elapsed 0:01:03, exp. remaining 0:03:42, complete 22.15%
+att-weights epoch 138, step 52, mem_usage:GPU:0 1.3GB, 1.172 sec/step, elapsed 0:01:04, exp. remaining 0:03:42, complete 22.48%
+att-weights epoch 138, step 53, mem_usage:GPU:0 1.3GB, 1.265 sec/step, elapsed 0:01:05, exp. remaining 0:03:41, complete 22.92%
+att-weights epoch 138, step 54, mem_usage:GPU:0 1.3GB, 1.501 sec/step, elapsed 0:01:07, exp. remaining 0:03:39, complete 23.48%
+att-weights epoch 138, step 55, mem_usage:GPU:0 1.3GB, 1.452 sec/step, elapsed 0:01:08, exp. remaining 0:03:38, complete 23.98%
+att-weights epoch 138, step 56, mem_usage:GPU:0 1.3GB, 1.510 sec/step, elapsed 0:01:10, exp. remaining 0:03:38, complete 24.32%
+att-weights epoch 138, step 57, mem_usage:GPU:0 1.3GB, 3.589 sec/step, elapsed 0:01:13, exp. remaining 0:03:45, complete 24.68%
+att-weights epoch 138, step 58, mem_usage:GPU:0 1.3GB, 1.726 sec/step, elapsed 0:01:15, exp. remaining 0:03:46, complete 25.02%
+att-weights epoch 138, step 59, mem_usage:GPU:0 1.3GB, 1.518 sec/step, elapsed 0:01:17, exp. remaining 0:03:47, complete 25.32%
+att-weights epoch 138, step 60, mem_usage:GPU:0 1.3GB, 1.413 sec/step, elapsed 0:01:18, exp. remaining 0:03:48, complete 25.58%
+att-weights epoch 138, step 61, mem_usage:GPU:0 1.3GB, 1.310 sec/step, elapsed 0:01:19, exp. remaining 0:03:47, complete 25.95%
+att-weights epoch 138, step 62, mem_usage:GPU:0 1.3GB, 1.351 sec/step, elapsed 0:01:21, exp. remaining 0:03:46, complete 26.38%
+att-weights epoch 138, step 63, mem_usage:GPU:0 1.3GB, 2.548 sec/step, elapsed 0:01:23, exp. remaining 0:03:46, complete 27.02%
+att-weights epoch 138, step 64, mem_usage:GPU:0 1.3GB, 1.415 sec/step, elapsed 0:01:25, exp. remaining 0:03:46, complete 27.28%
+att-weights epoch 138, step 65, mem_usage:GPU:0 1.3GB, 1.379 sec/step, elapsed 0:01:26, exp. remaining 0:03:46, complete 27.62%
+att-weights epoch 138, step 66, mem_usage:GPU:0 1.3GB, 1.565 sec/step, elapsed 0:01:28, exp. remaining 0:03:46, complete 28.02%
+att-weights epoch 138, step 67, mem_usage:GPU:0 1.3GB, 1.475 sec/step, elapsed 0:01:29, exp. remaining 0:03:47, complete 28.22%
+att-weights epoch 138, step 68, mem_usage:GPU:0 1.3GB, 1.464 sec/step, elapsed 0:01:31, exp. remaining 0:03:47, complete 28.59%
+att-weights epoch 138, step 69, mem_usage:GPU:0 1.3GB, 1.796 sec/step, elapsed 0:01:32, exp. remaining 0:03:47, complete 28.95%
+att-weights epoch 138, step 70, mem_usage:GPU:0 1.3GB, 2.599 sec/step, elapsed 0:01:35, exp. remaining 0:03:51, complete 29.22%
+att-weights epoch 138, step 71, mem_usage:GPU:0 1.3GB, 3.940 sec/step, elapsed 0:01:39, exp. remaining 0:03:57, complete 29.52%
+att-weights epoch 138, step 72, mem_usage:GPU:0 1.3GB, 2.460 sec/step, elapsed 0:01:41, exp. remaining 0:03:58, complete 29.92%
+att-weights epoch 138, step 73, mem_usage:GPU:0 1.3GB, 1.891 sec/step, elapsed 0:01:43, exp. remaining 0:03:58, complete 30.29%
+att-weights epoch 138, step 74, mem_usage:GPU:0 1.3GB, 2.534 sec/step, elapsed 0:01:46, exp. remaining 0:03:59, complete 30.72%
+att-weights epoch 138, step 75, mem_usage:GPU:0 1.3GB, 2.742 sec/step, elapsed 0:01:49, exp. remaining 0:04:01, complete 31.12%
+att-weights epoch 138, step 76, mem_usage:GPU:0 1.3GB, 8.272 sec/step, elapsed 0:01:57, exp. remaining 0:04:16, complete 31.35%
+att-weights epoch 138, step 77, mem_usage:GPU:0 1.3GB, 1.797 sec/step, elapsed 0:01:59, exp. remaining 0:04:15, complete 31.75%
+att-weights epoch 138, step 78, mem_usage:GPU:0 1.3GB, 2.950 sec/step, elapsed 0:02:02, exp. remaining 0:04:19, complete 32.02%
+att-weights epoch 138, step 79, mem_usage:GPU:0 1.3GB, 1.917 sec/step, elapsed 0:02:03, exp. remaining 0:04:17, complete 32.49%
+att-weights epoch 138, step 80, mem_usage:GPU:0 1.3GB, 1.877 sec/step, elapsed 0:02:05, exp. remaining 0:04:15, complete 32.96%
+att-weights epoch 138, step 81, mem_usage:GPU:0 1.3GB, 3.077 sec/step, elapsed 0:02:08, exp. remaining 0:04:19, complete 33.22%
+att-weights epoch 138, step 82, mem_usage:GPU:0 1.3GB, 1.810 sec/step, elapsed 0:02:10, exp. remaining 0:04:18, complete 33.62%
+att-weights epoch 138, step 83, mem_usage:GPU:0 1.3GB, 2.810 sec/step, elapsed 0:02:13, exp. remaining 0:04:18, complete 34.06%
+att-weights epoch 138, step 84, mem_usage:GPU:0 1.3GB, 2.035 sec/step, elapsed 0:02:15, exp. remaining 0:04:17, complete 34.49%
+att-weights epoch 138, step 85, mem_usage:GPU:0 1.3GB, 1.773 sec/step, elapsed 0:02:17, exp. remaining 0:04:16, complete 34.86%
+att-weights epoch 138, step 86, mem_usage:GPU:0 1.3GB, 2.355 sec/step, elapsed 0:02:19, exp. remaining 0:04:16, complete 35.29%
+att-weights epoch 138, step 87, mem_usage:GPU:0 1.3GB, 2.150 sec/step, elapsed 0:02:21, exp. remaining 0:04:14, complete 35.82%
+att-weights epoch 138, step 88, mem_usage:GPU:0 1.3GB, 4.117 sec/step, elapsed 0:02:25, exp. remaining 0:04:17, complete 36.19%
+att-weights epoch 138, step 89, mem_usage:GPU:0 1.3GB, 2.533 sec/step, elapsed 0:02:28, exp. remaining 0:04:16, complete 36.66%
+att-weights epoch 138, step 90, mem_usage:GPU:0 1.3GB, 2.548 sec/step, elapsed 0:02:31, exp. remaining 0:04:15, complete 37.19%
+att-weights epoch 138, step 91, mem_usage:GPU:0 1.3GB, 6.779 sec/step, elapsed 0:02:37, exp. remaining 0:04:22, complete 37.59%
+att-weights epoch 138, step 92, mem_usage:GPU:0 1.3GB, 3.341 sec/step, elapsed 0:02:41, exp. remaining 0:04:23, complete 37.96%
+att-weights epoch 138, step 93, mem_usage:GPU:0 1.3GB, 3.604 sec/step, elapsed 0:02:44, exp. remaining 0:04:25, complete 38.26%
+att-weights epoch 138, step 94, mem_usage:GPU:0 1.3GB, 2.134 sec/step, elapsed 0:02:46, exp. remaining 0:04:25, complete 38.63%
+att-weights epoch 138, step 95, mem_usage:GPU:0 1.3GB, 3.038 sec/step, elapsed 0:02:49, exp. remaining 0:04:24, complete 39.09%
+att-weights epoch 138, step 96, mem_usage:GPU:0 1.3GB, 3.527 sec/step, elapsed 0:02:53, exp. remaining 0:04:26, complete 39.46%
+att-weights epoch 138, step 97, mem_usage:GPU:0 1.3GB, 2.219 sec/step, elapsed 0:02:55, exp. remaining 0:04:27, complete 39.66%
+att-weights epoch 138, step 98, mem_usage:GPU:0 1.3GB, 0.848 sec/step, elapsed 0:02:56, exp. remaining 0:04:25, complete 39.89%
+att-weights epoch 138, step 99, mem_usage:GPU:0 1.3GB, 0.802 sec/step, elapsed 0:02:57, exp. remaining 0:04:24, complete 40.13%
+att-weights epoch 138, step 100, mem_usage:GPU:0 1.3GB, 0.796 sec/step, elapsed 0:02:58, exp. remaining 0:04:22, complete 40.43%
+att-weights epoch 138, step 101, mem_usage:GPU:0 1.3GB, 0.834 sec/step, elapsed 0:02:58, exp. remaining 0:04:19, complete 40.86%
+att-weights epoch 138, step 102, mem_usage:GPU:0 1.3GB, 0.828 sec/step, elapsed 0:02:59, exp. remaining 0:04:15, complete 41.29%
+att-weights epoch 138, step 103, mem_usage:GPU:0 1.3GB, 0.941 sec/step, elapsed 0:03:00, exp. remaining 0:04:13, complete 41.63%
+att-weights epoch 138, step 104, mem_usage:GPU:0 1.3GB, 0.811 sec/step, elapsed 0:03:01, exp. remaining 0:04:11, complete 41.96%
+att-weights epoch 138, step 105, mem_usage:GPU:0 1.3GB, 1.095 sec/step, elapsed 0:03:02, exp. remaining 0:04:09, complete 42.29%
+att-weights epoch 138, step 106, mem_usage:GPU:0 1.3GB, 1.227 sec/step, elapsed 0:03:03, exp. remaining 0:04:07, complete 42.66%
+att-weights epoch 138, step 107, mem_usage:GPU:0 1.3GB, 0.798 sec/step, elapsed 0:03:04, exp. remaining 0:04:04, complete 43.00%
+att-weights epoch 138, step 108, mem_usage:GPU:0 1.3GB, 1.118 sec/step, elapsed 0:03:05, exp. remaining 0:04:03, complete 43.30%
+att-weights epoch 138, step 109, mem_usage:GPU:0 1.3GB, 0.875 sec/step, elapsed 0:03:06, exp. remaining 0:04:00, complete 43.66%
+att-weights epoch 138, step 110, mem_usage:GPU:0 1.3GB, 0.862 sec/step, elapsed 0:03:07, exp. remaining 0:03:58, complete 44.03%
+att-weights epoch 138, step 111, mem_usage:GPU:0 1.3GB, 0.863 sec/step, elapsed 0:03:08, exp. remaining 0:03:56, complete 44.36%
+att-weights epoch 138, step 112, mem_usage:GPU:0 1.3GB, 0.768 sec/step, elapsed 0:03:09, exp. remaining 0:03:51, complete 44.96%
+att-weights epoch 138, step 113, mem_usage:GPU:0 1.3GB, 0.849 sec/step, elapsed 0:03:10, exp. remaining 0:03:49, complete 45.26%
+att-weights epoch 138, step 114, mem_usage:GPU:0 1.3GB, 0.854 sec/step, elapsed 0:03:10, exp. remaining 0:03:48, complete 45.56%
+att-weights epoch 138, step 115, mem_usage:GPU:0 1.3GB, 0.885 sec/step, elapsed 0:03:11, exp. remaining 0:03:46, complete 45.83%
+att-weights epoch 138, step 116, mem_usage:GPU:0 1.3GB, 1.917 sec/step, elapsed 0:03:13, exp. remaining 0:03:45, complete 46.23%
+att-weights epoch 138, step 117, mem_usage:GPU:0 1.3GB, 0.970 sec/step, elapsed 0:03:14, exp. remaining 0:03:43, complete 46.56%
+att-weights epoch 138, step 118, mem_usage:GPU:0 1.3GB, 0.753 sec/step, elapsed 0:03:15, exp. remaining 0:03:41, complete 46.90%
+att-weights epoch 138, step 119, mem_usage:GPU:0 1.3GB, 0.843 sec/step, elapsed 0:03:16, exp. remaining 0:03:39, complete 47.16%
+att-weights epoch 138, step 120, mem_usage:GPU:0 1.3GB, 0.821 sec/step, elapsed 0:03:17, exp. remaining 0:03:36, complete 47.63%
+att-weights epoch 138, step 121, mem_usage:GPU:0 1.3GB, 1.176 sec/step, elapsed 0:03:18, exp. remaining 0:03:34, complete 48.03%
+att-weights epoch 138, step 122, mem_usage:GPU:0 1.3GB, 0.627 sec/step, elapsed 0:03:18, exp. remaining 0:03:32, complete 48.33%
+att-weights epoch 138, step 123, mem_usage:GPU:0 1.3GB, 0.976 sec/step, elapsed 0:03:19, exp. remaining 0:03:31, complete 48.63%
+att-weights epoch 138, step 124, mem_usage:GPU:0 1.3GB, 0.920 sec/step, elapsed 0:03:20, exp. remaining 0:03:28, complete 49.03%
+att-weights epoch 138, step 125, mem_usage:GPU:0 1.3GB, 0.812 sec/step, elapsed 0:03:21, exp. remaining 0:03:24, complete 49.60%
+att-weights epoch 138, step 126, mem_usage:GPU:0 1.3GB, 0.812 sec/step, elapsed 0:03:22, exp. remaining 0:03:22, complete 50.00%
+att-weights epoch 138, step 127, mem_usage:GPU:0 1.3GB, 0.852 sec/step, elapsed 0:03:23, exp. remaining 0:03:19, complete 50.50%
+att-weights epoch 138, step 128, mem_usage:GPU:0 1.3GB, 0.973 sec/step, elapsed 0:03:24, exp. remaining 0:03:17, complete 50.83%
+att-weights epoch 138, step 129, mem_usage:GPU:0 1.3GB, 0.928 sec/step, elapsed 0:03:25, exp. remaining 0:03:15, complete 51.23%
+att-weights epoch 138, step 130, mem_usage:GPU:0 1.3GB, 0.916 sec/step, elapsed 0:03:26, exp. remaining 0:03:13, complete 51.60%
+att-weights epoch 138, step 131, mem_usage:GPU:0 1.3GB, 0.794 sec/step, elapsed 0:03:26, exp. remaining 0:03:10, complete 52.10%
+att-weights epoch 138, step 132, mem_usage:GPU:0 1.3GB, 0.908 sec/step, elapsed 0:03:27, exp. remaining 0:03:07, complete 52.54%
+att-weights epoch 138, step 133, mem_usage:GPU:0 1.3GB, 0.884 sec/step, elapsed 0:03:28, exp. remaining 0:03:05, complete 52.94%
+att-weights epoch 138, step 134, mem_usage:GPU:0 1.3GB, 0.852 sec/step, elapsed 0:03:29, exp. remaining 0:03:03, complete 53.27%
+att-weights epoch 138, step 135, mem_usage:GPU:0 1.3GB, 0.943 sec/step, elapsed 0:03:30, exp. remaining 0:03:01, complete 53.74%
+att-weights epoch 138, step 136, mem_usage:GPU:0 1.3GB, 0.879 sec/step, elapsed 0:03:31, exp. remaining 0:02:59, complete 54.10%
+att-weights epoch 138, step 137, mem_usage:GPU:0 1.3GB, 0.854 sec/step, elapsed 0:03:32, exp. remaining 0:02:57, complete 54.47%
+att-weights epoch 138, step 138, mem_usage:GPU:0 1.3GB, 0.815 sec/step, elapsed 0:03:32, exp. remaining 0:02:55, complete 54.80%
+att-weights epoch 138, step 139, mem_usage:GPU:0 1.3GB, 0.866 sec/step, elapsed 0:03:33, exp. remaining 0:02:53, complete 55.27%
+att-weights epoch 138, step 140, mem_usage:GPU:0 1.3GB, 0.873 sec/step, elapsed 0:03:34, exp. remaining 0:02:50, complete 55.70%
+att-weights epoch 138, step 141, mem_usage:GPU:0 1.3GB, 0.835 sec/step, elapsed 0:03:35, exp. remaining 0:02:48, complete 56.10%
+att-weights epoch 138, step 142, mem_usage:GPU:0 1.3GB, 0.870 sec/step, elapsed 0:03:36, exp. remaining 0:02:47, complete 56.44%
+att-weights epoch 138, step 143, mem_usage:GPU:0 1.3GB, 0.922 sec/step, elapsed 0:03:37, exp. remaining 0:02:45, complete 56.84%
+att-weights epoch 138, step 144, mem_usage:GPU:0 1.3GB, 0.836 sec/step, elapsed 0:03:38, exp. remaining 0:02:43, complete 57.10%
+att-weights epoch 138, step 145, mem_usage:GPU:0 1.3GB, 0.948 sec/step, elapsed 0:03:39, exp. remaining 0:02:41, complete 57.61%
+att-weights epoch 138, step 146, mem_usage:GPU:0 1.3GB, 0.761 sec/step, elapsed 0:03:39, exp. remaining 0:02:39, complete 57.94%
+att-weights epoch 138, step 147, mem_usage:GPU:0 1.3GB, 1.010 sec/step, elapsed 0:03:40, exp. remaining 0:02:37, complete 58.37%
+att-weights epoch 138, step 148, mem_usage:GPU:0 1.3GB, 1.080 sec/step, elapsed 0:03:41, exp. remaining 0:02:35, complete 58.77%
+att-weights epoch 138, step 149, mem_usage:GPU:0 1.3GB, 1.092 sec/step, elapsed 0:03:43, exp. remaining 0:02:34, complete 59.14%
+att-weights epoch 138, step 150, mem_usage:GPU:0 1.3GB, 1.512 sec/step, elapsed 0:03:44, exp. remaining 0:02:32, complete 59.51%
+att-weights epoch 138, step 151, mem_usage:GPU:0 1.3GB, 2.134 sec/step, elapsed 0:03:46, exp. remaining 0:02:31, complete 59.97%
+att-weights epoch 138, step 152, mem_usage:GPU:0 1.3GB, 2.375 sec/step, elapsed 0:03:49, exp. remaining 0:02:31, complete 60.27%
+att-weights epoch 138, step 153, mem_usage:GPU:0 1.3GB, 1.711 sec/step, elapsed 0:03:50, exp. remaining 0:02:30, complete 60.61%
+att-weights epoch 138, step 154, mem_usage:GPU:0 1.3GB, 2.907 sec/step, elapsed 0:03:53, exp. remaining 0:02:30, complete 60.81%
+att-weights epoch 138, step 155, mem_usage:GPU:0 1.3GB, 2.159 sec/step, elapsed 0:03:55, exp. remaining 0:02:30, complete 61.11%
+att-weights epoch 138, step 156, mem_usage:GPU:0 1.3GB, 2.824 sec/step, elapsed 0:03:58, exp. remaining 0:02:29, complete 61.44%
+att-weights epoch 138, step 157, mem_usage:GPU:0 1.3GB, 5.321 sec/step, elapsed 0:04:04, exp. remaining 0:02:30, complete 61.87%
+att-weights epoch 138, step 158, mem_usage:GPU:0 1.3GB, 2.289 sec/step, elapsed 0:04:06, exp. remaining 0:02:29, complete 62.24%
+att-weights epoch 138, step 159, mem_usage:GPU:0 1.3GB, 2.589 sec/step, elapsed 0:04:08, exp. remaining 0:02:29, complete 62.54%
+att-weights epoch 138, step 160, mem_usage:GPU:0 1.3GB, 3.293 sec/step, elapsed 0:04:12, exp. remaining 0:02:28, complete 62.94%
+att-weights epoch 138, step 161, mem_usage:GPU:0 1.3GB, 3.001 sec/step, elapsed 0:04:15, exp. remaining 0:02:27, complete 63.34%
+att-weights epoch 138, step 162, mem_usage:GPU:0 1.3GB, 1.884 sec/step, elapsed 0:04:17, exp. remaining 0:02:26, complete 63.78%
+att-weights epoch 138, step 163, mem_usage:GPU:0 1.3GB, 1.625 sec/step, elapsed 0:04:18, exp. remaining 0:02:24, complete 64.18%
+att-weights epoch 138, step 164, mem_usage:GPU:0 1.3GB, 1.720 sec/step, elapsed 0:04:20, exp. remaining 0:02:22, complete 64.58%
+att-weights epoch 138, step 165, mem_usage:GPU:0 1.3GB, 3.428 sec/step, elapsed 0:04:23, exp. remaining 0:02:22, complete 64.91%
+att-weights epoch 138, step 166, mem_usage:GPU:0 1.3GB, 3.858 sec/step, elapsed 0:04:27, exp. remaining 0:02:22, complete 65.24%
+att-weights epoch 138, step 167, mem_usage:GPU:0 1.3GB, 8.811 sec/step, elapsed 0:04:36, exp. remaining 0:02:24, complete 65.68%
+att-weights epoch 138, step 168, mem_usage:GPU:0 1.3GB, 3.434 sec/step, elapsed 0:04:39, exp. remaining 0:02:24, complete 66.01%
+att-weights epoch 138, step 169, mem_usage:GPU:0 1.3GB, 6.401 sec/step, elapsed 0:04:46, exp. remaining 0:02:23, complete 66.64%
+att-weights epoch 138, step 170, mem_usage:GPU:0 1.3GB, 3.300 sec/step, elapsed 0:04:49, exp. remaining 0:02:21, complete 67.14%
+att-weights epoch 138, step 171, mem_usage:GPU:0 1.3GB, 3.340 sec/step, elapsed 0:04:53, exp. remaining 0:02:21, complete 67.51%
+att-weights epoch 138, step 172, mem_usage:GPU:0 1.3GB, 1.819 sec/step, elapsed 0:04:54, exp. remaining 0:02:19, complete 67.85%
+att-weights epoch 138, step 173, mem_usage:GPU:0 1.3GB, 2.397 sec/step, elapsed 0:04:57, exp. remaining 0:02:18, complete 68.21%
+att-weights epoch 138, step 174, mem_usage:GPU:0 1.3GB, 0.839 sec/step, elapsed 0:04:58, exp. remaining 0:02:16, complete 68.55%
+att-weights epoch 138, step 175, mem_usage:GPU:0 1.3GB, 0.869 sec/step, elapsed 0:04:58, exp. remaining 0:02:15, complete 68.85%
+att-weights epoch 138, step 176, mem_usage:GPU:0 1.3GB, 0.899 sec/step, elapsed 0:04:59, exp. remaining 0:02:13, complete 69.15%
+att-weights epoch 138, step 177, mem_usage:GPU:0 1.3GB, 1.020 sec/step, elapsed 0:05:00, exp. remaining 0:02:10, complete 69.68%
+att-weights epoch 138, step 178, mem_usage:GPU:0 1.3GB, 0.949 sec/step, elapsed 0:05:01, exp. remaining 0:02:09, complete 69.91%
+att-weights epoch 138, step 179, mem_usage:GPU:0 1.3GB, 1.007 sec/step, elapsed 0:05:02, exp. remaining 0:02:06, complete 70.48%
+att-weights epoch 138, step 180, mem_usage:GPU:0 1.3GB, 0.906 sec/step, elapsed 0:05:03, exp. remaining 0:02:04, complete 70.88%
+att-weights epoch 138, step 181, mem_usage:GPU:0 1.3GB, 0.698 sec/step, elapsed 0:05:04, exp. remaining 0:02:03, complete 71.08%
+att-weights epoch 138, step 182, mem_usage:GPU:0 1.3GB, 0.965 sec/step, elapsed 0:05:05, exp. remaining 0:02:02, complete 71.38%
+att-weights epoch 138, step 183, mem_usage:GPU:0 1.3GB, 0.862 sec/step, elapsed 0:05:06, exp. remaining 0:02:01, complete 71.65%
+att-weights epoch 138, step 184, mem_usage:GPU:0 1.3GB, 1.635 sec/step, elapsed 0:05:07, exp. remaining 0:02:00, complete 71.91%
+att-weights epoch 138, step 185, mem_usage:GPU:0 1.3GB, 2.971 sec/step, elapsed 0:05:10, exp. remaining 0:01:59, complete 72.25%
+att-weights epoch 138, step 186, mem_usage:GPU:0 1.3GB, 0.871 sec/step, elapsed 0:05:11, exp. remaining 0:01:57, complete 72.65%
+att-weights epoch 138, step 187, mem_usage:GPU:0 1.3GB, 1.017 sec/step, elapsed 0:05:12, exp. remaining 0:01:55, complete 73.02%
+att-weights epoch 138, step 188, mem_usage:GPU:0 1.3GB, 1.791 sec/step, elapsed 0:05:14, exp. remaining 0:01:54, complete 73.38%
+att-weights epoch 138, step 189, mem_usage:GPU:0 1.3GB, 0.672 sec/step, elapsed 0:05:15, exp. remaining 0:01:52, complete 73.72%
+att-weights epoch 138, step 190, mem_usage:GPU:0 1.3GB, 0.961 sec/step, elapsed 0:05:16, exp. remaining 0:01:51, complete 73.95%
+att-weights epoch 138, step 191, mem_usage:GPU:0 1.3GB, 1.066 sec/step, elapsed 0:05:17, exp. remaining 0:01:49, complete 74.28%
+att-weights epoch 138, step 192, mem_usage:GPU:0 1.3GB, 0.881 sec/step, elapsed 0:05:18, exp. remaining 0:01:47, complete 74.68%
+att-weights epoch 138, step 193, mem_usage:GPU:0 1.3GB, 0.930 sec/step, elapsed 0:05:19, exp. remaining 0:01:46, complete 74.92%
+att-weights epoch 138, step 194, mem_usage:GPU:0 1.3GB, 0.882 sec/step, elapsed 0:05:19, exp. remaining 0:01:45, complete 75.25%
+att-weights epoch 138, step 195, mem_usage:GPU:0 1.3GB, 0.892 sec/step, elapsed 0:05:20, exp. remaining 0:01:43, complete 75.62%
+att-weights epoch 138, step 196, mem_usage:GPU:0 1.3GB, 1.196 sec/step, elapsed 0:05:22, exp. remaining 0:01:42, complete 75.88%
+att-weights epoch 138, step 197, mem_usage:GPU:0 1.3GB, 0.776 sec/step, elapsed 0:05:22, exp. remaining 0:01:40, complete 76.22%
+att-weights epoch 138, step 198, mem_usage:GPU:0 1.3GB, 0.598 sec/step, elapsed 0:05:23, exp. remaining 0:01:39, complete 76.48%
+att-weights epoch 138, step 199, mem_usage:GPU:0 1.3GB, 0.951 sec/step, elapsed 0:05:24, exp. remaining 0:01:38, complete 76.75%
+att-weights epoch 138, step 200, mem_usage:GPU:0 1.3GB, 0.855 sec/step, elapsed 0:05:25, exp. remaining 0:01:36, complete 77.05%
+att-weights epoch 138, step 201, mem_usage:GPU:0 1.3GB, 0.843 sec/step, elapsed 0:05:26, exp. remaining 0:01:35, complete 77.32%
+att-weights epoch 138, step 202, mem_usage:GPU:0 1.3GB, 0.879 sec/step, elapsed 0:05:26, exp. remaining 0:01:33, complete 77.72%
+att-weights epoch 138, step 203, mem_usage:GPU:0 1.3GB, 1.064 sec/step, elapsed 0:05:27, exp. remaining 0:01:31, complete 78.22%
+att-weights epoch 138, step 204, mem_usage:GPU:0 1.3GB, 0.758 sec/step, elapsed 0:05:28, exp. remaining 0:01:29, complete 78.62%
+att-weights epoch 138, step 205, mem_usage:GPU:0 1.3GB, 0.839 sec/step, elapsed 0:05:29, exp. remaining 0:01:27, complete 79.02%
+att-weights epoch 138, step 206, mem_usage:GPU:0 1.3GB, 0.856 sec/step, elapsed 0:05:30, exp. remaining 0:01:25, complete 79.39%
+att-weights epoch 138, step 207, mem_usage:GPU:0 1.3GB, 1.010 sec/step, elapsed 0:05:31, exp. remaining 0:01:23, complete 79.82%
+att-weights epoch 138, step 208, mem_usage:GPU:0 1.3GB, 1.031 sec/step, elapsed 0:05:32, exp. remaining 0:01:22, complete 80.15%
+att-weights epoch 138, step 209, mem_usage:GPU:0 1.3GB, 0.808 sec/step, elapsed 0:05:33, exp. remaining 0:01:21, complete 80.42%
+att-weights epoch 138, step 210, mem_usage:GPU:0 1.3GB, 1.043 sec/step, elapsed 0:05:34, exp. remaining 0:01:19, complete 80.75%
+att-weights epoch 138, step 211, mem_usage:GPU:0 1.3GB, 2.424 sec/step, elapsed 0:05:36, exp. remaining 0:01:18, complete 81.19%
+att-weights epoch 138, step 212, mem_usage:GPU:0 1.3GB, 2.757 sec/step, elapsed 0:05:39, exp. remaining 0:01:17, complete 81.45%
+att-weights epoch 138, step 213, mem_usage:GPU:0 1.3GB, 1.999 sec/step, elapsed 0:05:41, exp. remaining 0:01:16, complete 81.75%
+att-weights epoch 138, step 214, mem_usage:GPU:0 1.3GB, 2.358 sec/step, elapsed 0:05:43, exp. remaining 0:01:14, complete 82.15%
+att-weights epoch 138, step 215, mem_usage:GPU:0 1.3GB, 2.339 sec/step, elapsed 0:05:46, exp. remaining 0:01:13, complete 82.52%
+att-weights epoch 138, step 216, mem_usage:GPU:0 1.3GB, 2.189 sec/step, elapsed 0:05:48, exp. remaining 0:01:11, complete 83.02%
+att-weights epoch 138, step 217, mem_usage:GPU:0 1.3GB, 1.619 sec/step, elapsed 0:05:50, exp. remaining 0:01:08, complete 83.69%
+att-weights epoch 138, step 218, mem_usage:GPU:0 1.3GB, 2.572 sec/step, elapsed 0:05:52, exp. remaining 0:01:05, complete 84.26%
+att-weights epoch 138, step 219, mem_usage:GPU:0 1.3GB, 1.918 sec/step, elapsed 0:05:54, exp. remaining 0:01:04, complete 84.56%
+att-weights epoch 138, step 220, mem_usage:GPU:0 1.3GB, 1.768 sec/step, elapsed 0:05:56, exp. remaining 0:01:02, complete 85.02%
+att-weights epoch 138, step 221, mem_usage:GPU:0 1.3GB, 1.398 sec/step, elapsed 0:05:57, exp. remaining 0:01:00, complete 85.49%
+att-weights epoch 138, step 222, mem_usage:GPU:0 1.3GB, 1.443 sec/step, elapsed 0:05:59, exp. remaining 0:00:59, complete 85.79%
+att-weights epoch 138, step 223, mem_usage:GPU:0 1.3GB, 2.521 sec/step, elapsed 0:06:01, exp. remaining 0:00:58, complete 86.16%
+att-weights epoch 138, step 224, mem_usage:GPU:0 1.3GB, 1.867 sec/step, elapsed 0:06:03, exp. remaining 0:00:56, complete 86.46%
+att-weights epoch 138, step 225, mem_usage:GPU:0 1.3GB, 2.295 sec/step, elapsed 0:06:05, exp. remaining 0:00:55, complete 86.76%
+att-weights epoch 138, step 226, mem_usage:GPU:0 1.3GB, 2.216 sec/step, elapsed 0:06:08, exp. remaining 0:00:54, complete 87.02%
+att-weights epoch 138, step 227, mem_usage:GPU:0 1.3GB, 2.181 sec/step, elapsed 0:06:10, exp. remaining 0:00:53, complete 87.42%
+att-weights epoch 138, step 228, mem_usage:GPU:0 1.3GB, 1.854 sec/step, elapsed 0:06:12, exp. remaining 0:00:51, complete 87.93%
+att-weights epoch 138, step 229, mem_usage:GPU:0 1.3GB, 2.541 sec/step, elapsed 0:06:14, exp. remaining 0:00:49, complete 88.36%
+att-weights epoch 138, step 230, mem_usage:GPU:0 1.3GB, 2.070 sec/step, elapsed 0:06:16, exp. remaining 0:00:47, complete 88.79%
+att-weights epoch 138, step 231, mem_usage:GPU:0 1.3GB, 1.657 sec/step, elapsed 0:06:18, exp. remaining 0:00:46, complete 89.09%
+att-weights epoch 138, step 232, mem_usage:GPU:0 1.3GB, 1.552 sec/step, elapsed 0:06:19, exp. remaining 0:00:44, complete 89.59%
+att-weights epoch 138, step 233, mem_usage:GPU:0 1.3GB, 1.638 sec/step, elapsed 0:06:21, exp. remaining 0:00:41, complete 90.09%
+att-weights epoch 138, step 234, mem_usage:GPU:0 1.3GB, 4.782 sec/step, elapsed 0:06:26, exp. remaining 0:00:40, complete 90.49%
+att-weights epoch 138, step 235, mem_usage:GPU:0 1.3GB, 0.982 sec/step, elapsed 0:06:27, exp. remaining 0:00:39, complete 90.76%
+att-weights epoch 138, step 236, mem_usage:GPU:0 1.3GB, 1.480 sec/step, elapsed 0:06:28, exp. remaining 0:00:37, complete 91.13%
+att-weights epoch 138, step 237, mem_usage:GPU:0 1.3GB, 1.077 sec/step, elapsed 0:06:29, exp. remaining 0:00:36, complete 91.43%
+att-weights epoch 138, step 238, mem_usage:GPU:0 1.3GB, 0.999 sec/step, elapsed 0:06:30, exp. remaining 0:00:34, complete 91.83%
+att-weights epoch 138, step 239, mem_usage:GPU:0 1.3GB, 6.673 sec/step, elapsed 0:06:37, exp. remaining 0:00:33, complete 92.26%
+att-weights epoch 138, step 240, mem_usage:GPU:0 1.3GB, 0.855 sec/step, elapsed 0:06:38, exp. remaining 0:00:32, complete 92.56%
+att-weights epoch 138, step 241, mem_usage:GPU:0 1.3GB, 0.901 sec/step, elapsed 0:06:39, exp. remaining 0:00:30, complete 92.96%
+att-weights epoch 138, step 242, mem_usage:GPU:0 1.3GB, 1.361 sec/step, elapsed 0:06:40, exp. remaining 0:00:29, complete 93.20%
+att-weights epoch 138, step 243, mem_usage:GPU:0 1.3GB, 0.914 sec/step, elapsed 0:06:41, exp. remaining 0:00:27, complete 93.66%
+att-weights epoch 138, step 244, mem_usage:GPU:0 1.3GB, 1.156 sec/step, elapsed 0:06:42, exp. remaining 0:00:25, complete 94.00%
+att-weights epoch 138, step 245, mem_usage:GPU:0 1.3GB, 3.532 sec/step, elapsed 0:06:46, exp. remaining 0:00:24, complete 94.33%
+att-weights epoch 138, step 246, mem_usage:GPU:0 1.3GB, 1.040 sec/step, elapsed 0:06:47, exp. remaining 0:00:22, complete 94.80%
+att-weights epoch 138, step 247, mem_usage:GPU:0 1.3GB, 1.130 sec/step, elapsed 0:06:48, exp. remaining 0:00:20, complete 95.20%
+att-weights epoch 138, step 248, mem_usage:GPU:0 1.3GB, 0.908 sec/step, elapsed 0:06:49, exp. remaining 0:00:19, complete 95.53%
+att-weights epoch 138, step 249, mem_usage:GPU:0 1.3GB, 0.930 sec/step, elapsed 0:06:50, exp. remaining 0:00:17, complete 95.83%
+att-weights epoch 138, step 250, mem_usage:GPU:0 1.3GB, 0.876 sec/step, elapsed 0:06:51, exp. remaining 0:00:16, complete 96.23%
+att-weights epoch 138, step 251, mem_usage:GPU:0 1.3GB, 0.981 sec/step, elapsed 0:06:52, exp. remaining 0:00:15, complete 96.46%
+att-weights epoch 138, step 252, mem_usage:GPU:0 1.3GB, 1.020 sec/step, elapsed 0:06:53, exp. remaining 0:00:14, complete 96.70%
+att-weights epoch 138, step 253, mem_usage:GPU:0 1.3GB, 0.881 sec/step, elapsed 0:06:53, exp. remaining 0:00:12, complete 97.03%
+att-weights epoch 138, step 254, mem_usage:GPU:0 1.3GB, 0.853 sec/step, elapsed 0:06:54, exp. remaining 0:00:11, complete 97.33%
+att-weights epoch 138, step 255, mem_usage:GPU:0 1.3GB, 1.677 sec/step, elapsed 0:06:56, exp. remaining 0:00:10, complete 97.57%
+att-weights epoch 138, step 256, mem_usage:GPU:0 1.3GB, 1.282 sec/step, elapsed 0:06:57, exp. remaining 0:00:08, complete 98.00%
+att-weights epoch 138, step 257, mem_usage:GPU:0 1.3GB, 0.850 sec/step, elapsed 0:06:58, exp. remaining 0:00:06, complete 98.37%
+att-weights epoch 138, step 258, mem_usage:GPU:0 1.3GB, 0.878 sec/step, elapsed 0:06:59, exp. remaining 0:00:05, complete 98.63%
+att-weights epoch 138, step 259, mem_usage:GPU:0 1.3GB, 0.856 sec/step, elapsed 0:07:00, exp. remaining 0:00:04, complete 98.97%
+att-weights epoch 138, step 260, mem_usage:GPU:0 1.3GB, 0.613 sec/step, elapsed 0:07:01, exp. remaining 0:00:02, complete 99.30%
+att-weights epoch 138, step 261, mem_usage:GPU:0 1.3GB, 1.197 sec/step, elapsed 0:07:02, exp. remaining 0:00:01, complete 99.57%
+att-weights epoch 138, step 262, mem_usage:GPU:0 1.3GB, 1.072 sec/step, elapsed 0:07:03, exp. remaining 0:00:00, complete 99.77%
+att-weights epoch 138, step 263, mem_usage:GPU:0 1.3GB, 0.946 sec/step, elapsed 0:07:04, exp. remaining 0:00:00, complete 99.77%
+att-weights epoch 138, step 264, mem_usage:GPU:0 1.3GB, 1.112 sec/step, elapsed 0:07:05, exp. remaining 0:00:00, complete 99.77%
+att-weights epoch 138, step 265, mem_usage:GPU:0 1.3GB, 1.274 sec/step, elapsed 0:07:06, exp. remaining 0:00:00, complete 99.77%
+att-weights epoch 138, step 266, mem_usage:GPU:0 1.3GB, 1.002 sec/step, elapsed 0:07:07, exp. remaining 0:00:01, complete 99.77%
+att-weights epoch 138, step 267, mem_usage:GPU:0 1.3GB, 1.135 sec/step, elapsed 0:07:08, exp. remaining 0:00:01, complete 99.77%
+att-weights epoch 138, step 268, mem_usage:GPU:0 1.3GB, 1.059 sec/step, elapsed 0:07:09, exp. remaining 0:00:01, complete 99.77%
+att-weights epoch 138, step 269, mem_usage:GPU:0 1.3GB, 1.161 sec/step, elapsed 0:07:10, exp. remaining 0:00:01, complete 99.77%
+att-weights epoch 138, step 270, mem_usage:GPU:0 1.3GB, 0.903 sec/step, elapsed 0:07:11, exp. remaining 0:00:01, complete 99.77%
+att-weights epoch 138, step 271, mem_usage:GPU:0 1.3GB, 1.292 sec/step, elapsed 0:07:13, exp. remaining 0:00:01, complete 99.77%
+att-weights epoch 138, step 272, mem_usage:GPU:0 1.3GB, 17.676 sec/step, elapsed 0:07:30, exp. remaining 0:00:01, complete 99.77%
+Stats:
+  mem_usage:GPU:0: Stats(mean=1.3GB, std_dev=0.0B, min=1.3GB, max=1.3GB, num_seqs=273, avg_data_len=1)
+att-weights epoch 138, finished after 273 steps, 0:07:30 elapsed (33.0% computing time)
+Layer 'att_weights' Stats:
+  2998 seqs, 7498887 total frames, 2501.296531 average frames
+  Mean: 0.01907163022509351
+  Std dev: 0.12606958839712973
+  Min/max: 0.0 / 0.9999999
+Quitting
++------- EPILOGUE SCRIPT -----------------------------------------------
+|
+| Job ID ..............: 9161019
+| Stopped at ..........: Thu May 23 16:24:45 CEST 2019
+| Resources requested .: h_vmem=1536G,h_rss=10G,h_rt=3600,h_fsize=20G,s_core=0,pxe=ubuntu_16.04,gpu=1,scratch_free=5G,num_proc=5
+| Resources used ......: cpu=00:03:51, mem=435.84087 GB s, io=1.89544 GB, vmem=2.200G, maxvmem=2.200G, last_file_cache=711M, last_rss=3M, max-cache=1.818G
+| Memory used .........: 2.513G / 10.000G (25.1%)
+| Total time used .....: 0:08:33
+|
++------- EPILOGUE SCRIPT -----------------------------------------------
