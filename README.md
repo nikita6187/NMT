@@ -22,8 +22,19 @@ The repo contains many helper scripts, to help have an overview of the experimen
 - Located in https://github.com/nikita68/returnn
 - Please sync with the main branch using this guide https://help.github.com/en/articles/syncing-a-fork
 - The layer is found in https://github.com/nikita68/returnn/blob/master/TFNetworkHMMFactorization.py
+- All of the documentation is directly in the layer
+- Usage demos found in the `returnn/demos` subfolder, the Transformer demo with many features being here: https://github.com/nikita68/returnn/blob/master/demos/demo-tf-hmm-factorization-transformer.config Note that there are many different ones, including dynamic K, random head, RNN and independent decoder.
 
 ## Topic Factorization in RETURNN
 - Located in https://github.com/nikita68/returnn
 - Please sync with the main branch using this guide https://help.github.com/en/articles/syncing-a-fork
 - The layer is found in https://github.com/nikita68/returnn/blob/master/TFNetworkTopicFactorization.py
+- All of the documentation is directly in the layer
+- Usage demos found in the `returnn/demos` subfolder, the Transformer demo with many features being here: https://github.com/nikita68/returnn/blob/master/demos/demo-tf-transformer-topic-factorization.config Note, again, that there are many other demos, showing full softmax and pre-loading weights.
+
+## Geometric Loss
+As part of my sampled softmax implementations, I briefly looked into using the l2 (Euclidean) distance as the loss, between the target embeddings and the current decoder state, as this can add more fine grained sample methods. Due to limited time, I only looked at some basic experiments, which did not turn out to be fruitful. I also tried combining the loss with cross entropy. All of the layer logic can be found at the bottom of https://github.com/nikita68/returnn/blob/master/TFNetworkHMMFactorization.py, with some demos being located here: https://github.com/nikita68/returnn/blob/master/demos/demo-tf-transformer-geo-softmax-ce.config, https://github.com/nikita68/returnn/blob/master/demos/demo-tf-transformer-geo-softmax.config.
+
+
+
+
