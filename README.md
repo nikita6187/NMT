@@ -20,6 +20,7 @@ The repo contains many helper scripts, to help have an overview of the experimen
 
 ## Attention Mixture Model in RETURNN
 - Located in https://github.com/nikita68/returnn
+- Described in my bachelor thesis (please contact me: nikita [dot] makarov [at] rwth[minus]aachen [dot] de)
 - Please sync with the main branch using this guide https://help.github.com/en/articles/syncing-a-fork
 - The layer is found in https://github.com/nikita68/returnn/blob/master/TFNetworkHMMFactorization.py
 - All of the documentation is directly in the layer
