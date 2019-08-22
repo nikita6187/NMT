@@ -1,7 +1,7 @@
 # NMT Experiments at i6
 
 ## Structure
-The structure contains the configs and some results on the work on the Attention Mixture Model (also called HMM Factorization), as well as the topic aware decomposition for domain adaptation. 
+The structure contains the configs and some results on the work on the Attention Mixture Model (also called HMM Factorization, or AMM), as well as the topic aware decomposition for domain adaptation. 
 The repo is located at ```/work/smt2/makarov/NMT/```, with all results being collected their under the respective ```/logs/``` folders, seen under each location where configs are found.
 
 The hmm factorization folder contains three subfolders: ``de-en``,`zh-en` and `experiments`. ``de-en``,`zh-en` contain results on the language pairs, with ``de-en/hard-baseline`` having the most performant configs. `experiments` contains various results from extra experiments, such as for ASR and alignments.
@@ -20,6 +20,7 @@ The repo contains many helper scripts, to help have an overview of the experimen
 
 ## Attention Mixture Model in RETURNN
 - Located in https://github.com/nikita68/returnn
+- Described in my bachelor thesis (please contact me: nikita [dot] makarov [at] rwth[minus]aachen [dot] de)
 - Please sync with the main branch using this guide https://help.github.com/en/articles/syncing-a-fork
 - The layer is found in https://github.com/nikita68/returnn/blob/master/TFNetworkHMMFactorization.py
 - All of the documentation is directly in the layer
