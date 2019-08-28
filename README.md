@@ -25,6 +25,7 @@ The repo contains many helper scripts, to help have an overview of the experimen
 - The layer is found in https://github.com/nikita68/returnn/blob/master/TFNetworkHMMFactorization.py
 - All of the documentation is directly in the layer
 - Usage demos found in the `returnn/demos` subfolder, the Transformer demo with many features being here: https://github.com/nikita68/returnn/blob/master/demos/demo-tf-hmm-factorization-transformer.config Note that there are many different ones, including dynamic K, random head, RNN and independent decoder.
+- Warning: I've modified the eval layer so that it works with random heads, as it was missing some features
 
 ## Topic Factorization in RETURNN
 - Located in https://github.com/nikita68/returnn
